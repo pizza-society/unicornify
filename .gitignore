@@ -1,60 +1,23 @@
-**/.DS_Store
+.DS_Store
+node_modules
+/dist
 
-## Vue files
-*/node_modules
-*/dist
+
+# local env files
+.env.local
+.env.*.local
 
 # Log files
-*/npm-debug.log*
-*/yarn-debug.log*
-*/yarn-error.log*
-*/pnpm-debug.log*
-
-## Python files
-# local env files
-*/.env.local
-*/.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Editor directories and files
-*/.idea
-*/.vscode
-*/*.suo
-*/*.ntvs*
-*/*.njsproj
-*/*.sln
-*/*.sw?
-
-# Backup files # 
-*/*.bak 
-
-# Installer logs 
-*/pip-log.txt 
-*/pip-delete-this-directory.txt 
-
-# Unit test / coverage reports 
-*/htmlcov/ 
-*/.tox/ 
-*/.coverage 
-*/.coverage.* 
-*/.cache 
-*/.pytest_cache/ 
-*/nosetests.xml 
-*/coverage.xml 
-*/*.cover 
-*/.hypothesis/ 
-
-# pyenv 
-*/.python-version 
-
-# celery 
-*/celerybeat-schedule.* 
-
-# Environments 
-*/.env 
-*/.venv
-*/env
-*/env/ 
-*/venv/ 
-*/ENV/ 
-*/env.bak/ 
-*/venv.bak/ 
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

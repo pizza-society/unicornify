@@ -1,4 +1,4 @@
-# unicornify-web
+# unicornify
 
 ## Project setup
 ```

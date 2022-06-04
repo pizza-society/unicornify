@@ -4,7 +4,8 @@ import router from './router'
 import store from './store'
 
 // Main style
-require('@/assets/styles/_main.scss');
+require('@/assets/styles/main.scss');
+// require('~bootstrap/dist/js/bootstrap.min.js');
 
 createApp(App)
     .use(store)
