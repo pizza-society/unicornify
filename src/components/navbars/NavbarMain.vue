@@ -19,19 +19,24 @@
             <div class="collapse navbar-collapse"
                 id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active"
-                        aria-current="page"
-                        href="#">
+                    <router-link class="nav-link"
+                        to="/"
+                        active-class="active text-primary">
                         Home
-                    </a>
-                    <a class="nav-link" href="#">
-                        Features
-                    </a>
-                    <a class="nav-link" href="#">
-                        Pricing
-                    </a>
-                    <a class="nav-link disabled">
-                        Disabled
+                    </router-link>
+                    <router-link class="nav-link"
+                        to="/about"
+                        active-class="active text-primary">
+                        About
+                    </router-link>
+                </div>
+
+                <div class="navbar-nav ms-auto">
+                    <a class="btn btn-outline-primary"
+                        href="https://github.com/pizza-society/unicornify"
+                        target="_blank">
+                        <i class="fa-brands fa-github-alt"></i>
+                        Github
                     </a>
                 </div>
             </div>
