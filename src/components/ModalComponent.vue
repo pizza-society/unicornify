@@ -5,7 +5,7 @@
 				v-if="isModalOpen">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content bg-dark">
-						<div class="modal-header border-dark">
+						<div class="modal-header">
 							<h5 class="modal-title">
 								<slot name="header" />
 							</h5>
@@ -18,7 +18,7 @@
 						<div class="modal-body">
 							<slot name="content" />
 						</div>
-						<div class="modal-footer border-dark">
+						<div class="modal-footer">
 							<slot name="footer" />
 						</div>
 					</div>
@@ -33,7 +33,7 @@
 import { onMounted, defineComponent, ref } from "vue";
 
 export default defineComponent({
-    name: "ModalBase",
+    name: "ModalComponent",
     setup() {
         const isModalOpen = ref<boolean>(false);
 

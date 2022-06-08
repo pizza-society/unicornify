@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="container py-3">
         <button type="button" 
             class="btn btn-primary"
             v-on:click="toggleModal()">
             Toggle modal
         </button>
 
-        <ModalBase ref="modalComponent">
+        <ModalComponent ref="modalComponent">
             <template #header>
                 <span>
                     This is a title
@@ -14,7 +14,7 @@
             </template>
 
             <template #content>
-                <p>Hello here</p>
+                <p class="mb-0">Hello here</p>
             </template>
 
             <template #footer>
@@ -29,18 +29,18 @@
                     Save changes
                 </button>
             </template>
-        </ModalBase>
+        </ModalComponent>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import ModalBase from '@/components/modals/ModalBase.vue';
+import ModalComponent from '@/components/ModalComponent.vue';
 
 export default defineComponent({
     name: 'TestingView',
     setup() {
-        const modalComponent = ref<InstanceType<typeof ModalBase>>()
+        const modalComponent = ref<InstanceType<typeof ModalComponent>>()
 
         const toggleModal = () => {
             modalComponent.value?.toggleModal()
@@ -52,7 +52,7 @@ export default defineComponent({
         }
     },
     components: {
-        ModalBase
+        ModalComponent
     }
 })
 </script>
