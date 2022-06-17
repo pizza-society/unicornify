@@ -29,6 +29,11 @@
                         active-class="active text-primary">
                         About
                     </router-link>
+                    <router-link class="nav-link"
+                        to="/email-validator"
+                        active-class="active text-primary">
+                        Email Validator
+                    </router-link>
                 </div>
 
                 <div class="navbar-nav ms-auto">

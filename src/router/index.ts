@@ -18,6 +18,14 @@ const routes: Array<RouteRecordRaw> = [
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   },
+  {
+    path: '/email-validator',
+    name: 'EmailValidator',
+    components: {
+      default:() => import('@/views/EmailValidatorView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
+  },
 ]
 
 const router = createRouter({
