@@ -1,14 +1,14 @@
 <template>
-    <div class="container">
+    <div class="container pt-5">
         <div
             class="d-flex flex-column justify-content-center align-items-center"
         >
             <ErrorAlert v-if="error">
                 An Error has occured, please try again later ...
             </ErrorAlert>
-            <h1>
+            <h4>
                 <b>Email Address Validator</b>
-            </h1>
+            </h4>
             <div>
                 <div v-if="!formSubmitted">
                     <lottie-player
@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <div
                                     v-if="!formSubmitted"
-                                    class="input-group  mt-4"
+                                    class="input-group  justify-content-center mt-4"
                                 >
                                     <input
                                         type="email"
@@ -180,13 +180,12 @@ export default defineComponent({
     components: { ErrorAlert }
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .container-sm {
     max-width: 25rem;
 }
 
 .container {
     max-width: 50rem;
-    padding-top: 5rem;
 }
 </style>
