@@ -30,6 +30,11 @@
                         About
                     </router-link>
                     <router-link class="nav-link"
+                        to="/qr-code-generator"
+                        active-class="active text-primary">
+                        QR Generator
+                    </router-link>
+                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing

@@ -25,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
       default:() => import('@/views/TestingView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
+  },
+  {
+    path: '/qr-code-generator',
+    name: 'qr-code-generator',
+    components: {
+      default:() => import('@/views/QRGeneratorView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
   }
 ]
 
