@@ -30,11 +30,6 @@
                         About
                     </router-link>
                     <router-link class="nav-link"
-                        to="/email-validator"
-                        active-class="active text-primary">
-                        Email Validator
-                    </router-link>
-                    <router-link class="nav-link"
                         to="/24h-to-12h"
                         active-class="active text-primary">
                         Simple 24 h to 12 h Converter

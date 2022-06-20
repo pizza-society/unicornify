@@ -19,14 +19,6 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/email-validator',
-    name: 'EmailValidator',
-    components: {
-      default:() => import('@/views/EmailValidatorView.vue'),
-      Navbar: () => import('@/components/navbars/NavbarMain.vue')
-    }
-  },
-  {
     path: '/24h-to-12h',
     name: '24hTo12hConverter',
     components: {

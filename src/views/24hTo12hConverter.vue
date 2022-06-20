@@ -75,10 +75,8 @@ export default defineComponent({
     name: "24h-to-12h-converter",
     data() {
         return {
-            userEmail: "" as string,
             t12HourInput: "" as any,
             t24HourInput: "" as any,
-            response: "" as any,
             error: false as boolean
         };
     },
