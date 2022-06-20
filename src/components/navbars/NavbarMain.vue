@@ -34,6 +34,11 @@
                         active-class="active text-primary">
                         Email Validator
                     </router-link>
+                    <router-link class="nav-link"
+                        to="/testing"
+                        active-class="active text-primary">
+                        Testing
+                    </router-link>
                 </div>
 
                 <div class="navbar-nav ms-auto">

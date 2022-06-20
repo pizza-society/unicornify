@@ -26,6 +26,14 @@ const routes: Array<RouteRecordRaw> = [
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   },
+  {
+    path: '/testing',
+    name: 'testing',
+    components: {
+      default:() => import('@/views/TestingView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
+  }
 ]
 
 const router = createRouter({
