@@ -48,7 +48,7 @@
                         src="https://assets6.lottiefiles.com/packages/lf20_0rvn1y9l.json"
                         background="transparent"
                         speed="1"
-                        style="width: 400px; height: 400px;"
+                        style="width: 350px; height: 350px;"
                         loop
                         autoplay
                     />
