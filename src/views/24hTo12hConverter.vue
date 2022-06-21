@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <h1 class="display-6">
-            <b>Time Converter - Convert 24 Hour to 12 Hour</b>
-        </h1>
+    <div class="container pt-5">
         <div
             class="d-flex flex-column justify-content-center align-items-center">
             <ErrorAlert v-if="error">
                 An Error has occured, please try again later ...
             </ErrorAlert>
+            <h1 class="display-6">
+                <b>Time Converter - Convert 24 Hour to 12 Hour</b>
+            </h1>
             <lottie-player
                 src="https://assets6.lottiefiles.com/packages/lf20_cdxs2q1x.json"
                 background="transparent"
