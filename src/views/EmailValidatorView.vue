@@ -1,8 +1,7 @@
 <template>
     <div class="container pt-5">
         <div
-            class="d-flex flex-column justify-content-center align-items-center"
-        >
+            class="d-flex flex-column justify-content-center align-items-center">
             <ErrorAlert v-if="error">
                 An Error has occured, please try again later ...
             </ErrorAlert>
@@ -17,22 +16,19 @@
                         speed="1"
                         style="width: 350px; height: 350px;"
                         loop
-                        autoplay
-                    />
+                        autoplay/>
                 </div>
                 <div
                     v-else-if=
                     "
                         dataObtained && !response.disposable && response.format
-                    "
-                >
+                    ">
                     <lottie-player
                         src="https://assets4.lottiefiles.com/private_files/lf30_jgkflosi.json"
                         background="transparent"
                         speed="1"
                         style="width: 350px; height: 350px;"
-                        autoplay
-                    />
+                        autoplay/>
                 </div>
                 <div v-else-if="dataObtained">
                     <lottie-player
@@ -40,8 +36,7 @@
                         background="transparent"
                         speed="1"
                         style="width: 350px; height: 350px;"
-                        autoplay
-                    />
+                        autoplay/>
                 </div>
                 <div v-else>
                     <lottie-player
@@ -50,8 +45,7 @@
                         speed="1"
                         style="width: 350px; height: 350px;"
                         loop
-                        autoplay
-                    />
+                        autoplay/>
                 </div>
             </div>
             <div v-if="!formSubmitted">
@@ -66,8 +60,7 @@
                             <div class="form-group">
                                 <div
                                     v-if="!formSubmitted"
-                                    class="input-group  justify-content-center mt-4"
-                                >
+                                    class="input-group  justify-content-center mt-4">
                                     <input
                                         type="email"
                                         class="form-control-lg"
@@ -80,8 +73,7 @@
                                     <button
                                         class="btn btn-outline-primary"
                                         type="submit"
-                                        id="button-addon1"
-                                    >
+                                        id="button-addon1">
                                         Verify
                                     </button>
                                 </div>
@@ -90,8 +82,8 @@
                         <br />
                     </div>
                     <h5>
-                        <b
-                            >Add an email address above to verify its validity
+                        <b>
+                            Add an email address above to verify its validity
                             in real - time basis.
                         </b>
                     </h5>
@@ -101,8 +93,7 @@
                 v-else-if=
                 "
                     dataObtained && !response.disposable && response.format
-                "
-            >
+                ">
                 <h4>
                     The Email <b>"{{ email }}"</b> is Valid and Not Disposable
                     😁.
@@ -125,8 +116,7 @@
                 v-if="dataObtained"
                 type="button"
                 class="btn btn-primary btn-lg"
-                @click="$router.go(0)"
-            >
+                @click="$router.go(0)">
                 Check again
             </button>
         </div>
