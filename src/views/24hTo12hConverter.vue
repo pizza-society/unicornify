@@ -1,11 +1,10 @@
 <template>
-    <div class="display-6">
-        <h1 >
-            <b>Simple Time Converter - Convert 24 Hour to 12 Hour</b>
+    <div>
+        <h1 class="display-6">
+            <b>Time Converter - Convert 24 Hour to 12 Hour</b>
         </h1>
         <div
-            class="d-flex flex-column justify-content-center align-items-center"
-        >
+            class="d-flex flex-column justify-content-center align-items-center">
             <ErrorAlert v-if="error">
                 An Error has occured, please try again later ...
             </ErrorAlert>
@@ -15,35 +14,29 @@
                 speed="0.10"
                 style="width: 350px; height: 350px;"
                 loop
-                autoplay
-            />
+                autoplay/>
             <div>
                 <div class="container">
                     <div class="row rounded-top ">
                         <div class="col">
                             <label for="exampleInputEmail1" class="form-label"
-                                >24 Hour Clock</label
-                            >
+                                >24 Hour Clock</label>
                             <input
                                 type="email"
                                 class="form-control"
                                 placeholder="00:00"
-                                v-model="t24HourInput"
-                            />
+                                v-model="t24HourInput"/>
                             <br />
                             <button
                                 class="btn btn-outline-primary"
                                 type="submit"
                                 id="button-addon1"
-                                @click="convertTime24to12"
-                            >
+                                @click="convertTime24to12">
                                 Convert to 12-hour
                             </button>
                         </div>
                         <div class="col">
-                            <label for="exampleInputEmail1" class="form-label"
-                                >12 Hour Clock</label
-                            >
+                            <label for="exampleInputEmail1" class="form-label">12 Hour Clock</label>
                             <input
                                 type="email"
                                 class="form-control"
@@ -55,8 +48,7 @@
                                 class="btn btn-outline-primary"
                                 type="submit"
                                 id="button-addon1"
-                                @click="convertTime12to24"
-                            >
+                                @click="convertTime12to24">
                                 Convert to 24-hour
                             </button>
                         </div>
