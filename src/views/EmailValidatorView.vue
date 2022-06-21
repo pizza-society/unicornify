@@ -6,9 +6,9 @@
             <ErrorAlert v-if="error">
                 An Error has occured, please try again later ...
             </ErrorAlert>
-            <h4>
+            <h1 class="display-6">
                 <b>Email Address Validator</b>
-            </h4>
+            </h1>
             <div>
                 <div v-if="!formSubmitted">
                     <lottie-player
@@ -57,9 +57,9 @@
             <div v-if="!formSubmitted">
                 <span>
                     <h4>
-                        Email Validator is A Simple Little Tool for Validating
-                        and Detecting Real/Disposable and Temporary Email
-                        Addresses.
+                        Email validator is a simple little tool for validating
+                        and detecting real/disposable and temporary Email
+                        addresses.
                     </h4>
                     <div class="container-sm">
                         <form @submit="makeApiCall()" v-on:submit.prevent>
@@ -103,10 +103,10 @@
                     dataObtained && !response.disposable && response.format
                 "
             >
-                <h2>
+                <h4>
                     The Email <b>"{{ email }}"</b> is Valid and Not Disposable
                     😁.
-                </h2>
+                </h4>
             </div>
             <div v-else-if="dataObtained && response.disposable">
                 <h4>
