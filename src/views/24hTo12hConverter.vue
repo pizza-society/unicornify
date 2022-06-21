@@ -1,8 +1,8 @@
 <template>
-    <div class="container pt-5">
-        <h4>
+    <div class="display-6">
+        <h1 >
             <b>Simple Time Converter - Convert 24 Hour to 12 Hour</b>
-        </h4>
+        </h1>
         <div
             class="d-flex flex-column justify-content-center align-items-center"
         >
