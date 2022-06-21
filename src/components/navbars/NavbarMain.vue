@@ -30,6 +30,11 @@
                         About
                     </router-link>
                     <router-link class="nav-link"
+                        to="/email-validator"
+                        active-class="active text-primary">
+                        Email Validator
+                    </router-link>
+                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing
