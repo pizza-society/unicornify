@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     components: {
-      default: () => HomeView,
+      default: () =>  import('@/views/HomeView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   },
