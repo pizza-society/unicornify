@@ -51,13 +51,13 @@ def generate_qr(data: QRCodeModel):
         image_factory=StyledPilImage,
         module_drawer=drawer_module,
         color_mask=SolidFillColorMask(
-            front_color=data.front.as_rgb_tuple(),
-            back_color=data.back.as_rgb_tuple()
+            front_color=data.front_color.as_rgb_tuple(),
+            back_color=data.back_color.as_rgb_tuple()
         )
     )
 
     # Saving as data type
-    img.save(buffer, format=data.type)
+    img.save(buffer, format=data.image_type)
 
     # Encode base 64 and decode utf-8
     img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
