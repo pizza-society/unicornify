@@ -42,18 +42,22 @@
                             </span>
                         </button>
                     </div>
-
-                    
-               </div>
-
-                
+                </div>
             </div>
+
             <Transition>
                 <div class="col-sm-12 col-md-4 text-center"
                     v-if="generatedResult" >
                     <img v-if="generatedResult" 
-                        :src="`data:image/jpg;base64,${generatedResult}`"
-                        class="rounded" />
+                        :src="`data:image/png;base64,${generatedResult}`"
+                        class="rounded w-100 mb-3" />
+                    <div class="d-grid gap-2 d-flex justify-content-center">
+                        <button class="btn btn-primary"
+                            v-on:click="download()">
+                            <i class="fa-solid fa-download"></i>
+                            Download PNG
+                        </button>
+                    </div>
                 </div>
             </Transition>
         </div>
@@ -118,13 +122,25 @@ export default defineComponent({
             generatedResult.value = null
         }
 
+        // Download output
+        const download = () => {
+            const filetype_ = 'png'
+            const source = `data:image/${filetype_};base64,${generatedResult.value}`
+            const fileName = `qrcode_`
+            const downloadLink = document.createElement('a')
+            downloadLink.href = source
+            downloadLink.download = `${fileName}.${filetype_}`
+            downloadLink.click()
+        }
+
         return {
             generatedResult,
             urlForm,
             v$,
             isLoading,
             generateQR,
-            reset
+            reset,
+            download
         }
     },
 })
