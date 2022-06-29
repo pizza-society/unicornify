@@ -46,10 +46,16 @@
                     
                </div>
 
-                <img v-if="generatedResult" 
-                    :src="`data:image/jpg;base64,${generatedResult}`"
-                    class="rounded" />
+                
             </div>
+            <Transition>
+                <div class="col-sm-12 col-md-4 text-center"
+                    v-if="generatedResult" >
+                    <img v-if="generatedResult" 
+                        :src="`data:image/jpg;base64,${generatedResult}`"
+                        class="rounded" />
+                </div>
+            </Transition>
         </div>
     </div>
 </template>
@@ -123,3 +129,19 @@ export default defineComponent({
     },
 })
 </script>
+
+<style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.v-enter-from {
+    transform: translateX(10px);
+    opacity: 0;
+}
+.v-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+</style>
