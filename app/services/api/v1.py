@@ -51,8 +51,8 @@ def generate_qr(data: QRCodeModel):
         image_factory=StyledPilImage,
         module_drawer=drawer_module,
         color_mask=SolidFillColorMask(
-            front_color=data.front if type(data.front) == tuple else data.front.as_rgb_tuple(),
-            back_color=data.back if type(data.back) == tuple else data.back.as_rgb_tuple()
+            front_color=data.front.as_rgb_tuple(),
+            back_color=data.back.as_rgb_tuple()
         )
     )
 

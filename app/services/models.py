@@ -21,6 +21,6 @@ class QRCodeModel(BaseModel):
     link: HttpUrl
     type: ImageChoices = ImageChoices.PNG
     drawer: DrawerChoices = DrawerChoices.SQUAREM
-    front: Color = (0, 0, 0)
-    back: Color = (255, 255, 255)
+    front: Color = Color('rgb(0, 0, 0)')
+    back: Color = Color('rgb(255, 255, 255)')
 
