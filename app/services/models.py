@@ -20,15 +20,18 @@ class DrawerChoices(int, Enum):
     HORIZONTALM = 6
 
 class CamelModel(BaseModel):
+    """
+        Base model with snake_case to camelCase conversion
+    """
     class Config:
         alias_generator = to_camel_case
         allow_population_by_field_name = True
 
-class QRCodeResponse():
+class QRCodeResponse(BaseModel):
     result: str
 
 class QRCodeModel(CamelModel):
-    link: HttpUrl
+    url: HttpUrl
     image_type: ImageChoices = ImageChoices.PNG
     drawer: DrawerChoices = DrawerChoices.SQUAREM
     front_color: Color = Color('rgb(0, 0, 0)')
