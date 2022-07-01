@@ -8,15 +8,15 @@
                             <label class="form-label">Enter URL</label>
                             <input class="form-control"
                                 placeholder="Enter link to open when scanned"
-                                v-model="urlForm.link"
+                                v-model="qrForm.url"
                                 :disabled="isLoading"
-                                @blur="v$.link.$touch"
+                                @blur="v$.url.$touch"
                                 :class="{
-                                    'is-invalid': v$.link.$error && v$.link.$dirty,
-                                    'is-valid': !v$.link.$error && v$.link.$dirty
+                                    'is-invalid': v$.url.$error && v$.url.$dirty,
+                                    'is-valid': !v$.url.$error && v$.url.$dirty
                                 }" />
                             <div class="invalid-feedback" 
-                                v-for="error of v$.link.$errors"
+                                v-for="error of v$.url.$errors"
                                 :key="error.$uid">
                                 {{ error.$message }}
                             </div>
@@ -65,7 +65,7 @@
                                 <button class="btn btn-outline-primary"
                                     v-on:click="download()">
                                     <i class="fa-solid fa-download"></i>
-                                    Download {{ urlForm.imageType.toUpperCase() }}
+                                    Download {{ qrForm.imageType.toUpperCase() }}
                                 </button>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                 <form class="needs-validation">
                     <div>
                         <label class="form-label">Image type</label>
-                        <select class="form-select" v-model="urlForm.imageType">
+                        <select class="form-select" v-model="qrForm.imageType">
                             <option :value="ImageChoices.JPEG">
                                 JPEG
                             </option>
@@ -102,14 +102,14 @@
                             <label class="form-label">Front color</label>
                             <input type="color"
                                 class="form-control form-control-color"
-                                v-model="urlForm.frontColor" />
+                                v-model="qrForm.frontColor" />
                         </div>
 
                         <div class="col-6">
                             <label class="form-label">Back color</label>
                             <input type="color"
                                 class="form-control form-control-color"
-                                v-model="urlForm.backColor" />
+                                v-model="qrForm.backColor" />
                         </div>
                     </div>
                 </form>
@@ -135,7 +135,7 @@
 import { defineComponent, ref } from 'vue';
 import { useServiceStore } from '@/store';
 
-import { ImageChoices } from '@/helpers/qr_generator.enum';
+import { ImageChoices } from '@/helpers/qr-generator.enum';
 import ModalComponent from '@/components/ModalComponent.vue';
 
 import useVuelidate from '@vuelidate/core';
@@ -152,14 +152,14 @@ export default defineComponent({
         const serviceSvc = useServiceStore()
 
         // Forms
-        const urlForm = ref({
-            link: null,
+        const qrForm = ref({
+            url: null,
             imageType: ImageChoices.JPEG,
             frontColor: '#000000',
             backColor: '#ffffff'
         })
         const validation = {
-            link: { 
+            url: { 
                 required: helpers.withMessage(
                     'Need to have a value',
                     required
@@ -169,7 +169,7 @@ export default defineComponent({
                     url
                 )}
         }
-        const v$ = useVuelidate(validation, urlForm)
+        const v$ = useVuelidate(validation, qrForm)
 
         // Checkers
         const isLoading = ref<boolean>(false)
@@ -182,9 +182,9 @@ export default defineComponent({
             isLoading.value = true
 
             return serviceSvc.generateQR(
-                urlForm.value
+                qrForm.value
             ).then(data => {
-                generatedResult.value = data
+                generatedResult.value = data.result
                 isLoading.value = false
             }).catch(() => {
                 isLoading.value = false
@@ -194,13 +194,13 @@ export default defineComponent({
         // Reset service
         const reset = () => {
             v$.value.$reset()
-            urlForm.value.link = null
+            qrForm.value.url = null
             generatedResult.value = null
         }
 
         // Download output
         const download = () => {
-            const filetype_ = urlForm.value.imageType
+            const filetype_ = qrForm.value.imageType
             const source = `data:image/${filetype_};base64,${generatedResult.value}`
             const fileName = `qrcode_`
             const downloadLink = document.createElement('a')
@@ -215,7 +215,7 @@ export default defineComponent({
 
         return {
             generatedResult,
-            urlForm,
+            qrForm,
             v$,
             isLoading,
             modalComponent,
