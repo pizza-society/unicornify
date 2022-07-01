@@ -30,10 +30,10 @@ def generate_qr(data: QRCodeModel):
         Generate a QR code with all the information:
 
         - **url**: a valid http / https URL
-        - **imageType***: [png / jpeg] ; optional, default = png
-        - **drawer***: [1-Square / 2-GappedSquare / 3-Circle / 4-Rounded / 5-Vertical / 6-Horizontal] ; optional, default = 1
-        - **frontColor***: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(0, 0, 0)
-        - **backColor***: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(255, 255, 255)
+        - **imageType**: [png / jpeg] ; optional, default = png
+        - **drawer**: [1-Square / 2-GappedSquare / 3-Circle / 4-Rounded / 5-Vertical / 6-Horizontal] ; optional, default = 1
+        - **frontColor**: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(0, 0, 0)
+        - **backColor**: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(255, 255, 255)
     """
     # Configure
     qr = qrcode.QRCode(
