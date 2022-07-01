@@ -2,6 +2,15 @@
     <div class="container">
         <div class="d-flex flex-row vh-min justify-content-center align-items-center row">
             <div class="col-sm-12 col-md-4 text-center">
+                <h3 class="mb-0">
+                    QR Generator
+                </h3>
+                <p class="mb-4">
+                    <small>
+                        Generate your own QR code with customized design!
+                    </small>
+                </p>
+
                 <div class="mb-3">
                     <form class="needs-validation">
                         <div class="mb-3">
