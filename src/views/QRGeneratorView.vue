@@ -65,7 +65,7 @@
                                 <button class="btn btn-outline-primary"
                                     v-on:click="download()">
                                     <i class="fa-solid fa-download"></i>
-                                    Download {{ qrForm.imageType.toUpperCase() }}
+                                    Download
                                 </button>
                             </div>
                         </div>
@@ -97,18 +97,89 @@
 
                     <hr class="my-3" />
 
+                    <label class="form-label">Style</label>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-1-square.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Square"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.SQUAREM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.SQUAREM)" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-2-gapped.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Gapped square"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.GAPPEDM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.GAPPEDM)" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-3-circle.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Circle"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.CIRCLEM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.CIRCLEM)" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-4-rounded.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Rounded"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.ROUNDEDM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.ROUNDEDM)" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-5-vertical.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Vertical"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.VERTICALM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.VERTICALM)" />
+                        </div>
+
+                        <div class="col-sm-6 col-md-4">
+                            <img src="@/assets/images/qr/qr-example-6-horizontal.png"
+                                role="button"
+                                class="rounded w-100 drawer-img"
+                                title="Horizontal"
+                                :class="{
+                                    'selected': qrForm.drawer === DrawerChoices.HORIZONTALM
+                                }"
+                                v-on:click="onSelectDrawer(DrawerChoices.HORIZONTALM)" />
+                        </div>
+                    </div>
+
+                    <hr class="my-3" />
+
                     <div class="row">
                         <div class="col-6">
                             <label class="form-label">Front color</label>
                             <input type="color"
-                                class="form-control form-control-color"
+                                class="form-control form-control-color p-0"
                                 v-model="qrForm.frontColor" />
                         </div>
 
                         <div class="col-6">
                             <label class="form-label">Back color</label>
                             <input type="color"
-                                class="form-control form-control-color"
+                                class="form-control form-control-color p-0"
                                 v-model="qrForm.backColor" />
                         </div>
                     </div>
@@ -117,14 +188,9 @@
 
             <template #footer>
                 <button type="button"
-                    class="btn btn-outline-primary"
-                    v-on:click="toggleModal()">
-                    Close
-                </button>
-                <button type="button"
                     class="btn btn-primary"
                     v-on:click="toggleModal()">
-                    Save changes
+                    Close
                 </button>
             </template>
         </ModalComponent>
@@ -135,7 +201,7 @@
 import { defineComponent, ref } from 'vue';
 import { useServiceStore } from '@/store';
 
-import { ImageChoices } from '@/helpers/qr-generator.enum';
+import { DrawerChoices, ImageChoices } from '@/helpers/qr-generator.enum';
 import ModalComponent from '@/components/ModalComponent.vue';
 
 import useVuelidate from '@vuelidate/core';
@@ -154,9 +220,10 @@ export default defineComponent({
         // Forms
         const qrForm = ref({
             url: null,
-            imageType: ImageChoices.JPEG,
+            imageType: ImageChoices.PNG,
             frontColor: '#000000',
-            backColor: '#ffffff'
+            backColor: '#ffffff',
+            drawer: DrawerChoices.SQUAREM
         })
         const validation = {
             url: { 
@@ -209,8 +276,14 @@ export default defineComponent({
             downloadLink.click()
         }
 
+        // Toggle modal
         const toggleModal = () => {
             modalComponent.value?.toggleModal()
+        }
+
+        // Select drawer
+        const onSelectDrawer = (mode: DrawerChoices) => {
+            qrForm.value.drawer = mode
         }
 
         return {
@@ -223,7 +296,9 @@ export default defineComponent({
             reset,
             download,
             toggleModal,
-            ImageChoices
+            onSelectDrawer,
+            ImageChoices,
+            DrawerChoices
         }
     },
     components: {
@@ -233,6 +308,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.drawer-img {
+    padding: 0.3rem;
+}
+
+.drawer-img.selected {
+    padding: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 
+                0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.25rem rgba(118, 78, 209, .5);
+}
 .v-enter-active,
 .v-leave-active {
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
