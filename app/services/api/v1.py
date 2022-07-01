@@ -1,8 +1,11 @@
 from fastapi import APIRouter
+from fastapi.exceptions import HTTPException
 
 import io
 import base64
+import json
 import qrcode
+import requests
 
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import SolidFillColorMask
@@ -15,7 +18,12 @@ from qrcode.image.styles.moduledrawers import (
     HorizontalBarsDrawer
 )
 
-from app.services.models import DrawerChoices, QRCodeModel
+from app.services.models import (
+    DrawerChoices,
+    QRCodeModel,
+    ShortedModel,
+    ShortedResponse
+)
 
 router = APIRouter()
 
@@ -60,6 +68,44 @@ def generate_qr(data: QRCodeModel):
     img.save(buffer, format=data.image_type)
 
     # Encode base 64 and decode utf-8
-    img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
     return img_base64
 
+@router.post(
+    '/generate-short-url/',
+    response_model=ShortedResponse,
+    summary='Generate short URL'
+)
+def generate_short_url(data: ShortedModel):
+    """
+        Generate a short URL by using 3rd party API with all the information:
+
+        - **url**: a valid http / https URL
+
+        Documentation about the external API can be found here https://cleanuri.com/docs
+    """
+    BASE_URL = 'https://cleanuri.com/api/v1/shorten'
+    
+    # Make request
+    shorted_service = requests.post(
+        BASE_URL,
+        {
+            'url': data.url
+        }
+    )
+
+    # Catching error
+    try:
+        shorted_service.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        # Convert byte to dict / json
+        error_response = json.loads(e.response.text)
+        raise HTTPException(
+            shorted_service.status_code,
+            detail=error_response['error']
+        )
+
+    # Return service in json
+    return json.loads(
+        shorted_service.text
+    )
