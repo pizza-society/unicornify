@@ -1,7 +1,7 @@
 from enum import Enum
 
 from humps import camelize
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, EmailStr
 from pydantic.color import Color
 
 def to_camel_case(string):
@@ -42,3 +42,9 @@ class ShortedModel(BaseModel):
 
 class ShortedResponse(CamelModel):
     result_url: HttpUrl
+
+class DisposableEmailModel(CamelModel):
+    email: EmailStr
+
+class DisposableEmailResponse(BaseModel):
+    result: object
