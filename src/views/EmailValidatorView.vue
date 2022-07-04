@@ -18,16 +18,18 @@
 				<div class="mb-3">
 					<div v-if="!formSubmitted">
 						<div class="container-sm">
-							<form @submit="makeApiCall()" v-on:submit.prevent>
+							<form @submit="validateEmail()" v-on:submit.prevent>
 								<div v-if="!formSubmitted">
-									<label class="form-label">Enter An Email</label>
+									<label class="form-label"
+										>Enter An Email</label
+									>
 									<input
 										type="email"
 										class="form-control"
 										placeholder="Email address"
 										aria-label="Email address"
 										aria-describedby="button-addon1"
-										v-model="userEmail"
+										v-model="userEmail.email"
 										required
 									/>
 									<br />
@@ -42,14 +44,22 @@
 							</form>
 						</div>
 					</div>
-					<div v-else-if="dataObtained && !response.disposable && response.format">
+					<div
+						v-else-if="
+							dataObtained &&
+								!response.disposable &&
+								response.format
+						"
+					>
 						<div class="alert alert-success" role="alert">
-							The Email <b>"{{ email }}"</b> is Valid and Not Disposable
+							The Email <b>"{{ email }}"</b> is Valid and Not
+							Disposable
 						</div>
 					</div>
 					<div v-else-if="dataObtained && response.disposable">
 						<div class="alert alert-danger" role="alert">
-							Warning, The Email <b>"{{ email }}"</b> is a Disposable Email.
+							Warning, The Email <b>"{{ email }}"</b> is a
+							Disposable Email.
 						</div>
 					</div>
 					<div v-else-if="dataObtained && !response.format">
@@ -80,14 +90,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
-import axios from "axios";
-import ResponseData from "../types/ResponseData";
+import { useServiceStore } from "@/store";
+import { mapActions } from "pinia";
+
 undefined;
 export default defineComponent({
 	name: "email-validator",
 	data() {
 		return {
-			userEmail: "" as string,
+			userEmail: { email: "" } as any,
 			formSubmitted: false as boolean,
 			dataObtained: false as boolean,
 			response: "" as any,
@@ -95,23 +106,38 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		makeApiCall() {
+		...mapActions(useServiceStore, ["validateDisposableEmail"]),
+		validateEmail() {
 			this.formSubmitted = true;
-			axios
-				.get(`https://www.disify.com/api/email/${this.userEmail}`)
-				.then((response: ResponseData) => {
+			this.validateDisposableEmail(this.userEmail)
+				.then(response => {
 					// console.log("Response", response.data);
 					this.response = response.data;
 					this.dataObtained = true;
-					// this.sleep(3000).then(() => {
-					//     this.dataObtained = true;
-					// });
+					this.sleep(3000).then(() => {
+						this.dataObtained = true;
+					});
 				})
 				.catch(err => {
 					console.log("Error", err);
 					this.error = true;
-					setTimeout(() => this.$router.push({ name: "home" }), 5000);
+					// setTimeout(() => this.$router.push({ name: "home" }), 5000);
 				});
+			// axios
+			// 	.get(`https://www.disify.com/api/email/${this.userEmail}`)
+			// 	.then((response: ResponseData) => {
+			// 		// console.log("Response", response.data);
+			// 		this.response = response.data;
+			// 		this.dataObtained = true;
+			// 		// this.sleep(3000).then(() => {
+			// 		//     this.dataObtained = true;
+			// 		// });
+			// 	})
+			// 	.catch(err => {
+			// 		console.log("Error", err);
+			// 		this.error = true;
+			// 		setTimeout(() => this.$router.push({ name: "home" }), 5000);
+			// 	});
 		},
 		sleep(time: number) {
 			return new Promise(resolve => setTimeout(resolve, time));
@@ -119,7 +145,7 @@ export default defineComponent({
 	},
 	computed: {
 		email(): string {
-			return this.userEmail + "!";
+			return this.userEmail.email + "!";
 		}
 	},
 	components: { ErrorAlert }
