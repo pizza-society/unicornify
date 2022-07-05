@@ -150,18 +150,18 @@ async def validate_disposable_email(data: DisposableEmailModel):
     BASE_URL = f'https://www.disify.com/api/email'
 
     # Make request
-    shorted_service = requests.get(
+    disposable_email_service = requests.get(
         f'{BASE_URL}/{data.email}'
     )
 
     # Catching error
     try:
-        shorted_service.raise_for_status()
+        disposable_email_service.raise_for_status()
     except requests.exceptions.HTTPError as e:
         # Convert byte to dict / json
         error_response = json.loads(e.response.text)
         raise HTTPException(
-            shorted_service.status_code,
+            disposable_email_service.status_code,
             detail=error_response['error']
         )
     
@@ -169,6 +169,6 @@ async def validate_disposable_email(data: DisposableEmailModel):
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
         content={
-            'result': shorted_service.json()
+            'result': disposable_email_service.json()
         }
     )
