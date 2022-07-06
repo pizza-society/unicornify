@@ -42,7 +42,7 @@
                     <router-link class="nav-link"
                         to="/24h-to-12h"
                         active-class="active text-primary">
-                        Simple 24 h to 12 h Converter
+                        24 Hour Time Converter
                     </router-link>
                     <router-link class="nav-link"
                         to="/testing"
