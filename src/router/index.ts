@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     components: {
-      default: () => HomeView,
+      default: () =>  import('@/views/HomeView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   },
@@ -19,8 +18,8 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/24h-to-12h',
-    name: '24hTo12hConverter',
+    path: '/email-validator',
+    name: 'EmailValidator',
     components: {
       default:() => import('@/views/24hTo12hConverter.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
@@ -31,6 +30,14 @@ const routes: Array<RouteRecordRaw> = [
     name: 'testing',
     components: {
       default:() => import('@/views/TestingView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
+  },
+  {
+    path: '/qr-code-generator',
+    name: 'qr-code-generator',
+    components: {
+      default:() => import('@/views/QRGeneratorView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   }

@@ -42,7 +42,7 @@ export default defineComponent({
         };
 
         onMounted(() => {
-            console.log("modalComponent");
+            // console.log("modalComponent");
         });
 
         return {
