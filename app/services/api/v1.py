@@ -1,9 +1,12 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import HTTPException
 
 import io
 import base64
+import json
 import qrcode
+import requests
 
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import SolidFillColorMask
@@ -16,7 +19,15 @@ from qrcode.image.styles.moduledrawers import (
     HorizontalBarsDrawer
 )
 
-from app.services.models import DrawerChoices, QRCodeModel, QRCodeResponse
+from app.services.models import (
+    DisposableEmailModel,
+    DisposableEmailResponse,
+    DrawerChoices,
+    QRCodeModel,
+    QRCodeResponse,
+    ShortedModel,
+    ShortedResponse
+) 
 
 router = APIRouter()
 
@@ -39,8 +50,8 @@ def generate_qr(data: QRCodeModel):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
+        box_size=50,
+        border=2,
     )
 
     # Get drawer module
@@ -74,13 +85,90 @@ def generate_qr(data: QRCodeModel):
     img.save(buffer, format=data.image_type)
 
     # Encode base 64 and decode utf-8
-    img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
     # Return response
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
         content={
-            "result": img_base64
+            'result': img_base64
         }
     )
 
+@router.post(
+    '/generate-short-url/',
+    response_model=ShortedResponse,
+    summary='Generate short URL'
+)
+def generate_short_url(data: ShortedModel):
+    """
+        Generate a short URL by using 3rd party API with all the information:
+
+        - **url**: a valid http / https URL
+
+        Documentation about the external API can be found here https://cleanuri.com/docs
+    """
+    BASE_URL = 'https://cleanuri.com/api/v1/shorten'
+    
+    # Make request
+    shorted_service = requests.post(
+        BASE_URL,
+        {
+            'url': data.url
+        }
+    )
+
+    # Catching error
+    try:
+        shorted_service.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        # Convert byte to dict / json
+        error_response = json.loads(e.response.text)
+        raise HTTPException(
+            shorted_service.status_code,
+            detail=error_response['error']
+        )
+
+    # Return service in json
+    return json.loads(
+        shorted_service.text
+    )
+
+@router.post(
+    '/validate-disposable-email/',
+    response_model=DisposableEmailResponse,
+    summary='Validate disposable email'
+)
+async def validate_disposable_email(data: DisposableEmailModel):
+    """
+        Validate disposable Email by using 3rd party API with all the information:
+
+        - **email**: a valid email address
+
+        Documentation about the external API can be found here https://www.disify.com/
+    """
+    BASE_URL = f'https://www.disify.com/api/email'
+
+    # Make request
+    disposable_email_service = requests.get(
+        f'{BASE_URL}/{data.email}'
+    )
+
+    # Catching error
+    try:
+        disposable_email_service.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        # Convert byte to dict / json
+        error_response = json.loads(e.response.text)
+        raise HTTPException(
+            disposable_email_service.status_code,
+            detail=error_response['error']
+        )
+    
+    # Return response
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            'result': disposable_email_service.json()
+        }
+    )
