@@ -18,6 +18,14 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/24h-to-12h',
+    name: '24hTo12hConverter',
+    components: {
+      default:() => import('@/views/24hTo12hConverter.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
+  },
+  {
     path: '/email-validator',
     name: 'EmailValidator',
     components: {
