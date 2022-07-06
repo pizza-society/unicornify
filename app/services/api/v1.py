@@ -167,7 +167,7 @@ async def validate_disposable_email(data: DisposableEmailModel):
     
     # Return response
     return JSONResponse(
-        status_code=status.HTTP_201_CREATED,
+        status_code=status.HTTP_200_OK,
         content={
             'result': disposable_email_service.json()
         }
