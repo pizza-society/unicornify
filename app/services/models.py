@@ -1,7 +1,7 @@
 from enum import Enum
 
 from humps import camelize
-from pydantic import BaseModel, Field, HttpUrl, EmailStr
+from pydantic import BaseModel, Field, HttpUrl
 from pydantic.color import Color
 
 def to_camel_case(string):
@@ -36,15 +36,3 @@ class QRCodeModel(CamelModel):
     drawer: DrawerChoices = DrawerChoices.SQUAREM
     front_color: Color = Color('rgb(0, 0, 0)')
     back_color: Color = Color('rgb(255, 255, 255)')
-
-class ShortedModel(BaseModel):
-    url: HttpUrl
-
-class ShortedResponse(CamelModel):
-    result_url: HttpUrl
-
-class DisposableEmailModel(CamelModel):
-    email: EmailStr
-
-class DisposableEmailResponse(BaseModel):
-    result: object
