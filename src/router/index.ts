@@ -40,6 +40,14 @@ const routes: Array<RouteRecordRaw> = [
       default:() => import('@/views/QRGeneratorView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
+  },
+  {
+    path: '/url-shortener',
+    name: 'url-shortener',
+    components: {
+      default:() => import('@/views/ShortenerView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
   }
 ]
 
