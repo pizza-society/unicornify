@@ -9,7 +9,9 @@ app = FastAPI(
     openapi_url=f'{settings.API_V1_STR}/openapi.json'
 )
 
-# Set all CORS enabled origins
+# CORS config
+# https://fastapi.tiangolo.com/tutorial/cors/#use-corsmiddleware
+
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
