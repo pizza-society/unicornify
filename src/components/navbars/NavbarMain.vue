@@ -40,6 +40,11 @@
                         Email Validator
                     </router-link>
                     <router-link class="nav-link"
+                        to="/url-shortener"
+                        active-class="active text-primary">
+                        URL Shortener
+                    </router-link>
+                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing
