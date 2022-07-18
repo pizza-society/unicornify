@@ -48,3 +48,9 @@ class DisposableEmailModel(CamelModel):
 
 class DisposableEmailResponse(BaseModel):
     result: object
+
+class TwitterVideoDownloaderModel(BaseModel):
+    url: HttpUrl
+
+class TwitterVideoDownloaderResponse(BaseModel):
+    result: object

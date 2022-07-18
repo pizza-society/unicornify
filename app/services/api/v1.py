@@ -26,8 +26,14 @@ from app.services.models import (
     QRCodeModel,
     QRCodeResponse,
     ShortedModel,
-    ShortedResponse
+    ShortedResponse,
+    TwitterVideoDownloaderModel,
+    TwitterVideoDownloaderResponse
 ) 
+
+from app.services.helpers import (
+    TwitterVideoDownloader
+)
 
 router = APIRouter()
 
@@ -139,7 +145,7 @@ def generate_short_url(data: ShortedModel):
     response_model=DisposableEmailResponse,
     summary='Validate disposable email'
 )
-async def validate_disposable_email(data: DisposableEmailModel):
+def validate_disposable_email(data: DisposableEmailModel):
     """
         Validate disposable Email by using 3rd party API with all the information:
 
@@ -170,5 +176,31 @@ async def validate_disposable_email(data: DisposableEmailModel):
         status_code=status.HTTP_200_OK,
         content={
             'result': disposable_email_service.json()
+        }
+    )
+
+@router.post(
+    '/download-tweet-video/',
+    response_model=TwitterVideoDownloaderResponse,
+    summary='Download Twitter status video'
+)
+def download_tweet_media(data: TwitterVideoDownloaderModel):
+    """
+        Generate a Tweet video downloader object by using 3rd party script with all the information:
+
+        - **url**: a valid http / https URL for twitter status 
+                   i.e: https://twitter.com/user/status/media_id
+
+        Documentation about the external CLI can be found here https://github.com/ytdl-org/youtube-dl
+    """
+    tw_downloader = TwitterVideoDownloader()
+    # Call script
+    tw_data = tw_downloader.extract_tweet_status_info(tweet_url=data.url)
+    
+    # Return response
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            'result': tw_data
         }
     )
