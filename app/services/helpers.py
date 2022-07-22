@@ -11,7 +11,9 @@ class TwitterVideoDownloader:
     """
 
     ydl_options = {"outtmpl": "%(id)s.%(ext)s"}
-    size_sample = "N/A" # To be updated, as there is no clear method to find accurate video size.
+    size_sample = (
+        "N/A"  # To be updated, as there is no clear method to find accurate video size.
+    )
 
     def extract_tweet_media_resolutions(self, dict_formats) -> dict:
         """
@@ -33,11 +35,12 @@ class TwitterVideoDownloader:
                 index += 1
         return dict
 
-    def extract_tweet_meta_data(self, tweet_meta_data) -> dict:
+    def extract_tweet_meta_data(self, tweet_meta_data, tweet_url) -> dict:
         """
         Extract specificed data from ytdl response Tweet data
         """
         dict = {}
+        dict["tweet_url"] = tweet_url
         dict["uploader_user_id"] = tweet_meta_data["uploader_id"]
         dict["uploader_display_name"] = tweet_meta_data["uploader"]
         dict["upload_date"] = self.format_date(tweet_meta_data["upload_date"])
@@ -74,7 +77,7 @@ class TwitterVideoDownloader:
         except:
             return "There's no video in this tweet"
         dict_tweet_data_extracted["tweet_meta_data"] = self.extract_tweet_meta_data(
-            tweet_info_data
+            tweet_info_data, tweet_url
         )
         dict_tweet_data_extracted["tweet_medias"] = self.extract_tweet_media_resolutions(
             tweet_media_formats
