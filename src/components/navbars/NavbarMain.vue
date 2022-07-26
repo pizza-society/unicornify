@@ -45,6 +45,11 @@
                         24 Hour Time Converter
                     </router-link>
                     <router-link class="nav-link"
+                        to="/twitter-downloader"
+                        active-class="active text-primary">
+                        Twitter Downloader
+                    </router-link>
+                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing
