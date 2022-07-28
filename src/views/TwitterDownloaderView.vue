@@ -96,15 +96,15 @@ export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
         // Data
-        const generatedResult = ref<object | null | unknown>(null);
+        const tweetMetaData = ref<object | null | unknown>(null);
+        const tweetMedias = ref<object | null | unknown>(null);
 
         // Services
         const serviceSvc = useServiceStore();
 
         // Form
         const downloadForm = ref({
-            url: null,
-            quality: null
+            url: null
         });
 
         // Twitter Status regex: https://stackoverflow.com/a/4138539/16711156
@@ -134,9 +134,24 @@ export default defineComponent({
         // Get resolutions
         const getTweetMedia = () => {
             isLoading.value = true;
-            console.log("downloadForm.value.url", downloadForm.value.url);
+
+            return serviceSvc
+                .downloadTwitterVideo(downloadForm.value)
+                .then(data => {
+                    // Tweet media file data
+                    tweetMedias.value = data.result.tweet_medias;
+                    // Tweet meta file data
+                    tweetMetaData.value = data.result.tweet_meta_data;
+
+                    isLoading.value = false;
+                    console.log("tweetMedias", tweetMedias.value);
+                    console.log("tweetMetaData", tweetMetaData.value);
+                })
+                .catch(() => {
+                    isLoading.value = false;
+                });
         };
-        return { generatedResult, downloadForm, v$, isLoading, getTweetMedia };
+        return { downloadForm, v$, isLoading, getTweetMedia };
     },
     components: {}
 });
