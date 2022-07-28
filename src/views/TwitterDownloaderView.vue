@@ -82,6 +82,38 @@
                         </figcaption>
                     </figure>
                 </div>
+                <table class="table table-primary table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Quality</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Downloads</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1080x720</td>
+                            <td>2 GB</td>
+                            <td>
+                                <a
+                                    href="https://video.twimg.com/ext_tw_video/1445649570269065219/pu/vid/480x560/NQE6PwJk6eka0ex0.mp4?tag=12"
+                                    download
+                                    >Download</a
+                                >
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr> -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
