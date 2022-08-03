@@ -82,42 +82,102 @@
                         </figcaption>
                     </figure>
                 </div>
-                <table class="table table-primary table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Quality</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Downloads</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1080x720</td>
-                            <td>2 GB</td>
-                            <td>
-                                <a
-                                    href="https://video.twimg.com/ext_tw_video/1445649570269065219/pu/vid/480x560/NQE6PwJk6eka0ex0.mp4?tag=12"
-                                    download
-                                    >Download</a
-                                >
-                            </td>
-                        </tr>
-                        <!-- <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr> -->
-                    </tbody>
-                </table>
+                <div v-if="tweetMedias && tweetMetaData && !isLoading">
+                    <div class="card text-center text-bg-dark ">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                {{ tweetMetaData.uploader_display_name }}
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- <h5 class="card-title">{{tweetMetaData.uploader_display_name}}</h5> -->
+                            <p class="card-text">
+                                {{ tweetMetaData.description }}
+                            </p>
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                        </div>
+                        <div class="card-footer text-muted">
+                        <div class="row g-0 text-bg-dark " >
+                            <div class="col-md-4">
+                            <img   :src="tweetMetaData.thumbnail" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">Card title</h5> -->
+                                <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+                               <div class="card-text">
+                                <table class="table table-dark table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Quality</th>
+                                                <!-- <th scope="col">Format</th> -->
+                                                <th scope="col">Downloads</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                v-for="value in tweetMedias"
+                                                :key="value"
+                                            >
+                                                <td>{{ value.resolution }}</td>
+                                                <!-- <td>{{ value.format }}</td> -->
+                                                <td>
+                                                    <a :href="value.url" download
+                                                        >Download</a
+                                                    >
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                               </div>
+                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                            </div>
+                            </div>
+                        </div>
+                            <!-- <span class="ratio ratio-16x9 row text-center">
+                                <img
+                                    :src="tweetMetaData.thumbnail"
+                                    class="card-img rounded"
+                                    alt="..."
+                                />
+                            </span>
+                            <div>
+                                <table class="table table-dark table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Quality</th>
+                                            <th scope="col">Format</th>
+                                            <th scope="col">Downloads</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="value in tweetMedias"
+                                            :key="value"
+                                        >
+                                            <td>{{ value.resolution }}</td>
+                                            <td>{{ value.format }}</td>
+                                            <td>
+                                                <a :href="value.url" download
+                                                    >Download</a
+                                                >
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
+
+
+
+
 
 <script lang="ts">
 import { useServiceStore } from "@/store";
@@ -128,9 +188,10 @@ export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
         // Data
-        const tweetMetaData = ref<object | null | unknown>(null);
-        const tweetMedias = ref<object | null | unknown>(null);
-
+        // const tweetMetaData = ref<object | null | unknown>(null);
+        // const tweetMedias = ref<object | null | unknown>(null);
+        const tweetMetaData = ref<any>(null);
+        const tweetMedias = ref<any>(null);
         // Services
         const serviceSvc = useServiceStore();
 
@@ -139,10 +200,18 @@ export default defineComponent({
             url: null
         });
 
-        // Twitter Status regex: https://stackoverflow.com/a/4138539/16711156
-        const twitterStatusRegex = helpers.regex(
-            /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
+        // Twitter Status Regex
+        // I.e:  https://twitter.com/TheOceanCleanup/status/1551568161018871810
+        const twRegexNormalStatus = helpers.regex(
+            /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/ // I.e:
         );
+        // // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
+        // const twRegexMobileBrowerStatus =
+        //     /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/;
+        // // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
+        // const twRegexMobileShareStatus =
+        //     /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?((\?)(.+))?$/;
+        
         //  declare our validation rules with validations validation rules.
         const validation = {
             url: {
@@ -152,7 +221,7 @@ export default defineComponent({
                 ),
                 url: helpers.withMessage(
                     "Please enter a valid twitter status link",
-                    twitterStatusRegex
+                    twRegexNormalStatus
                 )
             }
         };
@@ -183,7 +252,7 @@ export default defineComponent({
                     isLoading.value = false;
                 });
         };
-        return { downloadForm, v$, isLoading, getTweetMedia };
+        return { downloadForm, v$, isLoading, getTweetMedia, tweetMedias, tweetMetaData };
     },
     components: {}
 });
