@@ -23,7 +23,67 @@
                     </figcaption>
                 </figure>
                 <div class="mb-3">
-                    <form v-on:submit.prevent class="needs-validation">
+                    <div v-if="tweetMedias && tweetMetaData && !isLoading">
+                        <div class="card text-center text-bg-dark mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    {{ tweetMetaData.uploader_display_name }}
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">{{tweetMetaData.uploader_display_name}}</h5> -->
+                                <p class="card-text">
+                                    {{ tweetMetaData.description }}
+                                </p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="row g-0 text-bg-dark ">
+                                    <div class="col-md-4 img-container">
+                                        <img
+                                            :src="tweetMetaData.thumbnail"
+                                            class="img-fluid rounded-start"
+                                        />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <!-- <h5 class="card-title">Card title</h5> -->
+                                            <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+                                            <div class="card-text">
+                                                <table
+                                                    class="table table-dark table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                Quality
+                                                            </th>
+                                                            <th scope="col">
+                                                                Downloads
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            v-for="value in tweetMedias"
+                                                            :key="value">
+                                                            <td>
+                                                                {{value.resolution}}
+                                                            </td>
+                                                            <td>
+                                                                <a  @click="downloadVideo(value.url)">
+                                                                    Download
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form @submit.prevent class="needs-validation">
                         <div class="row rounded-top ">
                             <div class="input-group">
                                 <div class="input-group mb-3">
@@ -58,10 +118,9 @@
                         class="btn btn-primary"
                         type="button"
                         id="button-addon2"
-                        v-on:click="getTweetMedia()"
+                        @click="getTweetMedia()"
                         :disabled="isLoading || v$.$invalid"
                     >
-                        >
                         <span v-if="!isLoading">
                             Download
                         </span>
@@ -74,100 +133,12 @@
                             Loading...
                         </span>
                     </button>
-
                     <figure class="text-center mt-4">
                         <figcaption class="blockquote-footer">
                             Link example:
                             https://twitter.com/unicornify/status/882987478541533189
                         </figcaption>
                     </figure>
-                </div>
-                <div v-if="tweetMedias && tweetMetaData && !isLoading">
-                    <div class="card text-center text-bg-dark ">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                {{ tweetMetaData.uploader_display_name }}
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <!-- <h5 class="card-title">{{tweetMetaData.uploader_display_name}}</h5> -->
-                            <p class="card-text">
-                                {{ tweetMetaData.description }}
-                            </p>
-                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                        </div>
-                        <div class="card-footer text-muted">
-                        <div class="row g-0 text-bg-dark " >
-                            <div class="col-md-4">
-                            <img   :src="tweetMetaData.thumbnail" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                            <div class="card-body">
-                                <!-- <h5 class="card-title">Card title</h5> -->
-                                <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-                               <div class="card-text">
-                                <table class="table table-dark table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Quality</th>
-                                                <!-- <th scope="col">Format</th> -->
-                                                <th scope="col">Downloads</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr
-                                                v-for="value in tweetMedias"
-                                                :key="value"
-                                            >
-                                                <td>{{ value.resolution }}</td>
-                                                <!-- <td>{{ value.format }}</td> -->
-                                                <td>
-                                                    <a :href="value.url" download
-                                                        >Download</a
-                                                    >
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                               </div>
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                            </div>
-                            </div>
-                        </div>
-                            <!-- <span class="ratio ratio-16x9 row text-center">
-                                <img
-                                    :src="tweetMetaData.thumbnail"
-                                    class="card-img rounded"
-                                    alt="..."
-                                />
-                            </span>
-                            <div>
-                                <table class="table table-dark table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Quality</th>
-                                            <th scope="col">Format</th>
-                                            <th scope="col">Downloads</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            v-for="value in tweetMedias"
-                                            :key="value"
-                                        >
-                                            <td>{{ value.resolution }}</td>
-                                            <td>{{ value.format }}</td>
-                                            <td>
-                                                <a :href="value.url" download
-                                                    >Download</a
-                                                >
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> -->
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -183,6 +154,7 @@
 import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
+import axios from "axios";
 import { helpers, required } from "@vuelidate/validators";
 export default defineComponent({
     name: "TwitterDownloaderView",
@@ -235,7 +207,8 @@ export default defineComponent({
         // Get resolutions
         const getTweetMedia = () => {
             isLoading.value = true;
-
+            tweetMedias.value = {};
+            tweetMetaData.value = {};
             return serviceSvc
                 .downloadTwitterVideo(downloadForm.value)
                 .then(data => {
@@ -252,10 +225,39 @@ export default defineComponent({
                     isLoading.value = false;
                 });
         };
-        return { downloadForm, v$, isLoading, getTweetMedia, tweetMedias, tweetMetaData };
+
+        // Download tweet video
+        const downloadVideo = (url: string) =>
+        {
+            /*
+            *  Vue/HTML/JS how to download a file to browser using the download tag
+            *  https://stackoverflow.com/a/53775165/16711156
+            */
+                axios.get(url, { responseType: 'blob' })
+                    .then(response => {
+                        const blob = new Blob([response.data], { type: 'video/mp4' })
+                        const link = document.createElement('a')
+                        const timeStamp = new Date().getTime().toString();
+                        link.href = URL.createObjectURL(blob)
+                        link.download = `tweet-video-${timeStamp}`
+                        link.click()
+                        URL.revokeObjectURL(link.href)
+                    }).catch(console.error)
+        }
+        return { downloadForm, v$, isLoading, getTweetMedia, tweetMedias, tweetMetaData, downloadVideo };
     },
     components: {}
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.img-container  {
+    height: 200px;
+    width: 200px;
+}
+
+
+.img-container img {
+    max-height: 100%;
+}
+</style>
