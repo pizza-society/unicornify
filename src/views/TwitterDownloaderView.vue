@@ -1,16 +1,14 @@
 <template>
     <div class="container">
         <div
-            class="d-flex flex-column justify-content-center align-items-center"
-        >
+            class="d-flex flex-column justify-content-center align-items-center">
             <lottie-player
                 src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
                 background="transparent"
                 speed="0.5"
                 style="width: 300px; height: 300px;"
                 loop
-                autoplay
-            />
+                autoplay/>
             <div class="col-lg-6 col-md-4 text-center">
                 <figure class="text-center">
                     <blockquote class="blockquote">
@@ -41,8 +39,7 @@
                                     <div class="col-md-4 img-container">
                                         <img
                                             :src="tweetMetaData.thumbnail"
-                                            class="img-fluid rounded-start"
-                                        />
+                                            class="img-fluid rounded-start"/>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
@@ -101,13 +98,11 @@
                                                 v$.url.$error && v$.url.$dirty,
                                             'is-valid':
                                                 !v$.url.$error && v$.url.$dirty
-                                        }"
-                                    />
+                                        }"/>
                                     <div
                                         class="invalid-feedback"
                                         v-for="error of v$.url.$errors"
-                                        :key="error.$uid"
-                                    >
+                                        :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
                                 </div>
@@ -119,8 +114,7 @@
                         type="button"
                         id="button-addon2"
                         @click="getTweetMedia()"
-                        :disabled="isLoading || v$.$invalid"
-                    >
+                        :disabled="isLoading || v$.$invalid">
                         <span v-if="!isLoading">
                             Download
                         </span>
@@ -128,8 +122,7 @@
                             <span
                                 class="spinner-grow spinner-grow-sm"
                                 role="status"
-                                aria-hidden="true"
-                            />
+                                aria-hidden="true"/>
                             Loading...
                         </span>
                     </button>
@@ -145,17 +138,15 @@
     </div>
 </template>
 
-
-
-
-
-
 <script lang="ts">
 import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
+
 import useVuelidate from "@vuelidate/core";
 import axios from "axios";
+
 import { helpers, required } from "@vuelidate/validators";
+
 export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
@@ -164,6 +155,7 @@ export default defineComponent({
         // const tweetMedias = ref<object | null | unknown>(null);
         const tweetMetaData = ref<any>(null);
         const tweetMedias = ref<any>(null);
+
         // Services
         const serviceSvc = useServiceStore();
 
@@ -244,7 +236,16 @@ export default defineComponent({
                         URL.revokeObjectURL(link.href)
                     }).catch(console.error)
         }
-        return { downloadForm, v$, isLoading, getTweetMedia, tweetMedias, tweetMetaData, downloadVideo };
+
+        return { 
+            downloadForm, 
+            v$, 
+            isLoading,  
+            tweetMedias, 
+            tweetMetaData, 
+            getTweetMedia,
+            downloadVideo 
+        };
     },
     components: {}
 });
