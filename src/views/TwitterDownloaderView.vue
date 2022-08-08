@@ -221,20 +221,21 @@ export default defineComponent({
         // Download tweet video
         const downloadVideo = (url: string) =>
         {
+
             /*
             *  Vue/HTML/JS how to download a file to browser using the download tag
             *  https://stackoverflow.com/a/53775165/16711156
             */
-                axios.get(url, { responseType: 'blob' })
-                    .then(response => {
-                        const blob = new Blob([response.data], { type: 'video/mp4' })
-                        const link = document.createElement('a')
-                        const timeStamp = new Date().getTime().toString();
-                        link.href = URL.createObjectURL(blob)
-                        link.download = `tweet-video-${timeStamp}`
-                        link.click()
-                        URL.revokeObjectURL(link.href)
-                    }).catch(console.error)
+            axios.get(url, { responseType: 'blob' })
+                .then(response => {
+                    const blob = new Blob([response.data], { type: 'video/mp4' })
+                    const link = document.createElement('a')
+                    const timeStamp = new Date().getTime().toString();
+                    link.href = URL.createObjectURL(blob)
+                    link.download = `tweet-video-${timeStamp}`
+                    link.click()
+                    URL.revokeObjectURL(link.href)
+                }).catch(console.error)
         }
 
         return { 
