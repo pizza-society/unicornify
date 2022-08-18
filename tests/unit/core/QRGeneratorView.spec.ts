@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import QRGeneratorView from '@/views/QRGeneratorView.vue'
-import { setActivePinia, createPinia } from 'pinia'
 import { createTestingPinia } from '@pinia/testing'
+
+import QRGeneratorView from '@/views/QRGeneratorView.vue'
 
 describe('QRGeneratorView.vue', () => {
   beforeEach(() => {
