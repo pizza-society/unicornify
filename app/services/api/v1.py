@@ -17,7 +17,13 @@ from qrcode.image.styles.moduledrawers import (
 )
 from app.services.helpers import TwitterVideoDownloader
 
-from app.services.models import DrawerChoices, QRCodeModel, QRCodeResponse, TwitterVideoDownloaderModel, TwitterVideoDownloaderResponse
+from app.services.models import (
+    DrawerChoices,
+    QRCodeModel,
+    QRCodeResponse,
+    TwitterVideoDownloaderModel,
+    TwitterVideoDownloaderResponse,
+)
 
 router = APIRouter()
 
@@ -104,7 +110,7 @@ def download_tweet_media(data: TwitterVideoDownloaderModel):
     try:
         tw_data = tw_downloader.extract_tweet_status_info(tweet_url=data.url)
     except:
-        tw_data = {'error' : "There's no video in this tweet"}
+        tw_data = {"error": "There's no video in this tweet"}
 
     # Return response
     return JSONResponse(
