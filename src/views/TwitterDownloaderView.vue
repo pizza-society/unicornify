@@ -154,10 +154,12 @@ import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
 export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
+
         // Data
         const tweetMetaData = ref<any>(null);
         const tweetMedias = ref<any>(null);
         let error = ref<boolean>(false)
+
         // Services
         const serviceSvc = useServiceStore();
 
@@ -172,7 +174,7 @@ export default defineComponent({
             /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
         );
         // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
-        const twRegexMobileBrowerStatus = helpers.regex(
+        const twRegexMobileBrowserStatus = helpers.regex(
             /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
         );
         // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
@@ -190,7 +192,7 @@ export default defineComponent({
                     "Please enter a valid twitter status link",
                     or(
                         twRegexNormalStatus,
-                        twRegexMobileBrowerStatus,
+                        twRegexMobileBrowserStatus,
                         twRegexMobileShareStatus
                     )
                 )
