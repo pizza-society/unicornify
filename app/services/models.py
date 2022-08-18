@@ -36,3 +36,9 @@ class QRCodeModel(CamelModel):
     drawer: DrawerChoices = DrawerChoices.SQUAREM
     front_color: Color = Color('rgb(0, 0, 0)')
     back_color: Color = Color('rgb(255, 255, 255)')
+
+class TwitterVideoDownloaderModel(BaseModel):
+    url: HttpUrl
+
+class TwitterVideoDownloaderResponse(BaseModel):
+    result: object
