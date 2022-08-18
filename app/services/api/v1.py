@@ -1,12 +1,9 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
-from fastapi.exceptions import HTTPException
 
 import io
 import base64
-import json
 import qrcode
-import requests
 
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import SolidFillColorMask
@@ -19,17 +16,7 @@ from qrcode.image.styles.moduledrawers import (
     HorizontalBarsDrawer
 )
 
-from app.services.models import (
-    DrawerChoices,
-    QRCodeModel,
-    QRCodeResponse,
-    TwitterVideoDownloaderModel,
-    TwitterVideoDownloaderResponse
-) 
-
-from app.services.helpers import (
-    TwitterVideoDownloader
-)
+from app.services.models import DrawerChoices, QRCodeModel, QRCodeResponse
 
 router = APIRouter()
 
@@ -97,31 +84,3 @@ def generate_qr(data: QRCodeModel):
         }
     )
 
-@router.post(
-    '/download-tweet-video/',
-    response_model=TwitterVideoDownloaderResponse,
-    summary='Download Twitter status video'
-)
-def download_tweet_media(data: TwitterVideoDownloaderModel):
-    """
-        Generate a Tweet video downloader object by using 3rd party script with all the information:
-
-        - **url**: a valid http / https URL for twitter status 
-                   i.e: https://twitter.com/user/status/media_id
-
-        Documentation about the external CLI can be found here https://github.com/ytdl-org/youtube-dl
-    """
-    tw_downloader = TwitterVideoDownloader()
-    # Call script
-    try:
-        tw_data = tw_downloader.extract_tweet_status_info(tweet_url=data.url)
-    except:
-        tw_data = {'error' : "There's no video in this tweet"}
-
-    # Return response
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={
-            'result': tw_data
-        }
-    )
