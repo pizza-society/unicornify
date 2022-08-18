@@ -15,8 +15,9 @@ from qrcode.image.styles.moduledrawers import (
     VerticalBarsDrawer,
     HorizontalBarsDrawer
 )
+from app.services.helpers import TwitterVideoDownloader
 
-from app.services.models import DrawerChoices, QRCodeModel, QRCodeResponse
+from app.services.models import DrawerChoices, QRCodeModel, QRCodeResponse, TwitterVideoDownloaderModel, TwitterVideoDownloaderResponse
 
 router = APIRouter()
 
