@@ -20,8 +20,12 @@
                         Download Twitter Videos in seconds...
                     </figcaption>
                 </figure>
+				<ErrorAlert v-if="error">
+					The twitter link you supplied does not include any video 
+                    or that there is a problem downloading the video.
+				</ErrorAlert>    
                 <div class="mb-3">
-                    <div v-if="tweetMedias && tweetMetaData && !isLoading">
+                    <div v-if="tweetMedias && tweetMetaData && !isLoading && !error">
                         <div class="card text-center text-bg-dark mb-3">
                             <div class="card-header">
                                 <h5 class="card-title">
@@ -143,19 +147,17 @@ import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
 
 import useVuelidate from "@vuelidate/core";
-import axios from "axios";
 
-import { helpers, required } from "@vuelidate/validators";
+import { helpers, or, required } from "@vuelidate/validators";
+import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
 
 export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
         // Data
-        // const tweetMetaData = ref<object | null | unknown>(null);
-        // const tweetMedias = ref<object | null | unknown>(null);
         const tweetMetaData = ref<any>(null);
         const tweetMedias = ref<any>(null);
-
+        let error = ref<boolean>(false)
         // Services
         const serviceSvc = useServiceStore();
 
@@ -167,16 +169,17 @@ export default defineComponent({
         // Twitter Status Regex
         // I.e:  https://twitter.com/TheOceanCleanup/status/1551568161018871810
         const twRegexNormalStatus = helpers.regex(
-            /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/ // I.e:
+            /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
         );
-        // // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
-        // const twRegexMobileBrowerStatus =
-        //     /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/;
-        // // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
-        // const twRegexMobileShareStatus =
-        //     /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?((\?)(.+))?$/;
-        
-        //  declare our validation rules with validations validation rules.
+        // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
+        const twRegexMobileBrowerStatus = helpers.regex(
+            /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
+        );
+        // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
+        const twRegexMobileShareStatus = helpers.regex(
+            /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?((\?)(.+))?$/
+        );
+
         const validation = {
             url: {
                 required: helpers.withMessage(
@@ -185,13 +188,16 @@ export default defineComponent({
                 ),
                 url: helpers.withMessage(
                     "Please enter a valid twitter status link",
-                    twRegexNormalStatus
+                    or(
+                        twRegexNormalStatus,
+                        twRegexMobileBrowerStatus,
+                        twRegexMobileShareStatus
+                    )
                 )
             }
         };
 
-        // activate Vuelidate inside setup by calling useVuelidate.
-        const v$ = useVuelidate(validation, downloadForm); // useVuelidate(rules, state), v$ Vuelidate object.
+        const v$ = useVuelidate(validation, downloadForm);
 
         // Checkers
         const isLoading = ref<boolean>(false);
@@ -199,56 +205,56 @@ export default defineComponent({
         // Get resolutions
         const getTweetMedia = () => {
             isLoading.value = true;
-            tweetMedias.value = {};
-            tweetMetaData.value = {};
+            tweetMedias.value = null;
+            tweetMetaData.value = null;
             return serviceSvc
                 .downloadTwitterVideo(downloadForm.value)
                 .then(data => {
+                    if(data.result.error) throw new Error("There's no video in this tweet");
                     // Tweet media file data
                     tweetMedias.value = data.result.tweet_medias;
                     // Tweet meta file data
                     tweetMetaData.value = data.result.tweet_meta_data;
-
                     isLoading.value = false;
-                    console.log("tweetMedias", tweetMedias.value);
-                    console.log("tweetMetaData", tweetMetaData.value);
                 })
                 .catch(() => {
+                    tweetMedias.value = null;
+                    tweetMetaData.value = null;
                     isLoading.value = false;
+                    displayErrorMessage(5000)   
                 });
         };
 
-        // Download tweet video
-        const downloadVideo = (url: string) =>
-        {
-
-            /*
-            *  Vue/HTML/JS how to download a file to browser using the download tag
-            *  https://stackoverflow.com/a/53775165/16711156
-            */
-            axios.get(url, { responseType: 'blob' })
-                .then(response => {
-                    const blob = new Blob([response.data], { type: 'video/mp4' })
-                    const link = document.createElement('a')
-                    const timeStamp = new Date().getTime().toString();
-                    link.href = URL.createObjectURL(blob)
-                    link.download = `tweet-video-${timeStamp}`
-                    link.click()
-                    URL.revokeObjectURL(link.href)
-                }).catch(console.error)
+        // Error Handler
+		const displayErrorMessage = (duration: number) => {
+			error.value = true;
+			sleep(duration).then(() => {
+				error.value = false;
+			});
         }
+        
+        const sleep = (time: number) => {
+			return new Promise(resolve => setTimeout(resolve, time));
+		}
 
-        return { 
-            downloadForm, 
-            v$, 
-            isLoading,  
-            tweetMedias, 
-            tweetMetaData, 
+        // Download tweet video
+        const downloadVideo = (url: string) => {
+            serviceSvc.downloadBlobFile(url, "video/mp4", "tweet-video");
+        };
+
+        return {
+            downloadForm,
+            v$,
+            isLoading,
+            tweetMedias,
+            tweetMetaData,
+            error,
             getTweetMedia,
-            downloadVideo 
+            downloadVideo,
+            displayErrorMessage
         };
     },
-    components: {}
+    components: { ErrorAlert }
 });
 </script>
 

@@ -10,6 +10,7 @@ export default interface TwitterDownloaderResponse{
             title: string,
             description: string
         },
-        tweet_medias: object
+        tweet_medias: object,
+        error: string
     }
 }
