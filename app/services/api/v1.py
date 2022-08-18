@@ -52,8 +52,8 @@ def generate_qr(data: QRCodeModel):
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=50,
-        border=2,
+        box_size=10,
+        border=4,
     )
 
     # Get drawer module
@@ -87,13 +87,13 @@ def generate_qr(data: QRCodeModel):
     img.save(buffer, format=data.image_type)
 
     # Encode base 64 and decode utf-8
-    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
     # Return response
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
         content={
-            'result': img_base64
+            "result": img_base64
         }
     )
 

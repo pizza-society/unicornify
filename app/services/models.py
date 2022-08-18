@@ -1,7 +1,7 @@
 from enum import Enum
 
 from humps import camelize
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 from pydantic.color import Color
 
 def to_camel_case(string):
