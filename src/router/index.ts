@@ -48,6 +48,14 @@ const routes: Array<RouteRecordRaw> = [
       default:() => import('@/views/QRGeneratorView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
+  },
+  {
+    path: '/twitter-downloader',
+    name: 'twitter-downloader',
+    components: {
+      default:() => import('@/views/TwitterDownloaderView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
   }
 ]
 
