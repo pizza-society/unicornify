@@ -4,6 +4,7 @@ import router from './router'
 import { APIService } from './common/api.service'
 
 import { createPinia } from 'pinia'
+import 'v-calendar/dist/style.css';
 
 // Main style
 require('@/assets/styles/main.scss');
