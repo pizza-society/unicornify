@@ -45,9 +45,9 @@
                         24 Hour Time Converter
                     </router-link>
                     <router-link class="nav-link"
-                        to="/google-calendar-link-generator"
+                        to="/calendar-link-generator"
                         active-class="active text-primary">
-                        Google Calendar Link Generator
+                        Calendar Link Generator
                     </router-link>
                     <router-link class="nav-link"
                         to="/testing"

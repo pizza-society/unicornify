@@ -50,10 +50,10 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/google-calendar-link-generator',
-    name: 'google-calendar-link-generator',
+    path: '/calendar-link-generator',
+    name: 'calendar-link-generator',
     components: {
-      default:() => import('@/views/GoogleCalendarLinkGeneratorView.vue'),
+      default:() => import('@/views/CalendarLinkGeneratorView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   }
