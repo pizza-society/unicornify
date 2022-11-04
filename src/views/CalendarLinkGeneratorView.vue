@@ -19,16 +19,16 @@
                         <div class="row row-cols-2 g-4 gy-4">
                             <div class="col-7">
                                 <label class="form-label mb-1">Title</label>
-                                <input class="form-control" placeholder="Add Title"/>
+                                <input class="form-control" placeholder="Add Title" v-model="calendarForm.title"/>
                             </div>
                             <div class="col-4">
                                 <label class="form-label mb-1">Location</label>
-                                <input class="form-control" placeholder="Add Location"/>
+                                <input class="form-control" placeholder="Add Location" v-model="calendarForm.location"/>
                             </div>
                             <div class="col-7">
                                 <label class="form-label mb-1">Timezone</label>
                                 <!-- https://gist.github.com/nodesocket/3919205 -->
-                                <select name="timezone_offset" id="timezone-offset" class="form-select">
+                                <select name="timezone_offset" id="timezone-offset" class="form-select" v-model="calendarForm.timeZone">
                                     <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
                                     <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
                                     <option value="-10:00">(GMT -10:00) Hawaii</option>
@@ -74,7 +74,7 @@
                             <div class="col-4">
                                 <br/>
                                 <div class="mt-3 form-check">
-                                    <input class="form-check-input" type="checkbox" placeholder="All day event" value="">
+                                    <input class="form-check-input" type="checkbox" placeholder="All day event" v-model="calendarForm.isAllDayEvent">
                                     <label class="form-check-label" for="form-check-inpu">All day event</label>
                                 </div>
                             </div>
@@ -179,13 +179,23 @@
     </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { DatePicker } from 'v-calendar';
   export default defineComponent({
     name: 'CalendarLinkGenerator',
     setup() {
 
-      return {}
+      // Forms
+      const calendarForm = ref({
+        title: null,
+        location: null,
+        timeZone: null,
+        isAllDayEvent: false,
+        fromDateHour: null,
+        toDateHour: null,
+        description: null,
+      })
+      return {calendarForm}
     },
     components: {
       DatePicker
