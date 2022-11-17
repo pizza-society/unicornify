@@ -50,6 +50,14 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/twitter-downloader',
+    name: 'twitter-downloader',
+    components: {
+      default:() => import('@/views/TwitterDownloaderView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
+  },
+  {
     path: '/calendar-link-generator',
     name: 'calendar-link-generator',
     components: {
