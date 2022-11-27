@@ -24,111 +24,9 @@
                                 <select class="form-select" v-model='calendarForm.timeZone'>
                                     <option v-if="calendarForm.timeZone != ''" disabled value>Select a Timezone</option>
                                     <option v-else :value='calendarForm.timeZone'>{{Intl.DateTimeFormat().resolvedOptions().timeZone}}</option>
-                                    <option value="Pacific/Midway">Pacific/Midway (GMT-11:00)</option>
-                                    <option value="Pacific/Niue">Pacific/Niue (GMT-11:00)</option>
-                                    <option value="Pacific/Pago_Pago">Pacific/Pago Pago (GMT-11:00)</option>
-                                    <option value="America/Adak">America/Adak (GMT-10:00)</option>
-                                    <option value="Pacific/Honolulu">Pacific/Honolulu (GMT-10:00)</option>
-                                    <option value="Pacific/Rarotonga">Pacific/Rarotonga (GMT-10:00)</option>
-                                    <option value="Pacific/Tahiti">Pacific/Tahiti (GMT-10:00)</option>
-                                    <option value="Pacific/Marquesas">Pacific/Marquesas (GMT-09:30)</option>
-                                    <option value="America/Anchorage">America/Anchorage (GMT-09:00)</option>
-                                    <option value="America/Juneau">America/Juneau (GMT-09:00)</option>
-                                    <option value="America/Metlakatla">America/Metlakatla (GMT-09:00)</option>
-                                    <option value="America/Nome">America/Nome (GMT-09:00)</option>
-                                    <option value="America/Sitka">America/Sitka (GMT-09:00)</option>
-                                    <option value="America/Yakutat">America/Yakutat (GMT-09:00)</option>
-                                    <option value="Pacific/Gambier">Pacific/Gambier (GMT-09:00)</option>
-                                    <option value="America/Los_Angeles">America/Los Angeles (GMT-08:00)</option>
-                                    <option value="America/Tijuana">America/Tijuana (GMT-08:00)</option>
-                                    <option value="America/Vancouver">America/Vancouver (GMT-08:00)</option>
-                                    <option value="Pacific/Pitcairn">Pacific/Pitcairn (GMT-08:00)</option>
-                                    <option value="America/Boise">America/Boise (GMT-07:00)</option>
-                                    <option value="America/Cambridge_Bay">America/Cambridge Bay (GMT-07:00)</option>
-                                    <option value="America/Chihuahua">America/Chihuahua (GMT-07:00)</option>
-                                    <option value="America/Creston">America/Creston (GMT-07:00)</option>
-                                    <option value="America/Dawson">America/Dawson (GMT-07:00)</option>
-                                    <option value="America/Dawson_Creek">America/Dawson Creek (GMT-07:00)</option>
-                                    <option value="America/Denver">America/Denver (GMT-07:00)</option>
-                                    <option value="America/Edmonton">America/Edmonton (GMT-07:00)</option>
-                                    <option value="America/Fort_Nelson">America/Fort Nelson (GMT-07:00)</option>
-                                    <option value="America/Hermosillo">America/Hermosillo (GMT-07:00)</option>
-                                    <option value="America/Inuvik">America/Inuvik (GMT-07:00)</option>
-                                    <option value="America/Mazatlan">America/Mazatlan (GMT-07:00)</option>
-                                    <option value="America/Ojinaga">America/Ojinaga (GMT-07:00)</option>
-                                    <option value="America/Porto_Velho">America/Porto Velho (GMT-04:00)</option>
-                                    <option value="America/Port_of_Spain">America/Port of Spain (GMT-04:00)</option>
-                                    <option value="America/Puerto_Rico">America/Puerto Rico (GMT-04:00)</option>
-                                    <option value="America/Santiago">America/Santiago (GMT-04:00)</option>
-                                    <option value="America/Santo_Domingo">America/Santo Domingo (GMT-04:00)</option>
-                                    <option value="America/St_Barthelemy">America/St Barthelemy (GMT-04:00)</option>
-                                    <option value="America/St_Kitts">America/St Kitts (GMT-04:00)</option>
-                                    <option value="America/St_Lucia">America/St Lucia (GMT-04:00)</option>
-                                    <option value="America/St_Thomas">America/St Thomas (GMT-04:00)</option>
-                                    <option value="America/St_Vincent">America/St Vincent (GMT-04:00)</option>
-                                    <option value="America/Thule">America/Thule (GMT-04:00)</option>
-                                    <option value="America/Tortola">America/Tortola (GMT-04:00)</option>
-                                    <option value="Atlantic/Bermuda">Atlantic/Bermuda (GMT-04:00)</option>
-                                    <option value="America/St_Johns">America/St Johns (GMT-03:30)</option>
-                                    <option value="America/Araguaina">America/Araguaina (GMT-03:00)</option>
-                                    <option value="America/Argentina/Buenos_Aires">America/Argentina/Buenos Aires (GMT-03:00)</option>
-                                    <option value="America/Argentina/Catamarca">America/Argentina/Catamarca (GMT-03:00)</option>
-                                    <option value="America/Argentina/Cordoba">America/Argentina/Cordoba (GMT-03:00)</option>
-                                    <option value="Africa/Ndjamena">Africa/Ndjamena (GMT+01:00)</option>
-                                    <option value="Africa/Niamey">Africa/Niamey (GMT+01:00)</option>
-                                    <option value="Africa/Porto-Novo">Africa/Porto-Novo (GMT+01:00)</option>
-                                    <option value="Africa/Tunis">Africa/Tunis (GMT+01:00)</option>
-                                    <option value="Africa/Windhoek">Africa/Windhoek (GMT+01:00)</option>
-                                    <option value="Arctic/Longyearbyen">Arctic/Longyearbyen (GMT+01:00)</option>
-                                    <option value="Europe/Amsterdam">Europe/Amsterdam (GMT+01:00)</option>
-                                    <option value="Europe/Andorra">Europe/Andorra (GMT+01:00)</option>
-                                    <option value="Europe/Belgrade">Europe/Belgrade (GMT+01:00)</option>
-                                    <option value="Europe/Berlin">Europe/Berlin (GMT+01:00)</option>
-                                    <option value="Europe/Bratislava">Europe/Bratislava (GMT+01:00)</option>
-                                    <option value="Europe/Brussels">Europe/Brussels (GMT+01:00)</option>
-                                    <option value="Europe/Budapest">Europe/Budapest (GMT+01:00)</option>
-                                    <option value="Europe/Copenhagen">Europe/Copenhagen (GMT+01:00)</option>
-                                    <option value="Europe/Gibraltar">Europe/Gibraltar (GMT+01:00)</option>
-                                    <option value="Europe/Ljubljana">Europe/Ljubljana (GMT+01:00)</option>
-                                    <option value="Europe/Luxembourg">Europe/Luxembourg (GMT+01:00)</option>
-                                    <option value="Europe/Madrid">Europe/Madrid (GMT+01:00)</option>
-                                    <option value="Europe/Malta">Europe/Malta (GMT+01:00)</option>
-                                    <option value="Europe/Monaco">Europe/Monaco (GMT+01:00)</option>
-                                    <option value="Europe/Oslo">Europe/Oslo (GMT+01:00)</option>
-                                    <option value="Europe/Paris">Europe/Paris (GMT+01:00)</option>
-                                    <option value="Europe/Podgorica">Europe/Podgorica (GMT+01:00)</option>
-                                    <option value="Europe/Prague">Europe/Prague (GMT+01:00)</option>
-                                    <option value="Europe/Rome">Europe/Rome (GMT+01:00)</option>
-                                    <option value="Europe/San_Marino">Europe/San Marino (GMT+01:00)</option>
-                                    <option value="Europe/Sarajevo">Europe/Sarajevo (GMT+01:00)</option>
-                                    <option value="Europe/Skopje">Europe/Skopje (GMT+01:00)</option>
-                                    <option value="Europe/Stockholm">Europe/Stockholm (GMT+01:00)</option>
-                                    <option value="Europe/Tirane">Europe/Tirane (GMT+01:00)</option>
-                                    <option value="Europe/Vaduz">Europe/Vaduz (GMT+01:00)</option>
-                                    <option value="Europe/Vatican">Europe/Vatican (GMT+01:00)</option>
-                                    <option value="Europe/Vienna">Europe/Vienna (GMT+01:00)</option>
-                                    <option value="Europe/Warsaw">Europe/Warsaw (GMT+01:00)</option>
-                                    <option value="Europe/Zagreb">Europe/Zagreb (GMT+01:00)</option>
-                                    <option value="Europe/Zurich">Europe/Zurich (GMT+01:00)</option>
-                                    <option value="Africa/Blantyre">Africa/Blantyre (GMT+02:00)</option>
-                                    <option value="Africa/Bujumbura">Africa/Bujumbura (GMT+02:00)</option>
-                                    <option value="Africa/Cairo">Africa/Cairo (GMT+02:00)</option>
-                                    <option value="Africa/Gaborone">Africa/Gaborone (GMT+02:00)</option>
-                                    <option value="Africa/Harare">Africa/Harare (GMT+02:00)</option>
-                                    <option value="Africa/Johannesburg">Africa/Johannesburg (GMT+02:00)</option>
-                                    <option value="Africa/Juba">Africa/Juba (GMT+02:00)</option>
-                                    <option value="Africa/Khartoum">Africa/Khartoum (GMT+02:00)</option>
-                                    <option value="Africa/Kigali">Africa/Kigali (GMT+02:00)</option>
-                                    <option value="Africa/Lubumbashi">Africa/Lubumbashi (GMT+02:00)</option>
-                                    <option value="Africa/Lusaka">Africa/Lusaka (GMT+02:00)</option>
-                                    <option value="Africa/Maputo">Africa/Maputo (GMT+02:00)</option>
-                                    <option value="Africa/Maseru">Africa/Maseru (GMT+02:00)</option>
-                                    <option value="Africa/Mbabane">Africa/Mbabane (GMT+02:00)</option>
-                                    <option value="Africa/Tripoli">Africa/Tripoli (GMT+02:00)</option>
-                                    <option value="Asia/Amman">Asia/Amman (GMT+02:00)</option>
-                                    <option value="Asia/Beirut">Asia/Beirut (GMT+02:00)</option>
-                                    <option value="Asia/Damascus">Asia/Damascus (GMT+02:00)</option>
-                                    <option value="Asia/Famagusta">Asia/Famagusta (GMT+02:00)</option>
+                                    <option v-for='(zone, time) in timeZones' :value='zone' :key='zone'>
+                                        {{time}}
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-4">
@@ -294,10 +192,120 @@ export default defineComponent({
             )}&et=${convertDateTimeToPureISO(calendarForm.value.endTime)}`;
         });
 
+        // Data
+        const timeZones = {
+            "Pacific/Midway": "Pacific/Midway (GMT-11:00)",
+            "Pacific/Niue": "Pacific/Niue (GMT-11:00)",
+            "Pacific/Pago_Pago": "Pacific/Pago Pago (GMT-11:00)",
+            "America/Adak": "America/Adak (GMT-10:00)",
+            "Pacific/Honolulu": "Pacific/Honolulu (GMT-10:00)",
+            "Pacific/Rarotonga": "Pacific/Rarotonga (GMT-10:00)",
+            "Pacific/Tahiti": "Pacific/Tahiti (GMT-10:00)",
+            "Pacific/Marquesas": "Pacific/Marquesas (GMT-09:30)",
+            "America/Anchorage": "America/Anchorage (GMT-09:00)",
+            "America/Juneau": "America/Juneau (GMT-09:00)",
+            "America/Metlakatla": "America/Metlakatla (GMT-09:00)",
+            "America/Nome": "America/Nome (GMT-09:00)",
+            "America/Sitka": "America/Sitka (GMT-09:00)",
+            "America/Yakutat": "America/Yakutat (GMT-09:00)",
+            "Pacific/Gambier": "Pacific/Gambier (GMT-09:00)",
+            "America/Los_Angeles": "America/Los Angeles (GMT-08:00)",
+            "America/Tijuana": "America/Tijuana (GMT-08:00)",
+            "America/Vancouver": "America/Vancouver (GMT-08:00)",
+            "Pacific/Pitcairn": "Pacific/Pitcairn (GMT-08:00)",
+            "America/Boise": "America/Boise (GMT-07:00)",
+            "America/Cambridge_Bay": "America/Cambridge Bay (GMT-07:00)",
+            "America/Chihuahua": "America/Chihuahua (GMT-07:00)",
+            "America/Creston": "America/Creston (GMT-07:00)",
+            "America/Dawson": "America/Dawson (GMT-07:00)",
+            "America/Dawson_Creek": "America/Dawson Creek (GMT-07:00)",
+            "America/Denver": "America/Denver (GMT-07:00)",
+            "America/Edmonton": "America/Edmonton (GMT-07:00)",
+            "America/Fort_Nelson": "America/Fort Nelson (GMT-07:00)",
+            "America/Hermosillo": "America/Hermosillo (GMT-07:00)",
+            "America/Inuvik": "America/Inuvik (GMT-07:00)",
+            "America/Mazatlan": "America/Mazatlan (GMT-07:00)",
+            "America/Ojinaga": "America/Ojinaga (GMT-07:00)",
+            "America/Porto_Velho": "America/Porto Velho (GMT-04:00)",
+            "America/Port_of_Spain": "America/Port of Spain (GMT-04:00)",
+            "America/Puerto_Rico": "America/Puerto Rico (GMT-04:00)",
+            "America/Santiago": "America/Santiago (GMT-04:00)",
+            "America/Santo_Domingo": "America/Santo Domingo (GMT-04:00)",
+            "America/St_Barthelemy": "America/St Barthelemy (GMT-04:00)",
+            "America/St_Kitts": "America/St Kitts (GMT-04:00)",
+            "America/St_Lucia": "America/St Lucia (GMT-04:00)",
+            "America/St_Thomas": "America/St Thomas (GMT-04:00)",
+            "America/St_Vincent": "America/St Vincent (GMT-04:00)",
+            "America/Thule": "America/Thule (GMT-04:00)",
+            "America/Tortola": "America/Tortola (GMT-04:00)",
+            "Atlantic/Bermuda": "Atlantic/Bermuda (GMT-04:00)",
+            "America/St_Johns": "America/St Johns (GMT-03:30)",
+            "America/Araguaina": "America/Araguaina (GMT-03:00)",
+            "America/Argentina/Buenos_Aires": "America/Argentina/Buenos Aires (GMT-03:00)",
+            "America/Argentina/Catamarca": "America/Argentina/Catamarca (GMT-03:00)",
+            "America/Argentina/Cordoba": "America/Argentina/Cordoba (GMT-03:00)",
+            "Africa/Ndjamena": "Africa/Ndjamena (GMT+01:00)",
+            "Africa/Niamey": "Africa/Niamey (GMT+01:00)",
+            "Africa/Porto-Novo": "Africa/Porto-Novo (GMT+01:00)",
+            "Africa/Tunis": "Africa/Tunis (GMT+01:00)",
+            "Africa/Windhoek": "Africa/Windhoek (GMT+01:00)",
+            "Arctic/Longyearbyen": "Arctic/Longyearbyen (GMT+01:00)",
+            "Europe/Amsterdam": "Europe/Amsterdam (GMT+01:00)",
+            "Europe/Andorra": "Europe/Andorra (GMT+01:00)",
+            "Europe/Belgrade": "Europe/Belgrade (GMT+01:00)",
+            "Europe/Berlin": "Europe/Berlin (GMT+01:00)",
+            "Europe/Bratislava": "Europe/Bratislava (GMT+01:00)",
+            "Europe/Brussels": "Europe/Brussels (GMT+01:00)",
+            "Europe/Budapest": "Europe/Budapest (GMT+01:00)",
+            "Europe/Copenhagen": "Europe/Copenhagen (GMT+01:00)",
+            "Europe/Gibraltar": "Europe/Gibraltar (GMT+01:00)",
+            "Europe/Ljubljana": "Europe/Ljubljana (GMT+01:00)",
+            "Europe/Luxembourg": "Europe/Luxembourg (GMT+01:00)",
+            "Europe/Madrid": "Europe/Madrid (GMT+01:00)",
+            "Europe/Malta": "Europe/Malta (GMT+01:00)",
+            "Europe/Monaco": "Europe/Monaco (GMT+01:00)",
+            "Europe/Oslo": "Europe/Oslo (GMT+01:00)",
+            "Europe/Paris": "Europe/Paris (GMT+01:00)",
+            "Europe/Podgorica": "Europe/Podgorica (GMT+01:00)",
+            "Europe/Prague": "Europe/Prague (GMT+01:00)",
+            "Europe/Rome": "Europe/Rome (GMT+01:00)",
+            "Europe/San_Marino": "Europe/San Marino (GMT+01:00)",
+            "Europe/Sarajevo": "Europe/Sarajevo (GMT+01:00)",
+            "Europe/Skopje": "Europe/Skopje (GMT+01:00)",
+            "Europe/Stockholm": "Europe/Stockholm (GMT+01:00)",
+            "Europe/Tirane": "Europe/Tirane (GMT+01:00)",
+            "Europe/Vaduz": "Europe/Vaduz (GMT+01:00)",
+            "Europe/Vatican": "Europe/Vatican (GMT+01:00)",
+            "Europe/Vienna": "Europe/Vienna (GMT+01:00)",
+            "Europe/Warsaw": "Europe/Warsaw (GMT+01:00)",
+            "Europe/Zagreb": "Europe/Zagreb (GMT+01:00)",
+            "Europe/Zurich": "Europe/Zurich (GMT+01:00)",
+            "Africa/Blantyre": "Africa/Blantyre (GMT+02:00)",
+            "Africa/Bujumbura": "Africa/Bujumbura (GMT+02:00)",
+            "Africa/Cairo": "Africa/Cairo (GMT+02:00)",
+            "Africa/Gaborone": "Africa/Gaborone (GMT+02:00)",
+            "Africa/Harare": "Africa/Harare (GMT+02:00)",
+            "Africa/Johannesburg": "Africa/Johannesburg (GMT+02:00)",
+            "Africa/Juba": "Africa/Juba (GMT+02:00)",
+            "Africa/Khartoum": "Africa/Khartoum (GMT+02:00)",
+            "Africa/Kigali": "Africa/Kigali (GMT+02:00)",
+            "Africa/Lubumbashi": "Africa/Lubumbashi (GMT+02:00)",
+            "Africa/Lusaka": "Africa/Lusaka (GMT+02:00)",
+            "Africa/Maputo": "Africa/Maputo (GMT+02:00)",
+            "Africa/Maseru": "Africa/Maseru (GMT+02:00)",
+            "Africa/Mbabane": "Africa/Mbabane (GMT+02:00)",
+            "Africa/Tripoli": "Africa/Tripoli (GMT+02:00)",
+            "Asia/Amman": "Asia/Amman (GMT+02:00)",
+            "Asia/Beirut": "Asia/Beirut (GMT+02:00)",
+            "Asia/Damascus": "Asia/Damascus (GMT+02:00)",
+            "Asia/Famagusta": "Asia/Famagusta (GMT+02:00)",
+        }
+        
         return {
             calendarForm,
             generateGoogleCalendarLink,
             generateYahooCalendarLink,
+            timeZones,
             copyURLToClipboard
         };
     },
