@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="d-flex flex-row vh-min justify-content-center row gx-5">
-            <div class="col-lg-8 mt-5 ">
+            <div class="col-lg-8 mt-5">
                 <div class="text-center">
                     <h1 class="display-5 mb-0"> Calendar Link Generator </h1>
-                    <p class="lead text-secondary "> Generate links to add an event to popular calendar services. </p>
+                    <p class="lead text-secondary"> Generate links to add an event to popular calendar services. </p>
                 </div>
                 <div class="mt-0">
                     <form @submit.prevent>
@@ -13,17 +13,17 @@
                         <div class="row row-cols-2 g-4 gy-4">
                             <div class="col-7">
                                 <label class="form-label mb-1">Title</label>
-                                <input class="form-control" placeholder="Add Title" v-model="calendarForm.title" />
+                                <input class="form-control" placeholder="Add Title" v-model='calendarForm.title' />
                             </div>
                             <div class="col-4">
                                 <label class="form-label mb-1">Location</label>
-                                <input class="form-control" placeholder="Add Location" v-model="calendarForm.location" />
+                                <input class="form-control" placeholder="Add Location" v-model='calendarForm.location' />
                             </div>
                             <div class="col-7">
                                 <label class="form-label mb-1">Timezone</label>
-                                <select class="form-select" v-model="calendarForm.timeZone">
+                                <select class="form-select" v-model='calendarForm.timeZone'>
                                     <option v-if="calendarForm.timeZone != ''" disabled value>Select a Timezone</option>
-                                    <option v-else :value="calendarForm.timeZone">{{Intl.DateTimeFormat().resolvedOptions().timeZone}}</option>
+                                    <option v-else :value='calendarForm.timeZone'>{{Intl.DateTimeFormat().resolvedOptions().timeZone}}</option>
                                     <option value="Pacific/Midway">Pacific/Midway (GMT-11:00)</option>
                                     <option value="Pacific/Niue">Pacific/Niue (GMT-11:00)</option>
                                     <option value="Pacific/Pago_Pago">Pacific/Pago Pago (GMT-11:00)</option>
@@ -134,7 +134,7 @@
                             <div class="col-4">
                                 <br />
                                 <div class="mt-3 form-check">
-                                    <input class="form-check-input" type="checkbox" placeholder="All day event" v-model="calendarForm.isAllDayEvent">
+                                    <input class="form-check-input" type="checkbox" placeholder="All day event" v-model='calendarForm.isAllDayEvent'>
                                     <label class="form-check-label" for="form-check-inpu">All Day</label>
                                 </div>
                             </div>
@@ -143,12 +143,12 @@
                             <div class="col-11 mb-2">
                                 <label class="form-check-label" for="date-time-picker">From</label>
                                 <br />
-                                <DatePicker name="date-time-picker" :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" color="purple" is-dark is-expanded :max-date='new Date()' v-model="calendarForm.startTime" />
+                                <DatePicker name="date-time-picker" :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" color="purple" is-dark is-expanded :max-date='new Date()' v-model='calendarForm.startTime' />
                             </div>
                             <div class="col-11">
                                 <label class="form-check-label" for="date-time-picker">To</label>
                                 <br />
-                                <DatePicker name="date-time-picker" :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" color="purple" is-dark is-expanded :min-date='new Date()' v-model="calendarForm.endTime" />
+                                <DatePicker name="date-time-picker" :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" color="purple" is-dark is-expanded :min-date='new Date()' v-model='calendarForm.endTime' />
                             </div>
                         </div>
                         <div class="col-11">
@@ -179,13 +179,13 @@
                                         <path fill="#1565c0" d="M9,42h5v-8H6v5C6,40.657,7.343,42,9,42z"></path>
                                     </svg>
                                 </span>
-                                <input type="text" class="form-control" placeholder="Google Calendar" :value="generateGoogleCalendarLink" readonly>
-                                <a class="input-group-text" id="basic-addon1" @click="copyURLToClipboard(generateGoogleCalendarLink)">
+                                <input type="text" class="form-control" placeholder="Google Calendar" :value='generateGoogleCalendarLink' readonly>
+                                <a class="input-group-text" id="basic-addon1" @click='copyURLToClipboard(generateGoogleCalendarLink)'>
                                     <button type="button" class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-note-sticky"></i>
                                     </button>
                                 </a>
-                                <a class="input-group-text" id="basic-addon2" :href="generateGoogleCalendarLink">
+                                <a class="input-group-text" id="basic-addon2" :href='generateGoogleCalendarLink'>
                                     <button type="button" class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
                                     </button>
@@ -210,13 +210,13 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <input type="text" class="form-control" placeholder="Yahoo Calendar" :value="generateYahooCalendarLink" readonly>
-                                <span class="input-group-text" id="basic-addon3" @click="copyURLToClipboard(generateYahooCalendarLink)">
+                                <input type="text" class="form-control" placeholder="Yahoo Calendar" :value='generateYahooCalendarLink' readonly>
+                                <span class="input-group-text" id="basic-addon3" @click='copyURLToClipboard(generateYahooCalendarLink)'>
                                     <button type="button" class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-note-sticky"></i>
                                     </button>
                                 </span>
-                                <a class="input-group-text" id="basic-addon4" :href="generateYahooCalendarLink">
+                                <a class="input-group-text" id="basic-addon4" :href='generateYahooCalendarLink'>
                                     <button type="button" class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
                                     </button>
@@ -230,23 +230,23 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { DatePicker } from "v-calendar";
-import { computed } from "@vue/reactivity";
+import { defineComponent, ref } from 'vue';
+import { DatePicker } from 'v-calendar';
+import { computed } from '@vue/reactivity';
 export default defineComponent({
-    name: "CalendarLinkGenerator",
+    name: 'CalendarLinkGenerator',
     setup() {
         // Forms
         const calendarForm = ref({
-            title: "Event",
-            location: "",
+            title: 'Event',
+            location: '',
             startTime: new Date(),
             endTime: new Date(),
-            timeZone: "",
+            timeZone: '',
             isAllDayEvent: false,
-            fromDateHour: "",
-            toDateHour: "",
-            description: ""
+            fromDateHour: '',
+            toDateHour: '',
+            description: ''
         });
 
         // Methods
@@ -263,12 +263,12 @@ export default defineComponent({
             return calendarForm.value.isAllDayEvent
                 ? new Date(date.setDate(date.getDate() + 1))
                       .toISOString()
-                      .split("T", 1)[0]
-                      .replace(/-/g, "")
+                      .split('T', 1)[0]
+                      .replace(/-/g, '')
                 : date
                       .toISOString()
-                      .replace(/-|:/g, "")
-                      .replace(/\.\d{3}Z/, "Z");
+                      .replace(/-|:/g, '')
+                      .replace(/\.\d{3}Z/, 'Z');
         };
 
         // Computes
