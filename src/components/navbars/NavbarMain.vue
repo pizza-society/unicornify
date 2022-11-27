@@ -50,6 +50,11 @@
                         Twitter Downloader
                     </router-link>
                     <router-link class="nav-link"
+                        to="/calendar-link-generator"
+                        active-class="active text-primary">
+                        Calendar Link Generator
+                    </router-link>
+                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing

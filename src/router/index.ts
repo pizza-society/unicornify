@@ -56,6 +56,14 @@ const routes: Array<RouteRecordRaw> = [
       default:() => import('@/views/TwitterDownloaderView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
+  },
+  {
+    path: '/calendar-link-generator',
+    name: 'calendar-link-generator',
+    components: {
+      default:() => import('@/views/CalendarLinkGeneratorView.vue'),
+      Navbar: () => import('@/components/navbars/NavbarMain.vue')
+    }
   }
 ]
 
