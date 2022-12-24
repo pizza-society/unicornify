@@ -2,6 +2,7 @@ import { APIService } from '@/common/api.service'
 import QRGeneratorResponse from '@/types/qr-generator.model'
 import DisposableEmailResponse from '@/types/disposable-email-validator.models'
 import TwitterDownloaderResponse from '@/types/twitter-downloader.model'
+import TikTokDownloaderResponse from '@/types/tiktok-downloader.model'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -34,6 +35,17 @@ export const useServiceStore = defineStore('service', {
         downloadTwitterVideo(payload: object): Promise<TwitterDownloaderResponse> {
             return new Promise((resolve, reject) => {
                 APIService.post(`services/download-tweet-video`, payload)
+                    .then(({ data }) => {
+                        resolve(data)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+            }) 
+        },
+        downloadTikTokVideo(payload: object): Promise<TikTokDownloaderResponse> {
+            return new Promise((resolve, reject) => {
+                APIService.post(`services/download-tiktok-video`, payload)
                     .then(({ data }) => {
                         resolve(data)
                     })
