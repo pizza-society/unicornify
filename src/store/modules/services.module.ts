@@ -6,6 +6,8 @@ import TikTokDownloaderResponse from '@/types/tiktok-downloader.model'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+// AllOrigin Foward-Proxy: https://github.com/gnuns/allorigins, to by pass CORS
+const PROXY_BASE_URL = 'https://api.allorigins.win/raw'
 export const useServiceStore = defineStore('service', {
     state: () => ({}),
     getters: {},
@@ -54,13 +56,20 @@ export const useServiceStore = defineStore('service', {
                     })
             }) 
         },
+        /**
+         * Downloads a Blob file to the browser using the download tag
+         * 
+         * @param {string} url - The URL of the file to be downloaded
+         * @param {string} type - The MIME type of the file to be downloaded
+         * @param {string} fileNamePrefix - The prefix of the generated file name 
+         */
         downloadBlobFile(url: string, type: string, fileNamePrefix: string): void
         {
             /*
             *  Vue/HTML/JS how to download a file to browser using the download tag
             *  https://stackoverflow.com/a/53775165/16711156
             */
-            axios.get(url, { responseType: 'blob' })
+            axios.get(`${PROXY_BASE_URL}=?${url}`, { responseType: 'blob' })
                 .then(response => {
                     const blob = new Blob([response.data], { type: type })
                     const link = document.createElement('a')
