@@ -1,8 +1,6 @@
 export default interface TikTokDownloaderResponse {
     result: {
-        medias ? : {
-            index: TikTokMedias
-        },
+        medias : TikTokMedias,
         creator?: string,
         uploader?: string,
         title?: string,
@@ -16,12 +14,12 @@ export default interface TikTokDownloaderResponse {
 }
 
 export interface TikTokMedias {
-    id ? : {
-        format_id: string | null | undefined
-        format_note: string | null | undefined
-        vcodec: string | null | undefined
-        url: string | null | undefined
-        resolution: string | null | undefined
+    id : {
+        format_id: string 
+        format_note: string
+        vcodec: string
+        url: string
+        resolution: string
     }
 }
 
