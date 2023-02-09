@@ -62,14 +62,19 @@ export const useServiceStore = defineStore('service', {
          * @param {string} url - The URL of the file to be downloaded
          * @param {string} type - The MIME type of the file to be downloaded
          * @param {string} fileNamePrefix - The prefix of the generated file name 
+         * @param {boolean} useProxy - A flag indicating whether the link should be passed through the proxy server
          */
-        downloadBlobFile(url: string, type: string, fileNamePrefix: string): void
+        downloadBlobFile(url: string, type: string, fileNamePrefix: string, useProxy = false): void
         {
             /*
             *  Vue/HTML/JS how to download a file to browser using the download tag
             *  https://stackoverflow.com/a/53775165/16711156
             */
-            axios.get(`${PROXY_BASE_URL}?url=${url}`, { responseType: 'blob' })
+            let targetURL = url;
+            if (useProxy) {
+                targetURL = `${PROXY_BASE_URL}?url=${url}`;
+            }
+            axios.get(targetURL, { responseType: 'blob' })
                 .then(response => {
                     const blob = new Blob([response.data], { type: type })
                     const link = document.createElement('a')
