@@ -69,7 +69,7 @@ export const useServiceStore = defineStore('service', {
             *  Vue/HTML/JS how to download a file to browser using the download tag
             *  https://stackoverflow.com/a/53775165/16711156
             */
-            axios.get(`${PROXY_BASE_URL}=?${url}`, { responseType: 'blob' })
+            axios.get(`${PROXY_BASE_URL}?url=${url}`, { responseType: 'blob' })
                 .then(response => {
                     const blob = new Blob([response.data], { type: type })
                     const link = document.createElement('a')
