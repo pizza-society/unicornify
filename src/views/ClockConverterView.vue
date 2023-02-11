@@ -100,17 +100,17 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
-import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue"
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 export default defineComponent({
-	name: "clock-converter",
+	name: 'clock-converter',
 	setup() {
 
 		// Data
-		const t12HourInput = ref<string>("")
-		const t24HourInput = ref<string>("")
-		const convertedTime = ref<string>("")
+		const t12HourInput = ref<string>('')
+		const t24HourInput = ref<string>('')
+		const convertedTime = ref<string>('')
 		const error = ref<boolean>(false)
-		const errorMessage = ref<string>("")
+		const errorMessage = ref<string>('')
 
 
 		const convertTime24to12 = () => {
@@ -119,15 +119,15 @@ export default defineComponent({
 			const isValid = /^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/.test(time24h)
 			const match = time24h.match(/([0-9]{1,2}):([0-9]{2})/)
 
-			if ((isValid || time24h === "24:00") && match) {
+			if ((isValid || time24h === '24:00') && match) {
 				const [sHours, minutes] = match.slice(1)
-				const period = +sHours < 12 ? "AM" : "PM"
+				const period = +sHours < 12 ? 'AM' : 'PM'
 				const hours = +sHours % 12 || 12
 				const output = `${hours}:${minutes} ${period}`
-				convertedTime.value = time24h === "24:00" ? "12:00 AM" : output
+				convertedTime.value = time24h === '24:00' ? '12:00 AM' : output
 			} else {
 				convertedTime.value = ''
-				displayErrorMessage("Invalid 24 Hour time format, valid format example: 18:00", 3000)
+				displayErrorMessage('Invalid 24 Hour time format, valid format example: 18:00', 3000)
 			}
 		}
 
@@ -139,13 +139,13 @@ export default defineComponent({
 
 			if (isValid && match) {
 				const [sHours, minutes, period] = match.slice(1)
-				const PM = period === "PM"
+				const PM = period === 'PM'
 				const hours = (+sHours % 12) + (PM ? 12 : 0)
-				const output = `${("0" + hours).slice(-2)}:${minutes}`
+				const output = `${('0' + hours).slice(-2)}:${minutes}`
 				convertedTime.value = output
 			} else {
 				convertedTime.value = ''
-				displayErrorMessage("Invalid 12 Hour time format, valid format example: 12:00 am", 3000)
+				displayErrorMessage('Invalid 12 Hour time format, valid format example: 12:00 am', 3000)
 			}
 		}
 
