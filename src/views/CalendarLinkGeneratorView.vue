@@ -185,10 +185,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+
 import { DatePicker } from 'v-calendar';
 import { computed } from '@vue/reactivity';
+
 import { TIME_ZONES } from '@/common/constants'
-import { copyTextToClipboard } from '@/common/helpers'
+import { copyTextToClipboard } from '@/common/helpers';
+
 export default defineComponent({
     name: 'CalendarLinkGenerator',
     setup() {

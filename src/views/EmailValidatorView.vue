@@ -112,7 +112,6 @@ import { defineComponent, ref } from 'vue'
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 
 import { useServiceStore } from '@/store'
-
 import type { DisposableEmailMeta } from "@/types/disposable-email-validator.models"
 
 export default defineComponent({
