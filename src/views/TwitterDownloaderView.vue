@@ -64,13 +64,13 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr
-                                                            v-for="value in tweetMedias"
-                                                            :key="value">
+                                                            v-for="(item, index) in tweetMedias"
+                                                            :key="index">
                                                             <td>
-                                                                {{value.resolution}}
+                                                                {{item.resolution}}
                                                             </td>
                                                             <td>
-                                                                <a  @click="downloadVideo(value.url)">
+                                                                <a  @click="downloadVideo(item.url)">
                                                                     Download
                                                                 </a>
                                                             </td>
@@ -147,17 +147,18 @@ import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
 
 import useVuelidate from "@vuelidate/core";
-
+import { twitterStatusRegex, sleep } from "@/helpers/helpers"
 import { helpers, or, required } from "@vuelidate/validators";
 import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
+import { TweetMedia, TweetMeta } from "@/types/twitter-downloader.model"
 
 export default defineComponent({
     name: "TwitterDownloaderView",
     setup() {
 
         // Data
-        const tweetMetaData = ref<any>(null);
-        const tweetMedias = ref<any>(null);
+        const tweetMetaData = ref<TweetMeta | null>(null);
+        const tweetMedias = ref<TweetMedia[] | null>(null);
         let error = ref<boolean>(false)
 
         // Services
@@ -168,20 +169,6 @@ export default defineComponent({
             url: null
         });
 
-        // Twitter Status Regex
-        // I.e:  https://twitter.com/TheOceanCleanup/status/1551568161018871810
-        const twRegexNormalStatus = helpers.regex(
-            /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
-        );
-        // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
-        const twRegexMobileBrowserStatus = helpers.regex(
-            /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
-        );
-        // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
-        const twRegexMobileShareStatus = helpers.regex(
-            /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?((\?)(.+))?$/
-        );
-
         const validation = {
             url: {
                 required: helpers.withMessage(
@@ -191,9 +178,7 @@ export default defineComponent({
                 url: helpers.withMessage(
                     "Please enter a valid twitter status link",
                     or(
-                        twRegexNormalStatus,
-                        twRegexMobileBrowserStatus,
-                        twRegexMobileShareStatus
+                        twitterStatusRegex
                     )
                 )
             }
@@ -235,10 +220,6 @@ export default defineComponent({
 			});
         }
         
-        const sleep = (time: number) => {
-			return new Promise(resolve => setTimeout(resolve, time));
-		}
-
         // Download tweet video
         const downloadVideo = (url: string) => {
             serviceSvc.downloadBlobFile(url, "video/mp4", "tweet-video");
