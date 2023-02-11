@@ -3,7 +3,7 @@
       <div
           class="d-flex flex-column justify-content-center align-items-center">
           <lottie-player
-            v-if="!tikTokMediasData"
+            v-if="!TikTokMediaData"
               src="https://assets7.lottiefiles.com/packages/lf20_5h2kp8uz.json"
               background="transparent"
               speed="0.5"
@@ -14,7 +14,7 @@
             
             <div class="col-lg-8 text-center">
                     <figure 
-                        v-if="!tikTokMediasData && !error"
+                        v-if="!TikTokMediaData && !error"
                         class="text-center">
 
                         <blockquote class="blockquote">
@@ -36,7 +36,7 @@
 
                     <Transition>
                         <div 
-                            v-if="tikTokMediasData && tikTokMetaData && !isLoading && !error">
+                            v-if="TikTokMediaData && tikTokMetaData && !isLoading && !error">
                                 <div class="card text-bg-dark mb-3 mt-5" >
                                     <div class="row g-0">
 
@@ -62,12 +62,12 @@
                                                 <ul class="list-group list-group-flush">
                                                     <li 
                                                         class="list-group-item thumbnail"                                                              
-                                                        v-for="(item, index) in tikTokMediasData"
+                                                        v-for="(item, index) in TikTokMediaData"
                                                         :key="index"
                                                         @click="downloadVideo(item.url)">
                                                         <i class="fa-solid fa-circle-arrow-down"></i>
                                                         <span>
-                                                            Download MP4 [{{ Number(index) + 1 }}]
+                                                            Download {{ item.format_note }} [{{ Number(index) + 1 }}]
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -75,7 +75,7 @@
                                             
                                             <div class="card-footer">
                                                 <i class="fa-solid fa-video"></i>
-                                                {{ tikTokMetaData.duration_string }}
+                                                {{ convertToTime(tikTokMetaData.duration_string) }}
                                             </div>
 
                                         </div>
@@ -161,104 +161,103 @@ import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
 
 import useVuelidate from "@vuelidate/core";
-import { tikTokLinkRegex } from "@/common/helpers"
+import { tikTokLinkRegex, convertToTime, sleep } from "@/helpers/helpers"
 import { helpers, or, required } from "@vuelidate/validators";
 import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
-import { TikTokMedias, TikTokMeta } from "@/types/tiktok-downloader.model";
+import { TikTokMedia, TikTokMeta } from "@/types/tiktok-downloader.model";
 
 export default defineComponent({
-  name: "TikTokDownloaderView",
-  setup() {
+    name: "TikTokDownloaderView",
+    setup() {
+        
 
-      // Data
-      const tikTokMetaData = ref<TikTokMeta | null>();
-      const tikTokMediasData = ref<TikTokMedias | null>();
+        // Data
+        const tikTokMetaData = ref<TikTokMeta | null>()
+        const TikTokMediaData = ref<TikTokMedia[] | null>()
 
-      let error = ref<boolean>(false)
+        let error = ref<boolean>(false)
 
-      // Services
-      const serviceSvc = useServiceStore();
+        // Services
+        const serviceSvc = useServiceStore()
 
-      // Form
-      const downloadForm = ref({
-          url: null
-      });
+        // Form
+        const downloadForm = ref({
+            url: null
+        })
 
-      const validation = {
-          url: {
-              required: helpers.withMessage(
-                  "Please fill this field",
-                  required
-              ),
-              url: helpers.withMessage(
-                  "Please enter a valid TikTok link",
-                  or(
-                    tikTokLinkRegex
-                  )
-              )
-          }
-      };
+        const validation = {
+            url: {
+                required: helpers.withMessage(
+                    "Please fill this field",
+                    required
+                ),
+                url: helpers.withMessage(
+                    "Please enter a valid TikTok link",
+                    or(
+                        tikTokLinkRegex
+                    )
+                )
+            }
+        }
 
-      const v$ = useVuelidate(validation, downloadForm);
+        const v$ = useVuelidate(validation, downloadForm)
 
-      // Checkers
-      const isLoading = ref<boolean>(false);
+        // Checkers
+        const isLoading = ref<boolean>(false)
 
-      // Get resolutions
-      const getTikTokMedia = () => {
-          isLoading.value = true;
-          tikTokMediasData.value = null;
-          tikTokMetaData.value = null;
-          return serviceSvc
-              .downloadTikTokVideo(downloadForm.value)
-              .then(data => {
-                  if(data.result.error) throw new Error("There's no video in this link");
-                  // TikTok media file data
-                  tikTokMediasData.value = data.result.medias;
-                  // TiKTok meta file data
-                  tikTokMetaData.value = data.result;
-                  isLoading.value = false;
-              })
-              .catch(() => {
-                  tikTokMediasData.value = null;
-                  tikTokMetaData.value = null;
-                  isLoading.value = false;
-                  displayErrorMessage(5000)   
-              });
-      };
+        // Get resolutions
+        const getTikTokMedia = () => {
+            isLoading.value = true
+            TikTokMediaData.value = null
+            tikTokMetaData.value = null
+            return serviceSvc
+                .downloadTikTokVideo(downloadForm.value)
+                .then(data => {
+                    if (data.result.error) throw new Error("There's no video in this link")
+                    // TikTok media file data
+                    TikTokMediaData.value = data.result.medias
+                    // TiKTok meta file data
+                    tikTokMetaData.value = data.result
+                    isLoading.value = false
+                })
+                .catch(() => {
+                    TikTokMediaData.value = null
+                    tikTokMetaData.value = null
+                    isLoading.value = false
+                    displayErrorMessage(5000)
+                })
+        }
 
-      // Error Handler
-  const displayErrorMessage = (duration: number) => {
-    error.value = true;
-    sleep(duration).then(() => {
-      error.value = false;
-    });
-      }
-      
-      const sleep = (time: number) => {
-    return new Promise(resolve => setTimeout(resolve, time));
-  }
+        // Error Handler
+        const displayErrorMessage = (duration: number) => {
+            error.value = true
+            sleep(duration).then(() => {
+                error.value = false
+            })
+        }
 
-      // Download Tiktok video
-      const downloadVideo = (url: string) => {
-          console.log(url)
-          serviceSvc.downloadBlobFile(url, "video/mp4", "tiktok-video");
-      };
 
-      return {
-          downloadForm,
-          v$,
-          isLoading,
-          tikTokMediasData,
-          tikTokMetaData,
-          error,
-          getTikTokMedia,
-          downloadVideo,
-          displayErrorMessage
-      };
-  },
-  components: { ErrorAlert }
-});
+        // Download Tiktok video
+        const downloadVideo = (url: string) => {
+            console.log(url)
+            serviceSvc.downloadBlobFile(url, "video/mp4", "tiktok-video", true, { url: url })
+        }
+
+        return {
+            downloadForm,
+            v$,
+            isLoading,
+            TikTokMediaData,
+            tikTokMetaData,
+            error,
+            getTikTokMedia,
+            downloadVideo,
+            displayErrorMessage,
+            convertToTime
+        }
+    },
+    components: { ErrorAlert }
+})
 </script>
 <style lang="scss" scoped>
 
