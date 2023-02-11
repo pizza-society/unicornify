@@ -18,10 +18,10 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/24h-to-12h',
-    name: '24hTo12hConverter',
+    path: '/clock-converter',
+    name: 'ClockConverter',
     components: {
-      default:() => import('@/views/24hTo12hConverter.vue'),
+      default:() => import('@/views/ClockConverterView.vue'),
       Navbar: () => import('@/components/navbars/NavbarMain.vue')
     }
   },

@@ -40,9 +40,9 @@
                         Email Validator
                     </router-link>
                     <router-link class="nav-link"
-                        to="/24h-to-12h"
+                        to="/clock-converter"
                         active-class="active text-primary">
-                        24 Hour Time Converter
+                        Clock Converter
                     </router-link>
                     <router-link class="nav-link"
                         to="/twitter-downloader"
