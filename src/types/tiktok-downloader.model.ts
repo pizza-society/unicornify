@@ -1,30 +1,59 @@
+/** Interface for TikTokMedia */
 export interface TikTokMedia {
-    id : {
-        format_id: string 
-        format_note: string
-        vcodec: string
-        url: string
-        resolution: string
-    }
+    /** The format id of the media */
+    format_id: string 
+
+    /** The format note of the media */
+    format_note: string
+
+    /** The vcodec of the media */
+    vcodec: string
+
+    /** The url of the media */
+    url: string
+
+    /** The resolution of the media */
+    resolution: string
 }
 
-
+/** Interface for TikTokMeta */
 export interface TikTokMeta {
-    creator: string,
-    uploader: string,
-    title: string,
-    description: string,
-    duration_string: string,
-    _type: string,
-    thumbnail: string,
-    format: string,
-    error: string,
+    /** The name of the creator */
+    creator: string
+
+    /** The name of the uploader */
+    uploader: string
+
+    /** The title of the video */
+    title: string
+
+    /** The description of the video */
+    description: string
+
+    /** The duration of the video in string format */
+    duration_string: string
+
+    /** The type of the video */
+    _type: string
+
+    /** The thumbnail of the video */
+    thumbnail: string
+
+    /** The format of the video */
+    format: string
+
+    /** An error message if there is any */
+    error: string
 }
 
+/** Interface for TikTokDownloaderResult */
 export interface TikTokDownloaderResult extends TikTokMeta {
-    medias: TikTokMedia;
+    /** Array of the media data of the video */
+    medias: TikTokMedia[];
 }
 
+/** Interface for TikTokDownloaderResponse */
 export default interface TikTokDownloaderResponse {
+    /** The result of the TikTok downloader */
     result: TikTokDownloaderResult;
 }
