@@ -30,35 +30,136 @@
                         About
                     </router-link>
                     <router-link class="nav-link"
-                        to="/qr-code-generator"
-                        active-class="active text-primary">
-                        QR Generator
-                    </router-link>
-                    <router-link class="nav-link"
-                        to="/email-validator"
-                        active-class="active text-primary">
-                        Email Validator
-                    </router-link>
-                    <router-link class="nav-link"
-                        to="/clock-converter"
-                        active-class="active text-primary">
-                        Clock Converter
-                    </router-link>
-                    <router-link class="nav-link"
-                        to="/twitter-downloader"
-                        active-class="active text-primary">
-                        Twitter Downloader
-                    </router-link>
-                    <router-link class="nav-link"
-                        to="/calendar-link-generator"
-                        active-class="active text-primary">
-                        Calendar Link Generator
-                    </router-link>
-                    <router-link class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing
                     </router-link>
+                    <li 
+                        class="nav-item dropdown"
+                        @mouseover="toggleDropdownMenu('downloaders')"
+                        @mouseleave="toggleDropdownMenu('')">
+                        <a
+                            class="nav-link dropdown-toggle" 
+                            data-bs-toggle="dropdown"
+                            role="button"
+                            :aria-expanded="currentToggledMenu === 'downloaders' ? 'true' : 'false'"
+                            :class="{
+                                'show': currentToggledMenu === 'downloaders'
+                            }">
+                            Downloaders
+                        </a>
+                        <ul 
+                            @mouseover="toggleDropdownMenu('downloaders')"
+                            @mouseleave="toggleDropdownMenu('')"
+                            class="dropdown-menu"
+                            :class="{
+                                'show': currentToggledMenu === 'downloaders'
+                            }">
+                            <li>
+                                <router-link 
+                                    class="dropdown-item"
+                                    to="/twitter-downloader"
+                                    active-class="active text-primary">
+                                    Twitter Downloader
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li 
+                        class="nav-item dropdown"
+                        @mouseover="toggleDropdownMenu('generators')"
+                        @mouseleave="toggleDropdownMenu('')">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            data-bs-toggle="dropdown"
+                            role="button"
+                            :aria-expanded="currentToggledMenu === 'generators' ? 'true' : 'false'"
+                            :class="{
+                                'show': currentToggledMenu === 'generators'
+                            }">
+                            Generators
+                        </a>
+                        <ul 
+                            @mouseover="toggleDropdownMenu('generators')"
+                            @mouseleave="toggleDropdownMenu('')"
+                            class="dropdown-menu"
+                            :class="{
+                                'show': currentToggledMenu === 'generators'
+                            }">
+                            <li>
+                                <router-link class="dropdown-item"
+                                    to="/calendar-link-generator"
+                                    active-class="active text-primary">
+                                    Calendar Link Generator
+                                </router-link>
+                                <router-link class="dropdown-item"
+                                    to="/qr-code-generator"
+                                    active-class="active text-primary">
+                                    QR Generator
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li 
+                        class="nav-item dropdown"
+                        @mouseover="toggleDropdownMenu('validators')"
+                        @mouseleave="toggleDropdownMenu('')">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            data-bs-toggle="dropdown"
+                            role="button"
+                            :aria-expanded="currentToggledMenu === 'validators' ? 'true' : 'false'"
+                            :class="{
+                                'show': currentToggledMenu === 'validators'
+                            }">
+                            Validators
+                        </a>
+                        <ul 
+                            @mouseover="toggleDropdownMenu('validators')"
+                            @mouseleave="toggleDropdownMenu('')"
+                            class="dropdown-menu"
+                            :class="{
+                                'show': currentToggledMenu === 'validators'
+                            }">
+                            <li>
+                                <router-link class="dropdown-item"
+                                    to="/email-validator"
+                                    active-class="active text-primary">
+                                    Email Validator
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li 
+                        class="nav-item dropdown"
+                        @mouseover="toggleDropdownMenu('others')"
+                        @mouseleave="toggleDropdownMenu('')">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            data-bs-toggle="dropdown"
+                            role="button"
+                            :aria-expanded="currentToggledMenu === 'others' ? 'true' : 'false'"
+                            :class="{
+                                'show': currentToggledMenu === 'others'
+                            }">
+                            Others
+                        </a>
+                        <ul 
+                            @mouseover="toggleDropdownMenu('others')"
+                            @mouseleave="toggleDropdownMenu('')"
+                            class="dropdown-menu"
+                            :class="{
+                                'show': currentToggledMenu === 'others'
+                            }">
+                            <li>
+                                <router-link class="dropdown-item"
+                                    to="/clock-converter"
+                                    active-class="active text-primary">
+                                    Clock Converter
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
                 </div>
 
                 <div class="navbar-nav ms-auto">
@@ -73,3 +174,28 @@
         </div>
     </nav>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    name: 'NavbarMain',
+    setup() {
+
+        // Checkers
+        const currentToggledMenu = ref<string>('')
+
+        const toggleDropdownMenu = (menuName: string) => {
+            return currentToggledMenu.value === menuName ? currentToggledMenu.value = '' : currentToggledMenu.value = menuName
+        }
+
+        return {
+            toggleDropdownMenu,
+            currentToggledMenu,
+        }
+    }
+})
+</script>
+
+<style lang="scss" scoped>
+</style>
