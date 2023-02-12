@@ -1,19 +1,22 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
 import router from './router'
-import { APIService } from './common/api.service'
 
-import { createPinia } from 'pinia'
-import 'v-calendar/dist/style.css';
 
 // Main style
-require('@/assets/styles/main.scss');
-// require('bootstrap/dist/js/bootstrap.bundle.min.js');
+import './assets/styles/main.scss'
+
+import { APIService } from '@/common/api.service'
 
 // Initialize service
 APIService.init()
 
-createApp(App)
-    .use(router)
-    .use(createPinia())
-    .mount('#app')
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+
+app.mount('#app')
