@@ -13,7 +13,7 @@ To be updated
 To start, first create a python virtual environment:
 
 ```bash
-virtualenv env --python=python3
+virtualenv env --python=python3 --copies
 ```
 
 Activate the environment
