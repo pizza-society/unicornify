@@ -239,7 +239,6 @@ export default defineComponent({
 
         // Download Tiktok video
         const downloadVideo = (url: string) => {
-            console.log(url)
             serviceSvc.downloadBlobFile(url, "video/mp4", "tiktok-video", true, { url: url })
         }
 
