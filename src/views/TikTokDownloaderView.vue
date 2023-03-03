@@ -11,7 +11,6 @@
               loop
               autoplay/>
 
-            
             <div class="col-lg-8 text-center">
                     <figure 
                         v-if="!TikTokMediaData && !error"
