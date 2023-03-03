@@ -11,7 +11,6 @@
               loop
               autoplay/>
 
-            
             <div class="col-lg-8 text-center">
                     <figure 
                         v-if="!TikTokMediaData && !error"
@@ -161,7 +160,7 @@ import { useServiceStore } from "@/store";
 import { defineComponent, ref } from "vue";
 
 import useVuelidate from "@vuelidate/core";
-import { tikTokLinkRegex, convertToTime, sleep } from "@/helpers/helpers"
+import { tikTokLinkRegex, convertToTime, sleep } from "@/helpers/helpers";
 import { helpers, or, required } from "@vuelidate/validators";
 import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
 import { TikTokMedia, TikTokMeta } from "@/types/tiktok-downloader.model";
@@ -239,7 +238,6 @@ export default defineComponent({
 
         // Download Tiktok video
         const downloadVideo = (url: string) => {
-            console.log(url)
             serviceSvc.downloadBlobFile(url, "video/mp4", "tiktok-video", true, { url: url })
         }
 

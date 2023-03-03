@@ -150,7 +150,7 @@ import useVuelidate from "@vuelidate/core";
 import { twitterStatusRegex, sleep } from "@/helpers/helpers"
 import { helpers, or, required } from "@vuelidate/validators";
 import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
-import { TweetMedia, TweetMeta } from "@/types/twitter-downloader.model"
+import { TweetMedia, TweetMeta } from "@/types/twitter-downloader.model";
 
 export default defineComponent({
     name: "TwitterDownloaderView",

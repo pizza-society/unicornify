@@ -1,65 +1,65 @@
 /** Interface for TweetMeta */
 export interface TweetMeta {
     /** URL of the tweet */
-    tweet_url: string;
+    tweet_url: string
 
     /** ID of the user who uploaded the tweet */
-    uploader_user_id: string;
+    uploader_user_id: string
 
     /** Display name of the user who uploaded the tweet */
-    uploader_display_name: string;
+    uploader_display_name: string
 
     /** Date the tweet was uploaded */
-    upload_date: string;
+    upload_date: string
 
     /** Duration of the tweet media */
-    duration: string;
+    duration: string
 
     /** URL of the thumbnail for the tweet media */
-    thumbnail: string;
+    thumbnail: string
 
     /** Title of the tweet */
-    title: string;
+    title: string
 
     /** Description of the tweet */
-    description: string;
+    description: string
 }
 
 /** Interface for TweetMedia */
 export interface TweetMedia {
     /** Format of the tweet media */
-    format: string;
+    format: string
 
     /** Width of the tweet media */
-    width: number;
+    width: number
 
     /** Height of the tweet media */
-    height: number;
+    height: number
 
     /** Resolution of the tweet media */
-    resolution: string;
+    resolution: string
 
     /** URL of the tweet media */
-    url: string;
+    url: string
 
     /** Size of the tweet media */
-    size: string;
+    size: string
 }
 
 /** Interface for TwitterDownloaderResult */
 export interface TwitterDownloaderResult {
     /** Meta data for the tweet */
-    tweet_meta_data: TweetMeta;
+    tweet_meta_data: TweetMeta
 
     /** Array of media information for the tweet */
-    tweet_medias: TweetMedia[];
+    tweet_medias: TweetMedia[]
 
     /** Error message, if any */
-    error: string;
+    error: string
 }
 
 /** Interface for TwitterDownloaderResponse */
 export default interface TwitterDownloaderResponse {
     /** Result of the Twitter downloader operation */
-    result: TwitterDownloaderResult;
+    result: TwitterDownloaderResult
 }
