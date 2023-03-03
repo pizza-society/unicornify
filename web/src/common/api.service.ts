@@ -4,7 +4,7 @@ export const APIService = {
     // Config
     init() {
         // URL configs
-        axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+        axios.defaults.baseURL = `${import.meta.env.VITE_BASE_URL}`
 
         // Error interceptors
         axios.interceptors.response.use(undefined, (error) => {
