@@ -14,6 +14,7 @@ class ImageChoices(str, Enum):
 
 class DrawerChoices(int, Enum):
     """ Drawer choices for QR code generator """
+
     SQUAREM = 1
     GAPPEDM = 2
     CIRCLEM = 3
@@ -24,11 +25,13 @@ class DrawerChoices(int, Enum):
 
 class QRCodeResponse(BaseResponse):
     """ QR code generator response """
+
     pass
 
 
 class QRCode(CamelModel):
     """ QR code model """
+
     url: HttpUrl
     image_type: ImageChoices = ImageChoices.PNG
     drawer: DrawerChoices = DrawerChoices.SQUAREM

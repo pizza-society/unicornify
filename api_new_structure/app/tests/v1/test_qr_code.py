@@ -14,6 +14,7 @@ def test_methods():
     This test is to show an example.
     We tests whether only the right methods allowed.
     """
+
     response_get = client.get(TEST_URL)
     assert response_get.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
