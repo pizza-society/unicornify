@@ -1,9 +1,11 @@
 from fastapi import status
 from fastapi.testclient import TestClient
 
-from app.main import app
+from app.main import app, get_settings
+from app.v1.constants import SERVICES_ENDPOINT
 
-TEST_URL = "/api/v1/services/generate-qr-code/"
+TEST_ACTION = "/generate-qr-code/"
+TEST_URL = f"{ get_settings().API_V1_STR }{ SERVICES_ENDPOINT }{ TEST_ACTION }"
 client = TestClient(app)
 
 
@@ -27,13 +29,7 @@ def test_methods():
     response_post = client.post(TEST_URL)
     expected_response_post_data = {
         "detail": [
-            {
-                "loc": [
-                    "body"
-                ],
-                "msg": "field required",
-                "type": "value_error.missing"
-            }
+            {"loc": ["body"], "msg": "field required", "type": "value_error.missing"}
         ]
     }
     assert response_post.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
