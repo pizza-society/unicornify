@@ -8,8 +8,8 @@ from .camel_case import CamelModel
 class ImageChoices(str, Enum):
     """ Image choices for QR code generator """
 
-    PNG = 'png'
-    JPEG = 'jpeg'
+    PNG = "png"
+    JPEG = "jpeg"
 
 
 class DrawerChoices(int, Enum):
@@ -33,7 +33,7 @@ class QRCode(CamelModel):
     """ QR code model """
 
     url: HttpUrl
-    image_type: ImageChoices = ImageChoices.PNG
+    image_type: ImageChoices = ImageChoices.PNG # PNG file type
     drawer: DrawerChoices = DrawerChoices.SQUAREM
-    front_color: Color = Color('rgb(0, 0, 0)')
-    back_color: Color = Color('rgb(255, 255, 255)')
+    front_color: Color = Color("rgb(0, 0, 0)") # black
+    back_color: Color = Color("rgb(255, 255, 255)") # white

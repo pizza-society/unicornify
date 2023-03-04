@@ -16,18 +16,18 @@ from app.core.schemas.qr_code import DrawerChoices, QRCode, QRCodeResponse
 router = APIRouter()
 
 
-@router.post('/generate-qr-code/',
+@router.post("/generate-qr-code/",
              response_model=QRCodeResponse,
-             summary='Generate QR code')
+             summary="Generate QR code")
 def generate_qr(data: QRCode):
     """
-    Generate a QR code with all the information:
+    Generate a QR code
 
-    - **url**: a valid http / https URL
-    - **imageType**: [png / jpeg] ; optional, default = png
-    - **drawer**: [1-Square / 2-GappedSquare / 3-Circle / 4-Rounded / 5-Vertical / 6-Horizontal] ; optional, default = 1
-    - **frontColor**: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(0, 0, 0)
-    - **backColor**: [name / hex / rgb@rgba tuples / rgb@rgba string / hsl string ] ; optional, default = rgb(255, 255, 255)
+    :param data: the qr code generator settings
+    :type QRCode
+
+    TODO:
+        Update this docstring
     """
     # Configure
     qr = qrcode.QRCode(version=1, box_size=10, border=4,
