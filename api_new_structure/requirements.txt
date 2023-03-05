@@ -3,6 +3,7 @@ appdirs==1.4.4
 asgiref==3.5.2
 attrs==22.2.0
 beautifulsoup4==4.11.1
+Brotli==1.0.9
 bs4==0.0.1
 certifi==2022.5.18.1
 charset-normalizer==2.0.12
@@ -25,11 +26,13 @@ Jinja2==3.1.2
 lxml==4.9.1
 MarkupSafe==2.1.1
 MechanicalSoup==1.1.0
+mutagen==1.46.0
 orjson==3.7.1
 packaging==23.0
 parse==1.19.0
 Pillow==9.1.1
 pluggy==1.0.0
+pycryptodomex==3.17
 pydantic==1.9.1
 pyee==8.2.2
 pyhumps==3.8.0
@@ -58,4 +61,5 @@ w3lib==1.22.0
 watchgod==0.8.2
 websockets==10.3
 youtube-dl==2021.12.17
+yt-dlp==2022.11.11
 zipp==3.8.1
