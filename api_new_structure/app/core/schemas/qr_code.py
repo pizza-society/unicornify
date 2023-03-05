@@ -2,8 +2,9 @@ from enum import Enum
 from pydantic import HttpUrl
 from pydantic.color import Color
 
-from .base import BaseResponse
-from .camel_case import CamelModel
+from app.core.schemas.base import BaseResponse
+from app.core.schemas.camel_case import CamelModel
+
 
 class ImageChoices(str, Enum):
     """ Image choices for QR code generator """
