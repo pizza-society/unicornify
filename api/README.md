@@ -28,6 +28,14 @@ Run the live server
 uvicorn app.main:app --reload
 ```
 
+## Running tests
+
+To start running tests, run this command in virtualenv:
+
+```bash
+pytest -v
+```
+
 ## Acknowledgements
 
  - To be updated

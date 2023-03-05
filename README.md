@@ -1,5 +1,5 @@
 
-# Unicornify API 🦄
+# Unicornify 🦄
 
 A random app with multiple services
 
