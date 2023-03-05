@@ -1,24 +1,30 @@
+from functools import lru_cache
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.v1.api import api_router
-from app.core.config import settings
+from app.v1.api import api_router
+from app.core.settings import settings
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f'{settings.API_V1_STR}/openapi.json'
-)
+
+@lru_cache()
+def get_settings():
+    # https://fastapi.tiangolo.com/advanced/settings/#creating-the-settings-only-once-with-lru_cache
+    return settings
+
+
+app = FastAPI(title=get_settings().PROJECT_NAME,
+              openapi_url=f"{ get_settings().API_V1_STR }/openapi.json")
 
 # CORS config
 # https://fastapi.tiangolo.com/tutorial/cors/#use-corsmiddleware
 
-if settings.BACKEND_CORS_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
-        allow_credentials=True,
-        allow_methods=['*'],
-        allow_headers=['*'],
-    )
+if get_settings().BACKEND_CORS_ORIGINS:
+    app.add_middleware(CORSMiddleware,
+                       allow_origins=[str(origin) for origin in get_settings().BACKEND_CORS_ORIGINS],
+                       allow_credentials=True,
+                       allow_methods=["*"],
+                       allow_headers=["*"])
 
-app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router, prefix=get_settings().API_V1_STR)
+
