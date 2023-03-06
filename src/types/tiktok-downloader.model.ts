@@ -49,11 +49,11 @@ export interface TikTokMeta {
 /** Interface for TikTokDownloaderResult */
 export interface TikTokDownloaderResult extends TikTokMeta {
     /** Array of the media data of the video */
-    medias: TikTokMedia[];
+    medias: TikTokMedia[]
 }
 
 /** Interface for TikTokDownloaderResponse */
 export default interface TikTokDownloaderResponse {
     /** The result of the TikTok downloader */
-    result: TikTokDownloaderResult;
+    result: TikTokDownloaderResult
 }
