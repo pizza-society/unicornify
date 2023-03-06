@@ -34,6 +34,7 @@
                         active-class="active text-primary">
                         Testing
                     </router-link>
+                    <!-- TODO: Add support to mobile phone. -->
                     <li 
                         class="nav-item dropdown"
                         @mouseover="toggleDropdownMenu('downloaders')"
