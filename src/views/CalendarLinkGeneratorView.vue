@@ -189,7 +189,7 @@ import { defineComponent, ref } from 'vue';
 import { DatePicker } from 'v-calendar';
 import { computed } from '@vue/reactivity';
 
-import { TIME_ZONES } from '@/common/constants'
+import { TIME_ZONES } from '@/common/timezones';
 import { copyTextToClipboard } from '@/common/helpers';
 
 export default defineComponent({
