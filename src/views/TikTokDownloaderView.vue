@@ -9,7 +9,7 @@
               speed="0.5"
               style="width: 300px; height: 300px;"
               loop
-              autoplay/>
+              autoplay />
 
             <div class="col-lg-8 text-center">
                     <figure 
@@ -65,6 +65,7 @@
                                                         :key="index"
                                                         @click="downloadVideo(item.url)">
                                                         <i class="fa-solid fa-circle-arrow-down"></i>
+
                                                         <span>
                                                             Download {{ item.format_note }} [{{ Number(index) + 1 }}]
                                                         </span>
@@ -78,13 +79,9 @@
                                             </div>
 
                                         </div>
-
                                     </div>
-                                    
                                 </div>
-
                         </div>
-
                     </Transition>
             </div>
               <!-- Form -->
@@ -103,11 +100,10 @@
                                     :disabled="isLoading"
                                     @blur="v$.url.$touch"
                                     :class="{
-                                    'is-invalid':
-                                    v$.url.$error && v$.url.$dirty,
-                                    'is-valid':
-                                    !v$.url.$error && v$.url.$dirty
-                                    }"/>
+                                    'is-invalid': v$.url.$error && v$.url.$dirty,
+                                    'is-valid': !v$.url.$error && v$.url.$dirty}"
+                                    />
+
                                 <div
                                     class="invalid-feedback"
                                     v-for="error of v$.url.$errors"
@@ -136,7 +132,7 @@
                             role="status"
                             aria-hidden="true">
                         </span>
-                            Loading...
+                        Loading...
                     </span>
                 </button>
 
@@ -146,7 +142,6 @@
                         https://www.tiktok.com/@unicornify/video/0123456789
                     </figcaption>
                 </figure>
-                
             </div>
       </div>
   </div>
@@ -156,20 +151,20 @@
 
 
 <script lang="ts">
-import { useServiceStore } from "@/store";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue';
 
-import useVuelidate from "@vuelidate/core";
-import { tikTokLinkRegex, convertToTime, sleep } from "@/helpers/helpers";
-import { helpers, or, required } from "@vuelidate/validators";
-import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
-import { TikTokMedia, TikTokMeta } from "@/types/tiktok-downloader.model";
+import useVuelidate from '@vuelidate/core';
+import { helpers, or, required } from '@vuelidate/validators';
+
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
+import { useServiceStore } from '@/store';
+import { tikTokLinkRegex, convertToTime, sleep } from '@/helpers/helpers';
+import { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model';
 
 export default defineComponent({
-    name: "TikTokDownloaderView",
+    name: 'TikTokDownloaderView',
     setup() {
         
-
         // Data
         const tikTokMetaData = ref<TikTokMeta | null>()
         const TikTokMediaData = ref<TikTokMedia[] | null>()
@@ -187,11 +182,11 @@ export default defineComponent({
         const validation = {
             url: {
                 required: helpers.withMessage(
-                    "Please fill this field",
+                    'Please fill this field',
                     required
                 ),
                 url: helpers.withMessage(
-                    "Please enter a valid TikTok link",
+                    'Please enter a valid TikTok link',
                     or(
                         tikTokLinkRegex
                     )
@@ -238,7 +233,7 @@ export default defineComponent({
 
         // Download Tiktok video
         const downloadVideo = (url: string) => {
-            serviceSvc.downloadBlobFile(url, "video/mp4", "tiktok-video", true, { url: url })
+            serviceSvc.downloadBlobFile(url, 'video/mp4', 'tiktok-video', true, { url: url })
         }
 
         return {
