@@ -174,7 +174,7 @@ export default defineComponent({
         // Data
         const tweetMetaData = ref<any>(null)
         const tweetMedias = ref<any>(null)
-        let error = ref<boolean>(false)
+        const error = ref<boolean>(false)
 
         // Services
         const serviceSvc = useServiceStore()
