@@ -19,9 +19,7 @@
 
                 <div class="mb-3">
                     <div v-if="!formSubmitted">
-
                         <div class="container-sm">
-
                             <form @submit="validateEmail()" v-on:submit.prevent>
                                 <span v-if="!isValidEmail">
                                     <div class="alert alert-light" role="alert">
@@ -30,8 +28,10 @@
                                 </span>
 
                                 <div v-if="!formSubmitted">
-                                    <label class="form-label"
-                                        >Enter An Email</label>
+                                    <label class="form-label">
+                                        Enter An Email
+                                    </label>
+
                                     <input
                                         type="email"
                                         class="form-control"
@@ -39,7 +39,8 @@
                                         aria-label="Email address"
                                         aria-describedby="button-addon1"
                                         v-model="emailForm.email"
-                                        required/>
+                                        required />
+
                                     <br />
 
                                     <button
@@ -48,7 +49,6 @@
                                         id="button-addon1">
                                         Verify
                                     </button>
-                                    
                                 </div>
                             </form>
                         </div>
@@ -56,40 +56,31 @@
 
                     <div
                         v-else-if="dataObtained && !disposedEmailResult!.disposable && disposedEmailResult!.format">
-    
-
                         <div class="alert alert-success" role="alert">
                             The Email <b>"{{ emailForm.email }}"</b> is Valid and Not
                             Disposable
                         </div>
-
                     </div>
 
                     <div
                         v-else-if="dataObtained && disposedEmailResult!.disposable">
-
                         <div class="alert alert-danger" role="alert">
                             Warning, The Email <b>"{{ emailForm.email }}"</b> is a
                             Disposable Email
                         </div>
-
                     </div>
 
                     <div
                         v-else-if="dataObtained && !disposedEmailResult!.format">
-
                         <div class="alert alert-light" role="alert">
                             The Email <b>"{{ emailForm.email }}"</b> is not a Valid Email.
                         </div>
-                        
                     </div>
 
                     <div v-else>
-
                         <div class="spinner-border" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-
                     </div>
 
                     <br />
@@ -112,7 +103,7 @@ import { defineComponent, ref } from 'vue';
 
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
 import { useServiceStore } from '@/store';
-import type { DisposableEmailMeta } from "@/types/disposable-email-validator.models";
+import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models';
 
 export default defineComponent({
     name: 'email-validator',
