@@ -99,8 +99,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import { defineComponent, ref, computed } from 'vue';
+
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
+
 export default defineComponent({
 	name: 'clock-converter',
 	setup() {
