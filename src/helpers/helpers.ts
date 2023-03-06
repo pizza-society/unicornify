@@ -1,4 +1,5 @@
 import { helpers } from '@vuelidate/validators'
+
 /**
  * Tiktok Link Regex
  * https://stackoverflow.com/questions/74077377/regular-expression-to-match-any-tiktok-video-id-and-url
@@ -15,14 +16,14 @@ import { helpers } from '@vuelidate/validators'
 export const tikTokLinkRegex = helpers.regex(
     // eslint-disable-next-line no-useless-escape
     /\bhttps?:\/\/(?:m|www|vm)\.tiktok\.com\/(?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)\b|([\w\d]+))/gm
-  );
+);
   
 /**
  * Twitter Status Regex
  * Cases:
- *   - https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
- *   - https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
- *   - https://twitter.com/TheOceanCleanup/status/1551568161018871810
+ *   - https://twitter.com/usr/status/<id>?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
+ *   - https://mobile.twitter.com/usr/status/<id>
+ *   - https://twitter.com/usr/status/<id>
  */
 export const twitterStatusRegex = helpers.regex(
   /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?(\?(.+))?$/gm
