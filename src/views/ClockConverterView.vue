@@ -104,7 +104,7 @@ import { defineComponent, ref, computed } from 'vue';
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
 
 export default defineComponent({
-	name: 'clock-converter',
+	name: 'ClockConverter',
 	setup() {
 
 		// Data
