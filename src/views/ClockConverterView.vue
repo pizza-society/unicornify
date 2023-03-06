@@ -32,13 +32,14 @@
 					<strong>
 						Converted Time:
 					</strong> 
+					
 					{{ time }}.
 					<button
 						@click="convertedTime = ''"
 						type="button"
 						class="btn-close"
 						data-bs-dismiss="alert"
-						aria-label="Close"/>
+						aria-label="Close" />
 				</div>
 
 				<div class="mb-3">
