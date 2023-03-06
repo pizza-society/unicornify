@@ -3,7 +3,7 @@
       <div
           class="d-flex flex-column justify-content-center align-items-center">
           <lottie-player
-            v-if="!TikTokMediaData"
+            v-if="!tikTokMediaData"
               src="https://assets7.lottiefiles.com/packages/lf20_5h2kp8uz.json"
               background="transparent"
               speed="0.5"
@@ -13,7 +13,7 @@
 
             <div class="col-lg-8 text-center">
                     <figure 
-                        v-if="!TikTokMediaData && !error"
+                        v-if="!tikTokMediaData && !error"
                         class="text-center">
 
                         <blockquote class="blockquote">
@@ -35,7 +35,7 @@
 
                     <Transition>
                         <div 
-                            v-if="TikTokMediaData && tikTokMetaData && !isLoading && !error">
+                            v-if="tikTokMediaData && tikTokMetaData && !isLoading && !error">
                                 <div class="card text-bg-dark mb-3 mt-5" >
                                     <div class="row g-0">
 
@@ -61,7 +61,7 @@
                                                 <ul class="list-group list-group-flush">
                                                     <li 
                                                         class="list-group-item thumbnail"                                                              
-                                                        v-for="(item, index) in TikTokMediaData"
+                                                        v-for="(item, index) in tikTokMediaData"
                                                         :key="index"
                                                         @click="downloadVideo(item.url)">
                                                         <i class="fa-solid fa-circle-arrow-down"></i>
@@ -167,7 +167,7 @@ export default defineComponent({
         
         // Data
         const tikTokMetaData = ref<TikTokMeta | null>()
-        const TikTokMediaData = ref<TikTokMedia[] | null>()
+        const tikTokMediaData = ref<TikTokMedia[] | null>()
 
         let error = ref<boolean>(false)
 
@@ -202,20 +202,20 @@ export default defineComponent({
         // Get resolutions
         const getTikTokMedia = () => {
             isLoading.value = true
-            TikTokMediaData.value = null
+            tikTokMediaData.value = null
             tikTokMetaData.value = null
             return serviceSvc
                 .downloadTikTokVideo(downloadForm.value)
                 .then(data => {
                     if (data.result.error) throw new Error("There's no video in this link")
                     // TikTok media file data
-                    TikTokMediaData.value = data.result.medias
+                    tikTokMediaData.value = data.result.medias
                     // TiKTok meta file data
                     tikTokMetaData.value = data.result
                     isLoading.value = false
                 })
                 .catch(() => {
-                    TikTokMediaData.value = null
+                    tikTokMediaData.value = null
                     tikTokMetaData.value = null
                     isLoading.value = false
                     displayErrorMessage(5000)
@@ -240,7 +240,7 @@ export default defineComponent({
             downloadForm,
             v$,
             isLoading,
-            TikTokMediaData,
+            tikTokMediaData,
             tikTokMetaData,
             error,
             getTikTokMedia,
