@@ -67,7 +67,6 @@
 									:disabled="t24HourInput === '' ? true : false">
 									Convert to 12-hour
 								</button>
-
 							</div>
 
 							<div class="col">
@@ -90,7 +89,6 @@
 									Convert to 24-hour
 								</button>
 							</div>
-
 						</div>
 					</form>
 				</div>
@@ -172,6 +170,7 @@ export default defineComponent({
 		const time = computed(() => {
 			return convertedTime.value
 		})
+		
 		return {
 			convertedTime,
 			t24HourInput,
