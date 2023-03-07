@@ -1,4 +1,4 @@
-import { helpers } from '@vuelidate/validators'
+import { helpers } from '@vuelidate/validators';
 
 /**
  * Tiktok Link Regex
@@ -16,7 +16,7 @@ import { helpers } from '@vuelidate/validators'
 export const tikTokLinkRegex = helpers.regex(
     // eslint-disable-next-line no-useless-escape
     /\bhttps?:\/\/(?:m|www|vm)\.tiktok\.com\/(?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)\b|([\w\d]+))/gm
-);
+)
   
 /**
  * Twitter Status Regex
@@ -27,7 +27,7 @@ export const tikTokLinkRegex = helpers.regex(
  */
 export const twitterStatusRegex = helpers.regex(
   /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?(\?(.+))?$/gm
-);
+)
 
 /**
  * Converts a given number to seconds or minutes
