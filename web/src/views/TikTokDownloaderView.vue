@@ -3,13 +3,13 @@
       <div
           class="d-flex flex-column justify-content-center align-items-center">
           <lottie-player
-            v-if="!tikTokMediaData"
-              src="https://assets7.lottiefiles.com/packages/lf20_5h2kp8uz.json"
-              background="transparent"
-              speed="0.5"
-              style="width: 300px; height: 300px;"
-              loop
-              autoplay />
+                v-if="!tikTokMediaData"
+                src="https://assets7.lottiefiles.com/packages/lf20_5h2kp8uz.json"
+                background="transparent"
+                speed="0.5"
+                style="width: 300px; height: 300px;"
+                loop
+                autoplay />
 
             <div class="col-lg-8 text-center">
                     <figure 
@@ -187,9 +187,7 @@ export default defineComponent({
                 ),
                 url: helpers.withMessage(
                     'Please enter a valid TikTok link',
-                    or(
-                        tikTokLinkRegex
-                    )
+                    tikTokLinkRegex
                 )
             }
         }
