@@ -72,7 +72,7 @@ export const useServiceStore = defineStore('service', {
             if (useProxy) {
                 targetURL = `${process.env.VUE_APP_BASE_URL}/services/reverse-proxy/`
             }
-            axios.get(targetURL, { responseType: 'blob', params: query })
+            APIService.get(targetURL, null, { responseType: 'blob', params: query })
                 .then(response => {
                     const blob = new Blob([response.data], { type: type })
                     const link = document.createElement('a')
