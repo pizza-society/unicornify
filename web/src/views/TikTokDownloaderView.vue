@@ -67,7 +67,7 @@
                                                         <i class="fa-solid fa-circle-arrow-down"></i>
 
                                                         <span>
-                                                            Download {{ item.format_note }} [{{ Number(index) + 1 }}]
+                                                            Download {{ item.formatNote }} [{{ Number(index) + 1 }}]
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -75,7 +75,7 @@
                                             
                                             <div class="card-footer">
                                                 <i class="fa-solid fa-video"></i>
-                                                {{ convertToTime(tikTokMetaData.duration_string) }}
+                                                {{ convertToTime(tikTokMetaData.durationString) }}
                                             </div>
 
                                         </div>
@@ -169,7 +169,7 @@ export default defineComponent({
         const tikTokMetaData = ref<TikTokMeta | null>()
         const tikTokMediaData = ref<TikTokMedia[] | null>()
 
-        let error = ref<boolean>(false)
+        const error = ref<boolean>(false)
 
         // Services
         const serviceSvc = useServiceStore()

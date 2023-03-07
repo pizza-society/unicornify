@@ -4,7 +4,7 @@ export interface TikTokMedia {
     format_id: string 
 
     /** The format note of the media */
-    format_note: string
+    formatNote: string
 
     /** The vcodec of the media */
     vcodec: string
@@ -31,10 +31,10 @@ export interface TikTokMeta {
     description: string
 
     /** The duration of the video in string format */
-    duration_string: string
+    durationString: string
 
     /** The type of the video */
-    _type: string
+    type: string
 
     /** The thumbnail of the video */
     thumbnail: string
