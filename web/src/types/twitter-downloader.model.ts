@@ -1,16 +1,16 @@
 /** Interface for TweetMeta */
 export interface TweetMeta {
     /** URL of the tweet */
-    tweet_url: string
+    tweetUrl: string
 
     /** ID of the user who uploaded the tweet */
-    uploader_user_id: string
+    uploaderUserId: string
 
     /** Display name of the user who uploaded the tweet */
-    uploader_display_name: string
+    uploaderDisplayName: string
 
     /** Date the tweet was uploaded */
-    upload_date: string
+    uploadDate: string
 
     /** Duration of the tweet media */
     duration: string
@@ -49,10 +49,10 @@ export interface TweetMedia {
 /** Interface for TwitterDownloaderResult */
 export interface TwitterDownloaderResult {
     /** Meta data for the tweet */
-    tweet_meta_data: TweetMeta
+    tweetMetaData: TweetMeta
 
     /** Array of media information for the tweet */
-    tweet_medias: TweetMedia[]
+    tweetMedias: TweetMedia[]
 
     /** Error message, if any */
     error: string

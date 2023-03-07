@@ -29,11 +29,11 @@
                         <div class="card text-center text-bg-dark mb-3">
                             <div class="card-header">
                                 <h5 class="card-title">
-                                    {{ tweetMetaData.uploader_display_name }}
+                                    {{ tweetMetaData.uploaderDisplayName }}
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <!-- <h5 class="card-title">{{tweetMetaData.uploader_display_name}}</h5> -->
+                                <!-- <h5 class="card-title">{{tweetMetaData.uploaderDisplayName}}</h5> -->
                                 <p class="card-text">
                                     {{ tweetMetaData.description }}
                                 </p>
@@ -159,7 +159,7 @@ export default defineComponent({
         // Data
         const tweetMetaData = ref<TweetMeta | null>(null);
         const tweetMedias = ref<TweetMedia[] | null>(null);
-        let error = ref<boolean>(false)
+        const error = ref<boolean>(false)
 
         // Services
         const serviceSvc = useServiceStore();
@@ -177,9 +177,7 @@ export default defineComponent({
                 ),
                 url: helpers.withMessage(
                     "Please enter a valid twitter status link",
-                    or(
-                        twitterStatusRegex
-                    )
+                    twitterStatusRegex
                 )
             }
         };
@@ -199,9 +197,9 @@ export default defineComponent({
                 .then(data => {
                     if(data.result.error) throw new Error("There's no video in this tweet");
                     // Tweet media file data
-                    tweetMedias.value = data.result.tweet_medias;
+                    tweetMedias.value = data.result.tweetMedias;
                     // Tweet meta file data
-                    tweetMetaData.value = data.result.tweet_meta_data;
+                    tweetMetaData.value = data.result.tweetMetaData;
                     isLoading.value = false;
                 })
                 .catch(() => {
