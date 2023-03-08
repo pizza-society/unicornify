@@ -4,5 +4,5 @@
  * @return {Promise} Resolves when the text has been successfully written to the clipboard.
  */
 export const copyTextToClipboard = async (text: string): Promise<any> => {
-    await navigator.clipboard.writeText(text);
-};
+    await navigator.clipboard.writeText(text)
+}

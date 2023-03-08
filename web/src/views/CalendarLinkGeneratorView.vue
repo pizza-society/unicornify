@@ -10,8 +10,8 @@
                     <p class="lead text-secondary"> 
                         Generate links to add an event to popular calendar services. 
                     </p>
-
                 </div>
+
                 <div class="mt-0">
                     <form @submit.prevent>
                         <small class="text-left text-secondary mt-3"> 
@@ -49,27 +49,28 @@
                                     Timezone
                                 </label>
 
-                                <select class="form-select" v-model='calendarForm.timeZone'>
+                                <select
+                                    class="form-select"
+                                    v-model='calendarForm.timeZone'>
                                     <option 
                                         v-if="calendarForm.timeZone != ''" 
                                         disabled value>
                                         Select a Timezone
                                     </option>
 
-                                    <option 
-                                        v-else :value='calendarForm.timeZone'>
-                                        {{Intl.DateTimeFormat().resolvedOptions().timeZone}}
+                                    <option v-else :value='calendarForm.timeZone'>
+                                        {{ Intl.DateTimeFormat().resolvedOptions().timeZone }}
                                     </option>
 
                                     <option 
                                         v-for='(zone, time) in timeZones' 
                                         :value='zone' 
                                         :key='zone'>
-                                        {{time}}
+                                        {{ time }}
                                     </option>
-
                                 </select>
                             </div>
+
                             <div class="col-4">
                                 <br />
 
@@ -85,27 +86,33 @@
                                         for="form-check-inpu">
                                         All Day
                                     </label>
-
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-2 mb-2">
                             <div class="col-11 mb-2">
-                                <label class="form-check-label" for="date-time-picker">
+                                <label
+                                    class="form-check-label"
+                                    for="date-time-picker">
                                     From
                                 </label>
 
                                 <br />
 
                                 <DatePicker 
-                                    name="date-time-picker" 
-                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" 
-                                    color="purple" is-dark is-expanded :max-date='new Date()' 
-                                    v-model='calendarForm.startTime' />
+                                    name="date-time-picker"
+                                    color="purple"
+                                    is-dark
+                                    is-expanded
+                                    v-model="calendarForm.startTime"
+                                    :max-date="new Date()"
+                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
                             </div>
                             <div class="col-11">
-                                <label class="form-check-label" for="date-time-picker">
+                                <label
+                                    class="form-check-label"
+                                    for="date-time-picker">
                                     To
                                 </label>
 
@@ -113,10 +120,12 @@
 
                                 <DatePicker 
                                     name="date-time-picker" 
-                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" 
                                     color="purple" 
-                                    is-dark is-expanded :min-date='new Date()' 
-                                    v-model='calendarForm.endTime' />
+                                    is-dark
+                                    is-expanded
+                                    v-model="calendarForm.endTime"
+                                    :min-date="new Date()"
+                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
                             </div>
                         </div>
 
@@ -126,15 +135,20 @@
                                     Description
                                 </label>
                                 
-                                <textarea class="form-control" rows="3" placeholder="Add description"></textarea>
+                                <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Add description"></textarea>
                             </div>
                         </div>
-
                     </form>
                 </div>
+
                 <div class="mt-2 mb-5">
                     <small class="text-left text-secondary mt-3"> RESULTS </small>
+
                     <hr class="mt-1" />
+
                     <div class="row row-cols-1 g-4 gy-4">
                         <div class="col-11">
                             <div class="input-group mb-3">
@@ -146,19 +160,27 @@
                                 <input 
                                     type="text" 
                                     class="form-control" 
-                                    placeholder="Google Calendar" 
-                                    :value='generateGoogleCalendarLink' 
-                                    readonly />
+                                    placeholder="Google Calendar"
+                                    readonly
+                                    :value='generateGoogleCalendarLink'  />
 
                                 <a 
                                     class="input-group-text" 
                                     @click='copyTextToClipboard(generateGoogleCalendarLink)'>
-                                    <button type="button" class="btn btn-outline-dark">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-note-sticky"></i>
                                     </button>
                                 </a>
-                                <a class="input-group-text" id="basic-addon2" :href='generateGoogleCalendarLink'>
-                                    <button type="button" class="btn btn-outline-dark">
+
+                                <a
+                                    id="basic-addon2"
+                                    class="input-group-text"
+                                    :href='generateGoogleCalendarLink'>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
                                     </button>
                                 </a>
@@ -166,7 +188,6 @@
 
                         </div>
                         <div class="col-11">
-
                             <div class="input-group mb-3">
                                 <span class="input-group-text">
                                     <!-- Yahoo icon -->
@@ -176,26 +197,30 @@
                                 <input 
                                     type="text" 
                                     class="form-control" 
-                                    placeholder="Yahoo Calendar" 
-                                    :value='generateYahooCalendarLink' 
-                                    readonly />
+                                    placeholder="Yahoo Calendar"
+                                    readonly
+                                    :value='generateYahooCalendarLink' />
 
-                                <span 
-                                    class="input-group-text" 
+                                <span
                                     id="basic-addon3" 
+                                    class="input-group-text" 
                                     @click='copyTextToClipboard(generateYahooCalendarLink)'>
                                     <button type="button" class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-note-sticky"></i>
                                     </button>
                                 </span>
 
-                                <a class="input-group-text" id="basic-addon4" :href='generateYahooCalendarLink'>
-                                    <button type="button" class="btn btn-outline-dark">
+                                <a
+                                    id="basic-addon4"
+                                    class="input-group-text"
+                                    :href='generateYahooCalendarLink'>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-dark">
                                         <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
                                     </button>
                                 </a>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -203,14 +228,15 @@
         </div>
     </div>
 </template>
+
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
-import { DatePicker } from 'v-calendar';
-import { computed } from '@vue/reactivity';
+import { DatePicker } from 'v-calendar'
+import { computed } from '@vue/reactivity'
 
-import { TIME_ZONES } from '@/common/timezones';
-import { copyTextToClipboard } from '@/common/helpers';
+import { TIME_ZONES } from '@/common/timezones'
+import { copyTextToClipboard } from '@/common/helpers'
 
 export default defineComponent({
     name: 'CalendarLinkGenerator',
@@ -284,6 +310,5 @@ export default defineComponent({
     components: {
         DatePicker
     }
-});
+})
 </script>
-<style lang="scss" scoped></style>

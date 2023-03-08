@@ -44,7 +44,6 @@
 
 				<div class="mb-3">
 					<form v-on:submit.prevent>
-
 						<div class="row rounded-top ">
 							<div class="col mb-3">
 								<label 
@@ -98,14 +97,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed } from 'vue'
 
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 
 export default defineComponent({
 	name: 'ClockConverter',
 	setup() {
-
 		// Data
 		const t12HourInput = ref<string>('')
 		const t24HourInput = ref<string>('')

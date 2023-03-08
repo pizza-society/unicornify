@@ -1,4 +1,7 @@
-/** DisposableEmailMeta interface defines the structure of an object that represents metadata for a disposable email. */
+/**
+ * DisposableEmailMeta interface defines the structure of
+ * an object that represents metadata for a disposable email.
+ */
 export interface DisposableEmailMeta {
   /** The format of the email, whether it is valid or not. */
   format: boolean
@@ -16,8 +19,11 @@ export interface DisposableEmailMeta {
   whitelist: boolean
 }
 
-/** DisposableEmailResponse interface defines the structure of an object that represents the response from validating a disposable email. */
+/** DisposableEmailResponse interface defines the structure of
+ * an object that represents the response from validating a
+ * disposable email.
+ */
 export default interface DisposableEmailResponse {
-  /** The result of the disposable email validation, represented as a DisposableEmailMeta object. */
+  /** The result of the disposable email validation */
   result: DisposableEmailMeta
 }

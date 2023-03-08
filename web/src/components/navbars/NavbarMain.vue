@@ -1,11 +1,15 @@
 <template>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="@/assets/images/pizza-slice.png"
+            <a
+                class="navbar-brand"
+                href="#">
+                <img
+                    src="@/assets/images/pizza-slice.png"
                     alt="site_logo"
-                    class="d-inline-block align-text-top navbar-brand-logo">
+                    class="d-inline-block align-text-top navbar-brand-logo" />
             </a>
+
             <button
                 class="navbar-toggler"
                 type="button"
@@ -16,24 +20,32 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse"
-                id="navbarNavAltMarkup">
+
+            <div
+                id="navbarNavAltMarkup"
+                class="collapse navbar-collapse">
                 <div class="navbar-nav">
-                    <router-link class="nav-link"
+                    <router-link
+                        class="nav-link"
                         to="/"
                         active-class="active text-primary">
                         Home
                     </router-link>
-                    <router-link class="nav-link"
+
+                    <router-link
+                        class="nav-link"
                         to="/about"
                         active-class="active text-primary">
                         About
                     </router-link>
-                    <router-link class="nav-link"
+
+                    <router-link
+                        class="nav-link"
                         to="/testing"
                         active-class="active text-primary">
                         Testing
                     </router-link>
+
                     <!-- TODO: Add support to mobile phone. -->
                     <li 
                         class="nav-item dropdown"
@@ -49,10 +61,11 @@
                             }">
                             Downloaders
                         </a>
-                        <ul 
+
+                        <ul
+                            class="dropdown-menu"
                             @mouseover="toggleDropdownMenu('downloaders')"
                             @mouseleave="toggleDropdownMenu('')"
-                            class="dropdown-menu"
                             :class="{
                                 'show': currentToggledMenu === 'downloaders'
                             }">
@@ -66,6 +79,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li 
                         class="nav-item dropdown"
                         @mouseover="toggleDropdownMenu('generators')"
@@ -88,12 +102,14 @@
                                 'show': currentToggledMenu === 'generators'
                             }">
                             <li>
-                                <router-link class="dropdown-item"
+                                <router-link
+                                    class="dropdown-item"
                                     to="/calendar-link-generator"
                                     active-class="active text-primary">
                                     Calendar Link Generator
                                 </router-link>
-                                <router-link class="dropdown-item"
+                                <router-link
+                                    class="dropdown-item"
                                     to="/qr-code-generator"
                                     active-class="active text-primary">
                                     QR Generator
@@ -101,6 +117,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li 
                         class="nav-item dropdown"
                         @mouseover="toggleDropdownMenu('validators')"
@@ -123,7 +140,8 @@
                                 'show': currentToggledMenu === 'validators'
                             }">
                             <li>
-                                <router-link class="dropdown-item"
+                                <router-link
+                                    class="dropdown-item"
                                     to="/email-validator"
                                     active-class="active text-primary">
                                     Email Validator
@@ -131,6 +149,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li 
                         class="nav-item dropdown"
                         @mouseover="toggleDropdownMenu('others')"
@@ -153,7 +172,8 @@
                                 'show': currentToggledMenu === 'others'
                             }">
                             <li>
-                                <router-link class="dropdown-item"
+                                <router-link
+                                    class="dropdown-item"
                                     to="/clock-converter"
                                     active-class="active text-primary">
                                     Clock Converter
@@ -164,7 +184,8 @@
                 </div>
 
                 <div class="navbar-nav ms-auto">
-                    <a class="btn btn-outline-primary"
+                    <a
+                        class="btn btn-outline-primary"
                         href="https://github.com/pizza-society/unicornify"
                         target="_blank">
                         <i class="fa-brands fa-github-alt"></i>
@@ -177,7 +198,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
     name: 'NavbarMain',
@@ -197,6 +218,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style lang="scss" scoped>
-</style>

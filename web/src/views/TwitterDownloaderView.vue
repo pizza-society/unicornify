@@ -8,7 +8,7 @@
                 speed="0.5"
                 style="width: 300px; height: 300px;"
                 loop
-                autoplay/>
+                autoplay />
 
             <div class="col-lg-6 col-md-4 text-center">
                 <figure class="text-center">
@@ -21,7 +21,6 @@
                     <figcaption class="blockquote-footer">
                         Download Twitter Videos in seconds...
                     </figcaption>
-
                 </figure>
 
 				<ErrorAlert v-if="error">
@@ -50,7 +49,7 @@
                                     <div class="col-md-4 img-container">
                                         <img
                                             :src="tweetMetaData.thumbnail"
-                                            class="img-fluid rounded-start"/>
+                                            class="img-fluid rounded-start" />
                                     </div>
 
                                     <div class="col-md-8">
@@ -81,13 +80,12 @@
                                                             </td>
 
                                                             <td>
-                                                                <a  @click="downloadVideo(value.url)">
+                                                                <a @click="downloadVideo(value.url)">
                                                                     Download
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
-                                                    
+                                                    </tbody>  
                                                 </table>
                                             </div>
                                         </div>
@@ -113,11 +111,11 @@
                                         :class="{
                                             'is-invalid': v$.url.$error && v$.url.$dirty,
                                             'is-valid': !v$.url.$error && v$.url.$dirty
-                                        }"/>
+                                        }" />
 
                                     <div
-                                        class="invalid-feedback"
                                         v-for="error of v$.url.$errors"
+                                        class="invalid-feedback"
                                         :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -127,9 +125,9 @@
                     </form>
 
                     <button
+                        id="button-addon2"
                         class="btn btn-primary"
                         type="button"
-                        id="button-addon2"
                         @click="getTweetMedia()"
                         :disabled="isLoading || v$.$invalid">
                         <span v-if="!isLoading">
@@ -140,7 +138,7 @@
                             <span
                                 class="spinner-grow spinner-grow-sm"
                                 role="status"
-                                aria-hidden="true"/>
+                                aria-hidden="true" />
                             Loading...
                         </span>
                     </button>
@@ -151,7 +149,6 @@
                             https://twitter.com/unicornify/status/882987478541533189
                         </figcaption>
                     </figure>
-
                 </div>
             </div>
         </div>
@@ -159,18 +156,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 
-import useVuelidate from '@vuelidate/core';
-import { helpers, or, required } from '@vuelidate/validators';
+import useVuelidate from '@vuelidate/core'
+import { helpers, or, required } from '@vuelidate/validators'
 
-import { useServiceStore } from '@/store';
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
+import { useServiceStore } from '@/store'
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 
 export default defineComponent({
     name: 'TwitterDownloaderView',
     setup() {
-
         // Data
         const tweetMetaData = ref<any>(null)
         const tweetMedias = ref<any>(null)
@@ -206,15 +202,12 @@ export default defineComponent({
                 ),
                 url: helpers.withMessage(
                     'Please enter a valid twitter status link',
-                    or(
-                        twRegexNormalStatus,
-                        twRegexMobileBrowserStatus,
-                        twRegexMobileShareStatus
-                    )
+                    or(twRegexNormalStatus,
+                       twRegexMobileBrowserStatus,
+                       twRegexMobileShareStatus)
                 )
             }
         }
-
         const v$ = useVuelidate(validation, downloadForm)
 
         // Checkers
@@ -281,7 +274,6 @@ export default defineComponent({
     height: 200px;
     width: 200px;
 }
-
 
 .img-container img {
     max-height: 100%;

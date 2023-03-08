@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div
-            class="d-flex flex-row vh-min justify-content-center align-items-center row">
+            class="d-flex flex-row vh-min justify-content-center
+            align-items-center row">
             <div class="col-lg-12 col-md-4 text-center">
                 <ErrorAlert v-if="error">
                     An Error has occured, please try again later ...
@@ -44,9 +45,9 @@
                                     <br />
 
                                     <button
+                                        id="button-addon1"
                                         class="btn btn-outline-primary"
-                                        type="submit"
-                                        id="button-addon1">
+                                        type="submit">
                                         Verify
                                     </button>
                                 </div>
@@ -98,17 +99,16 @@
     </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, ref } from 'vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue';
-import { useServiceStore } from '@/store';
-import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models';
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import { useServiceStore } from '@/store'
+import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models'
 
 export default defineComponent({
     name: 'email-validator',
     setup() {
-
         // Data
         const disposedEmailResult = ref<DisposableEmailMeta | null>(null)
 
@@ -133,7 +133,9 @@ export default defineComponent({
                 })
                 return
             }
+
             formSubmitted.value = true
+
             return serviceSvc.validateDisposableEmail(
                 emailForm.value
                 ).then(data => {
@@ -167,9 +169,9 @@ export default defineComponent({
         }
     },
     components: { ErrorAlert }
-});
-
+})
 </script>
+
 <style lang="scss" scoped>
 .container-sm {
     max-width: 25rem;
