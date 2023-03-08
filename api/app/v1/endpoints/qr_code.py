@@ -10,8 +10,13 @@ from qrcode.image.styles.colormasks import SolidFillColorMask
 from qrcode.image.styles.moduledrawers import (SquareModuleDrawer, GappedSquareModuleDrawer,
     CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer)
 
+from app.v1 import constants
 from app.core.schemas.qr_code import DrawerChoices, QRCode, QRCodeResponse
 
+
+VERSION = 1
+BOX_SIZE = 10
+BORDER = 4
 
 router = APIRouter()
 
@@ -30,7 +35,7 @@ def generate_qr(data: QRCode):
         Update this docstring
     """
     # Configure
-    qr = qrcode.QRCode(version=1, box_size=10, border=4,
+    qr = qrcode.QRCode(version=VERSION, box_size=BOX_SIZE, border=BORDER,
                        error_correction=qrcode.constants.ERROR_CORRECT_L)
     drawer_module = get_drawer_module(data.drawer)
 
@@ -46,7 +51,7 @@ def generate_qr(data: QRCode):
     img.save(buffer, format=data.image_type)
 
     # Encode base 64 and decode utf-8
-    img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    img_base64 = base64.b64encode(buffer.getvalue()).decode(constants.Encoding.UTF8.value)
 
     # Return response
     return JSONResponse(status_code=status.HTTP_201_CREATED,
