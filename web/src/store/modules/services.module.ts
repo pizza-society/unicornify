@@ -1,10 +1,10 @@
+import { defineStore } from 'pinia'
+
 import { APIService } from '@/common/api.service'
 import QRGeneratorResponse from '@/types/qr-generator.model'
 import DisposableEmailResponse from '@/types/disposable-email-validator.models'
 import TwitterDownloaderResponse from '@/types/twitter-downloader.model'
 import TikTokDownloaderResponse from '@/types/tiktok-downloader.model'
-import { defineStore } from 'pinia'
-import axios from 'axios'
 
 export const useServiceStore = defineStore('service', {
     state: () => ({}),
@@ -62,21 +62,23 @@ export const useServiceStore = defineStore('service', {
          * @param {string} fileNamePrefix - The prefix of the generated file name 
          * @param {boolean} useProxy - A flag indicating whether the link should be passed through the proxy server
          */
-        downloadBlobFile(url: string, type: string, fileNamePrefix: string, useProxy = false, query = {}): void
-        {
+        downloadBlobFile(url: string, type: string, fileNamePrefix: string,
+                         useProxy = false, query = {}): void {
             /*
             *  Vue/HTML/JS how to download a file to browser using the download tag
             *  https://stackoverflow.com/a/53775165/16711156
             */
             let targetURL = url
+            
             if (useProxy) {
-                targetURL = `${process.env.VUE_APP_BASE_URL}/services/reverse-proxy/`
+                targetURL = `${ process.env.VUE_APP_BASE_URL }/services/reverse-proxy/`
             }
+
             APIService.get(targetURL, null, { responseType: 'blob', params: query })
                 .then(response => {
                     const blob = new Blob([response.data], { type: type })
                     const link = document.createElement('a')
-                    const timeStamp = new Date().getTime().toString();
+                    const timeStamp = new Date().getTime().toString()
                     link.href = URL.createObjectURL(blob)
                     link.download = `${fileNamePrefix}-${timeStamp}`
                     link.click()

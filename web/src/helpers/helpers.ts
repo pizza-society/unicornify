@@ -1,4 +1,4 @@
-import { helpers } from '@vuelidate/validators';
+import { helpers } from '@vuelidate/validators'
 
 /**
  * Tiktok Link Regex
@@ -37,19 +37,19 @@ export const twitterStatusRegex = helpers.regex(
  */
 export const convertToTime = (value: string): string => {
   // Parse the input value as a number
-  const num = parseInt(value);
+  const num = parseInt(value)
 
   // Check if the number is greater than or equal to 60
   if (num >= 60) {
-      // Convert the number to minutes
-      const minutes = Math.floor(num / 60);
-      const seconds = num % 60;
+    // Convert the number to minutes
+    const minutes = Math.floor(num / 60)
+    const seconds = num % 60
 
-      // Return the result as a formatted string
-      return `${minutes} minutes ${seconds} seconds`;
+    // Return the result as a formatted string
+    return `${ minutes } minutes ${ seconds } seconds`
   } else {
-      // Return the result as a formatted string
-      return `${num} seconds`;
+    // Return the result as a formatted string
+    return `${ num } seconds`
   }
 }
 
