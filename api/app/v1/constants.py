@@ -9,6 +9,7 @@ class Encoding(str, Enum):
     """
     Enum class for encodings
     """
+
     UTF8 = "utf-8"
 
 
