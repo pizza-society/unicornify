@@ -1,7 +1,15 @@
 """ API related constants """
+from enum import Enum
+
 
 SERVICES_TAG = "Services"
 SERVICES_ENDPOINT = "/services"
+
+class Encoding(str, Enum):
+    """
+    Enum class for encodings
+    """
+    UTF8 = "utf-8"
 
 
 class RegexPatterns:
