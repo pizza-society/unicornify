@@ -6,9 +6,7 @@ from fastapi.responses import JSONResponse
 
 import qrcode
 from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.colormasks import SolidFillColorMask
-from qrcode.image.styles.moduledrawers import (SquareModuleDrawer, GappedSquareModuleDrawer,
-    CircleModuleDrawer, RoundedModuleDrawer, VerticalBarsDrawer, HorizontalBarsDrawer)
+from qrcode.image.styles import colormasks, moduledrawers
 
 from app.v1 import constants
 from app.core.schemas.qr_code import DrawerChoices, QRCode, QRCodeResponse
@@ -44,8 +42,8 @@ def generate_qr(data: QRCode):
     qr.make(fit=True)
     buffer = io.BytesIO()
     img = qr.make_image(image_factory=StyledPilImage, module_drawer=drawer_module,
-                        color_mask=SolidFillColorMask(front_color=data.front_color.as_rgb_tuple(),
-                                                      back_color=data.back_color.as_rgb_tuple()))
+                        color_mask=colormasks.SolidFillColorMask(front_color=data.front_color.as_rgb_tuple(),
+                                                                 back_color=data.back_color.as_rgb_tuple()))
 
     # Saving as data type
     img.save(buffer, format=data.image_type)
@@ -62,14 +60,14 @@ def get_drawer_module(drawer: DrawerChoices):
     """ Get drawer module by enum choice """
     match drawer:
         case DrawerChoices.GAPPEDM:
-            return GappedSquareModuleDrawer()
+            return moduledrawers.GappedSquareModuleDrawer()
         case DrawerChoices.CIRCLEM:
-            return CircleModuleDrawer()
+            return moduledrawers.CircleModuleDrawer()
         case DrawerChoices.ROUNDEDM:
-            return RoundedModuleDrawer()
+            return moduledrawers.RoundedModuleDrawer()
         case DrawerChoices.VERTICALM:
-            return VerticalBarsDrawer()
+            return moduledrawers.VerticalBarsDrawer()
         case DrawerChoices.HORIZONTALM:
-            return HorizontalBarsDrawer()
+            return moduledrawers.HorizontalBarsDrawer()
         case _:
-            return SquareModuleDrawer()
+            return moduledrawers.SquareModuleDrawer()
