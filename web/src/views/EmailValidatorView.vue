@@ -115,7 +115,7 @@ import { mapActions } from "pinia";
 
 undefined;
 export default defineComponent({
-    name: "email-validator",
+    name: "EmailValidatorView",
     data() {
         return {
             emailForm: { email: "" } as any,
