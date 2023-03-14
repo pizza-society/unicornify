@@ -36,20 +36,21 @@ export const twitterStatusRegex = helpers.regex(
  * @return {string} The input number converted to either seconds or minutes, depending on its value
  */
 export const convertToTime = (value: string): string => {
-  // Parse the input value as a number
-  const num = parseInt(value);
+  const SECONDS_IN_MINUTE = 60
+  
+  const num = parseInt(value)
+  
+  if (isNaN(num)) {
+    return ''
+  }
 
-  // Check if the number is greater than or equal to 60
-  if (num >= 60) {
-      // Convert the number to minutes
-      const minutes = Math.floor(num / 60);
-      const seconds = num % 60;
+  const minutes = Math.floor(num / SECONDS_IN_MINUTE)
+  const seconds = num % SECONDS_IN_MINUTE
 
-      // Return the result as a formatted string
-      return `${minutes} minutes ${seconds} seconds`;
+  if (minutes > 0) {
+    return `${minutes} minutes ${seconds} seconds`
   } else {
-      // Return the result as a formatted string
-      return `${num} seconds`;
+    return `${seconds} seconds`
   }
 }
 
