@@ -107,7 +107,7 @@ import { useServiceStore } from '@/store'
 import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models'
 
 export default defineComponent({
-    name: 'email-validator',
+    name: 'EmailValidatorView',
     setup() {
         // Data
         const disposedEmailResult = ref<DisposableEmailMeta | null>(null)
