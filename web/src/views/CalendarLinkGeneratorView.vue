@@ -233,13 +233,13 @@
 import { defineComponent, ref } from 'vue'
 
 import { DatePicker } from 'v-calendar'
-import { computed } from '@vue/reactivity'
+import { computed } from 'vue'
 
 import { TIME_ZONES } from '@/common/timezones'
 import { copyTextToClipboard } from '@/common/helpers'
 
 export default defineComponent({
-    name: 'CalendarLinkGenerator',
+    name: 'CalendarLinkGeneratorView',
     setup() {
         // Forms
         const calendarForm = ref({
