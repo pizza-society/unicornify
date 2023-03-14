@@ -1,4 +1,4 @@
-import { helpers } from '@vuelidate/validators';
+import { helpers } from '@vuelidate/validators'
 
 /**
  * Tiktok Link Regex

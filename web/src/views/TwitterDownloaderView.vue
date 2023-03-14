@@ -1,14 +1,16 @@
 <template>
     <div class="container">
         <div
-            class="d-flex flex-column justify-content-center align-items-center">
+            class="d-flex flex-column justify-content-center
+            align-items-center">
             <lottie-player
                 src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
                 background="transparent"
                 speed="0.5"
                 style="width: 300px; height: 300px;"
                 loop
-                autoplay/>
+                autoplay />
+
             <div class="col-lg-6 col-md-4 text-center">
                 <figure class="text-center">
                     <blockquote class="blockquote">
@@ -16,14 +18,17 @@
                             Twitter Video Downloader
                         </h3>
                     </blockquote>
+
                     <figcaption class="blockquote-footer">
                         Download Twitter Videos in seconds...
                     </figcaption>
                 </figure>
+
 				<ErrorAlert v-if="error">
 					The twitter link you supplied does not include any video 
                     or that there is a problem downloading the video.
-				</ErrorAlert>    
+				</ErrorAlert>   
+
                 <div class="mb-3">
                     <div v-if="tweetMedias && tweetMetaData && !isLoading && !error">
                         <div class="card text-center text-bg-dark mb-3">
@@ -32,18 +37,21 @@
                                     {{ tweetMetaData.uploaderDisplayName }}
                                 </h5>
                             </div>
+
                             <div class="card-body">
                                 <p class="card-text">
                                     {{ tweetMetaData.description }}
                                 </p>
                             </div>
+
                             <div class="card-footer text-muted">
                                 <div class="row g-0 text-bg-dark ">
                                     <div class="col-md-4 img-container">
                                         <img
                                             :src="tweetMetaData.thumbnail"
-                                            class="img-fluid rounded-start"/>
+                                            class="img-fluid rounded-start" />
                                     </div>
+
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <div class="card-text">
@@ -64,10 +72,10 @@
                                                             v-for="(item, index) in tweetMedias"
                                                             :key="index">
                                                             <td>
-                                                                {{item.resolution}}
+                                                                {{ item.resolution }}
                                                             </td>
                                                             <td>
-                                                                <a  @click="downloadVideo(item.url)">
+                                                                <a @click="downloadVideo(item.url)">
                                                                     Download
                                                                 </a>
                                                             </td>
@@ -81,7 +89,10 @@
                             </div>
                         </div>
                     </div>
-                    <form @submit.prevent class="needs-validation">
+
+                    <form
+                        class="needs-validation"
+                        @submit.prevent>
                         <div class="row rounded-top ">
                             <div class="input-group">
                                 <div class="input-group mb-3">
@@ -93,16 +104,15 @@
                                         aria-describedby="button-addon2"
                                         v-model="downloadForm.url"
                                         :disabled="isLoading"
-                                        @blur="v$.url.$touch"
                                         :class="{
-                                            'is-invalid':
-                                                v$.url.$error && v$.url.$dirty,
-                                            'is-valid':
-                                                !v$.url.$error && v$.url.$dirty
-                                        }"/>
+                                            'is-invalid': v$.url.$error && v$.url.$dirty,
+                                            'is-valid': !v$.url.$error && v$.url.$dirty
+                                        }"
+                                        @blur="v$.url.$touch" />
+
                                     <div
-                                        class="invalid-feedback"
                                         v-for="error of v$.url.$errors"
+                                        class="invalid-feedback"
                                         :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -111,22 +121,24 @@
                         </div>
                     </form>
                     <button
+                        id="button-addon2"
                         class="btn btn-primary"
                         type="button"
-                        id="button-addon2"
-                        @click="getTweetMedia()"
-                        :disabled="isLoading || v$.$invalid">
+                        :disabled="isLoading || v$.$invalid"
+                        @click="getTweetMedia()">
                         <span v-if="!isLoading">
                             Download
                         </span>
+
                         <span v-else>
                             <span
                                 class="spinner-grow spinner-grow-sm"
                                 role="status"
-                                aria-hidden="true"/>
+                                aria-hidden="true" />
                             Loading...
                         </span>
                     </button>
+
                     <figure class="text-center mt-4">
                         <figcaption class="blockquote-footer">
                             Link example:
@@ -140,85 +152,88 @@
 </template>
 
 <script lang="ts">
-import { useServiceStore } from "@/store";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 
-import useVuelidate from "@vuelidate/core";
-import { twitterStatusRegex, sleep } from "@/helpers/helpers"
-import { helpers, or, required } from "@vuelidate/validators";
-import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
-import { TweetMedia, TweetMeta } from "@/types/twitter-downloader.model";
+import useVuelidate from '@vuelidate/core'
+import { helpers, required } from '@vuelidate/validators'
+
+import { useServiceStore } from '@/store'
+import { twitterStatusRegex, sleep } from '@/helpers/helpers'
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
 
 export default defineComponent({
-    name: "TwitterDownloaderView",
+    name: 'TwitterDownloaderView',
     setup() {
-
         // Data
-        const tweetMetaData = ref<TweetMeta | null>(null);
-        const tweetMedias = ref<TweetMedia[] | null>(null);
+        const tweetMetaData = ref<TweetMeta | null>(null)
+        const tweetMedias = ref<TweetMedia[] | null>(null)
         const error = ref<boolean>(false)
 
         // Services
-        const serviceSvc = useServiceStore();
+        const serviceSvc = useServiceStore()
 
         // Form
         const downloadForm = ref({
             url: null
-        });
+        })
 
         const validation = {
             url: {
                 required: helpers.withMessage(
-                    "Please fill this field",
+                    'Please fill this field',
                     required
                 ),
                 url: helpers.withMessage(
-                    "Please enter a valid twitter status link",
+                    'Please enter a valid twitter status link',
                     twitterStatusRegex
                 )
             }
-        };
-
-        const v$ = useVuelidate(validation, downloadForm);
+        }
+        const v$ = useVuelidate(validation, downloadForm)
 
         // Checkers
-        const isLoading = ref<boolean>(false);
+        const isLoading = ref<boolean>(false)
 
         // Get resolutions
         const getTweetMedia = () => {
-            isLoading.value = true;
-            tweetMedias.value = null;
-            tweetMetaData.value = null;
+            isLoading.value = true
+            tweetMedias.value = null
+            tweetMetaData.value = null
+
             return serviceSvc
                 .downloadTwitterVideo(downloadForm.value)
                 .then(data => {
-                    if(data.result.error) throw new Error("There's no video in this tweet");
+                    if(data.result.error) {
+                        throw new Error('There\'s no video in this tweet')
+                    }
+
                     // Tweet media file data
-                    tweetMedias.value = data.result.tweetMedias;
+                    tweetMedias.value = data.result.tweetMedias
                     // Tweet meta file data
-                    tweetMetaData.value = data.result.tweetMetaData;
-                    isLoading.value = false;
+                    tweetMetaData.value = data.result.tweetMetaData
+                    isLoading.value = false
                 })
                 .catch(() => {
-                    tweetMedias.value = null;
-                    tweetMetaData.value = null;
-                    isLoading.value = false;
+                    tweetMedias.value = null
+                    tweetMetaData.value = null
+                    isLoading.value = false
                     displayErrorMessage(5000)   
-                });
-        };
+                })
+        }
 
         // Error Handler
 		const displayErrorMessage = (duration: number) => {
-			error.value = true;
+			error.value = true
 			sleep(duration).then(() => {
-				error.value = false;
-			});
+				error.value = false
+			})
         }
         
         // Download tweet video
         const downloadVideo = (url: string) => {
-            serviceSvc.downloadBlobFile(url, "video/mp4", "tweet-video");
-        };
+            serviceSvc.downloadBlobFile(url, 'video/mp4', 'tweet-video')
+        }
 
         return {
             downloadForm,
@@ -230,10 +245,10 @@ export default defineComponent({
             getTweetMedia,
             downloadVideo,
             displayErrorMessage
-        };
+        }
     },
     components: { ErrorAlert }
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -241,7 +256,6 @@ export default defineComponent({
     height: 200px;
     width: 200px;
 }
-
 
 .img-container img {
     max-height: 100%;
