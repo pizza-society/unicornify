@@ -1,7 +1,7 @@
 /** Interface for TikTokMedia */
 export interface TikTokMedia {
     /** The format id of the media */
-    format_id: string 
+    formatId: string 
 
     /** The format note of the media */
     formatNote: string
