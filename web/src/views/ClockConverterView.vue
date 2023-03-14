@@ -102,7 +102,7 @@ import { defineComponent, ref, computed } from 'vue'
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 
 export default defineComponent({
-	name: 'ClockConverter',
+	name: 'ClockConverterView',
 	setup() {
 		// Data
 		const t12HourInput = ref<string>('')
