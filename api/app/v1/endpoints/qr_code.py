@@ -5,8 +5,10 @@ from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
 import qrcode
+from qrcode.exceptions import DataOverflowError
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles import colormasks, moduledrawers
+
 
 from app.v1 import constants
 from app.core.schemas.qr_code import DrawerChoices, QRCode, QRCodeResponse
@@ -26,11 +28,11 @@ def generate_qr(data: QRCode):
     """
     Generate a QR code
 
-    :param data: the qr code generator settings
-    :type QRCode
+    :param data: qr code generator settings
+    :type data: QRCode
 
-    TODO:
-        Update this docstring
+    :return: json response with results or error content
+    :rtype: JSONResponse
     """
     # Configure
     qr = qrcode.QRCode(version=VERSION, box_size=BOX_SIZE, border=BORDER,
@@ -48,8 +50,12 @@ def generate_qr(data: QRCode):
     # Saving as data type
     img.save(buffer, format=data.image_type)
 
-    # Encode base 64 and decode utf-8
-    img_base64 = base64.b64encode(buffer.getvalue()).decode(constants.Encoding.UTF8.value)
+    try:
+        # Encode base 64 and decode utf-8
+        img_base64 = base64.b64encode(buffer.getvalue()).decode(constants.Encoding.UTF8.value)
+    except (DataOverflowError, UnicodeDecodeError )as e:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
+                            content={ "error": e.args })
 
     # Return response
     return JSONResponse(status_code=status.HTTP_201_CREATED,
@@ -57,17 +63,31 @@ def generate_qr(data: QRCode):
 
 
 def get_drawer_module(drawer: DrawerChoices):
-    """ Get drawer module by enum choice """
+    """
+    Get drawer module by enum choice
+    
+    :param drawer: selected drawer 
+    :type drawer: DrawerChoices
+
+    :return: drawer module
+    :rtype: GappedSquareModuleDrawer or CircleModuleDrawer \
+        or RoundedModuleDrawer or VerticalBarsDrawer \
+        or HorizontalBarsDrawer or SquareModuleDrawer
+    """
+    drawer_module = None
+
     match drawer:
         case DrawerChoices.GAPPEDM:
-            return moduledrawers.GappedSquareModuleDrawer()
+            drawer_module = moduledrawers.GappedSquareModuleDrawer()
         case DrawerChoices.CIRCLEM:
-            return moduledrawers.CircleModuleDrawer()
+            drawer_module = moduledrawers.CircleModuleDrawer()
         case DrawerChoices.ROUNDEDM:
-            return moduledrawers.RoundedModuleDrawer()
+            drawer_module = moduledrawers.RoundedModuleDrawer()
         case DrawerChoices.VERTICALM:
-            return moduledrawers.VerticalBarsDrawer()
+            drawer_module = moduledrawers.VerticalBarsDrawer()
         case DrawerChoices.HORIZONTALM:
-            return moduledrawers.HorizontalBarsDrawer()
+            drawer_module = moduledrawers.HorizontalBarsDrawer()
         case _:
-            return moduledrawers.SquareModuleDrawer()
+            drawer_module = moduledrawers.SquareModuleDrawer()
+        
+    return drawer_module
