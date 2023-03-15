@@ -281,7 +281,7 @@ export default defineComponent({
                 calendarForm.value.location
             }&dates=${convertDateTimeToPureISO(
                 calendarForm.value.startTime
-            )}%2F${convertDateTimeToPureISO(calendarForm.value.endTime)}&ctz=${
+            )}%2F${ convertDateTimeToPureISO(calendarForm.value.endTime) }&ctz=${
                 calendarForm.value.timeZone
             }`
         })
@@ -293,7 +293,7 @@ export default defineComponent({
                 calendarForm.value.location
             }&st=${convertDateTimeToPureISO(
                 calendarForm.value.startTime
-            )}&et=${convertDateTimeToPureISO(calendarForm.value.endTime)}`
+            )}&et=${ convertDateTimeToPureISO(calendarForm.value.endTime) }`
         })
 
         // Data
