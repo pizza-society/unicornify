@@ -19,7 +19,8 @@ export interface DisposableEmailMeta {
   whitelist: boolean
 }
 
-/** DisposableEmailResponse interface defines the structure of
+/** 
+ * DisposableEmailResponse interface defines the structure of
  * an object that represents the response from validating a
  * disposable email.
  */
