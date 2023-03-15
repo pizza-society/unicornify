@@ -48,9 +48,9 @@ export const convertToTime = (value: string): string => {
   const seconds = num % SECONDS_IN_MINUTE
 
   if (minutes > 0) {
-    return `${minutes} minutes ${seconds} seconds`
+    return `${ minutes } minutes ${ seconds } seconds`
   } else {
-    return `${seconds} seconds`
+    return `${ seconds } seconds`
   }
 }
 
