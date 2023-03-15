@@ -30,27 +30,27 @@
 </template>
 
 <script lang="ts">
-import { onMounted, defineComponent, ref } from "vue";
+import { onMounted, defineComponent, ref } from 'vue'
 
 export default defineComponent({
-    name: "ModalComponent",
+    name: 'ModalComponent',
     setup() {
         const isModalOpen = ref<boolean>(false);
 
         const toggleModal = () => {
-            return (isModalOpen.value = !isModalOpen.value);
-        };
+            return (isModalOpen.value = !isModalOpen.value)
+        }
 
         onMounted(() => {
-            // console.log("modalComponent");
-        });
+            // console.log('modalComponent')
+        })
 
         return {
             isModalOpen,
             toggleModal,
-        };
+        }
     },
-});
+})
 </script>
 
 <style lang="scss">

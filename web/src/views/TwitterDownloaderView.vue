@@ -8,7 +8,8 @@
                 speed="0.5"
                 style="width: 300px; height: 300px;"
                 loop
-                autoplay/>
+                autoplay />
+
             <div class="col-lg-6 col-md-4 text-center">
                 <figure class="text-center">
                     <blockquote class="blockquote">
@@ -16,14 +17,17 @@
                             Twitter Video Downloader
                         </h3>
                     </blockquote>
+
                     <figcaption class="blockquote-footer">
                         Download Twitter Videos in seconds...
                     </figcaption>
                 </figure>
+
 				<ErrorAlert v-if="error">
 					The twitter link you supplied does not include any video 
                     or that there is a problem downloading the video.
-				</ErrorAlert>    
+				</ErrorAlert> 
+
                 <div class="mb-3">
                     <div v-if="tweetMedias && tweetMetaData && !isLoading && !error">
                         <div class="card text-center text-bg-dark mb-3">
@@ -32,19 +36,22 @@
                                     {{ tweetMetaData.uploader_display_name }}
                                 </h5>
                             </div>
+
                             <div class="card-body">
                                 <!-- <h5 class="card-title">{{tweetMetaData.uploader_display_name}}</h5> -->
                                 <p class="card-text">
                                     {{ tweetMetaData.description }}
                                 </p>
                             </div>
+
                             <div class="card-footer text-muted">
                                 <div class="row g-0 text-bg-dark ">
                                     <div class="col-md-4 img-container">
                                         <img
                                             :src="tweetMetaData.thumbnail"
-                                            class="img-fluid rounded-start"/>
+                                            class="img-fluid rounded-start" />
                                     </div>
+
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <!-- <h5 class="card-title">Card title</h5> -->
@@ -57,11 +64,13 @@
                                                             <th scope="col">
                                                                 Quality
                                                             </th>
+
                                                             <th scope="col">
                                                                 Downloads
                                                             </th>
                                                         </tr>
                                                     </thead>
+
                                                     <tbody>
                                                         <tr
                                                             v-for="value in tweetMedias"
@@ -69,13 +78,14 @@
                                                             <td>
                                                                 {{value.resolution}}
                                                             </td>
+
                                                             <td>
-                                                                <a  @click="downloadVideo(value.url)">
+                                                                <a @click="downloadVideo(value.url)">
                                                                     Download
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
+                                                    </tbody>  
                                                 </table>
                                             </div>
                                         </div>
@@ -84,6 +94,7 @@
                             </div>
                         </div>
                     </div>
+
                     <form @submit.prevent class="needs-validation">
                         <div class="row rounded-top ">
                             <div class="input-group">
@@ -98,14 +109,13 @@
                                         :disabled="isLoading"
                                         @blur="v$.url.$touch"
                                         :class="{
-                                            'is-invalid':
-                                                v$.url.$error && v$.url.$dirty,
-                                            'is-valid':
-                                                !v$.url.$error && v$.url.$dirty
-                                        }"/>
+                                            'is-invalid': v$.url.$error && v$.url.$dirty,
+                                            'is-valid': !v$.url.$error && v$.url.$dirty
+                                        }" />
+
                                     <div
-                                        class="invalid-feedback"
                                         v-for="error of v$.url.$errors"
+                                        class="invalid-feedback"
                                         :key="error.$uid">
                                         {{ error.$message }}
                                     </div>
@@ -113,23 +123,26 @@
                             </div>
                         </div>
                     </form>
+
                     <button
+                        id="button-addon2"
                         class="btn btn-primary"
                         type="button"
-                        id="button-addon2"
                         @click="getTweetMedia()"
                         :disabled="isLoading || v$.$invalid">
                         <span v-if="!isLoading">
                             Download
                         </span>
+
                         <span v-else>
                             <span
                                 class="spinner-grow spinner-grow-sm"
                                 role="status"
-                                aria-hidden="true"/>
+                                aria-hidden="true" />
                             Loading...
                         </span>
                     </button>
+
                     <figure class="text-center mt-4">
                         <figcaption class="blockquote-footer">
                             Link example:
@@ -143,106 +156,102 @@
 </template>
 
 <script lang="ts">
-import { useServiceStore } from "@/store";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 
-import useVuelidate from "@vuelidate/core";
+import useVuelidate from '@vuelidate/core'
+import { helpers, or, required } from '@vuelidate/validators'
 
-import { helpers, or, required } from "@vuelidate/validators";
-import ErrorAlert from "@/components/ErrorHandlers/ErrorAlert.vue";
+import { useServiceStore } from '@/store'
+import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 
 export default defineComponent({
-    name: "TwitterDownloaderView",
+    name: 'TwitterDownloaderView',
     setup() {
-
         // Data
-        const tweetMetaData = ref<any>(null);
-        const tweetMedias = ref<any>(null);
-        let error = ref<boolean>(false)
+        const tweetMetaData = ref<any>(null)
+        const tweetMedias = ref<any>(null)
+        const error = ref<boolean>(false)
 
         // Services
-        const serviceSvc = useServiceStore();
+        const serviceSvc = useServiceStore()
 
         // Form
         const downloadForm = ref({
             url: null
-        });
+        })
 
         // Twitter Status Regex
         // I.e:  https://twitter.com/TheOceanCleanup/status/1551568161018871810
         const twRegexNormalStatus = helpers.regex(
             /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
-        );
+        )
         // I.e: https://mobile.twitter.com/TheOceanCleanup/status/1551568161018871810
         const twRegexMobileBrowserStatus = helpers.regex(
             /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?$/
-        );
+        )
         // I.e: https://twitter.com/tansuyegen/status/1553643510271807489?s=24&t=DWBlw1gZk3FFWVQYOHUGYw
         const twRegexMobileShareStatus = helpers.regex(
             /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?((\?)(.+))?$/
-        );
+        )
 
         const validation = {
             url: {
                 required: helpers.withMessage(
-                    "Please fill this field",
+                    'Please fill this field',
                     required
                 ),
                 url: helpers.withMessage(
-                    "Please enter a valid twitter status link",
-                    or(
-                        twRegexNormalStatus,
-                        twRegexMobileBrowserStatus,
-                        twRegexMobileShareStatus
-                    )
+                    'Please enter a valid twitter status link',
+                    or(twRegexNormalStatus,
+                       twRegexMobileBrowserStatus,
+                       twRegexMobileShareStatus)
                 )
             }
-        };
-
-        const v$ = useVuelidate(validation, downloadForm);
+        }
+        const v$ = useVuelidate(validation, downloadForm)
 
         // Checkers
-        const isLoading = ref<boolean>(false);
+        const isLoading = ref<boolean>(false)
 
         // Get resolutions
         const getTweetMedia = () => {
-            isLoading.value = true;
-            tweetMedias.value = null;
-            tweetMetaData.value = null;
+            isLoading.value = true
+            tweetMedias.value = null
+            tweetMetaData.value = null
             return serviceSvc
                 .downloadTwitterVideo(downloadForm.value)
                 .then(data => {
-                    if(data.result.error) throw new Error("There's no video in this tweet");
+                    if(data.result.error) throw new Error("There's no video in this tweet")
                     // Tweet media file data
-                    tweetMedias.value = data.result.tweet_medias;
+                    tweetMedias.value = data.result.tweet_medias
                     // Tweet meta file data
-                    tweetMetaData.value = data.result.tweet_meta_data;
-                    isLoading.value = false;
+                    tweetMetaData.value = data.result.tweet_meta_data
+                    isLoading.value = false
                 })
                 .catch(() => {
-                    tweetMedias.value = null;
-                    tweetMetaData.value = null;
-                    isLoading.value = false;
+                    tweetMedias.value = null
+                    tweetMetaData.value = null
+                    isLoading.value = false
                     displayErrorMessage(5000)   
-                });
-        };
+                })
+        }
 
         // Error Handler
 		const displayErrorMessage = (duration: number) => {
-			error.value = true;
+			error.value = true
 			sleep(duration).then(() => {
-				error.value = false;
-			});
+				error.value = false
+			})
         }
         
         const sleep = (time: number) => {
-			return new Promise(resolve => setTimeout(resolve, time));
+			return new Promise(resolve => setTimeout(resolve, time))
 		}
 
         // Download tweet video
         const downloadVideo = (url: string) => {
-            serviceSvc.downloadBlobFile(url, "video/mp4", "tweet-video");
-        };
+            serviceSvc.downloadBlobFile(url, 'video/mp4', 'tweet-video')
+        }
 
         return {
             downloadForm,
@@ -254,10 +263,10 @@ export default defineComponent({
             getTweetMedia,
             downloadVideo,
             displayErrorMessage
-        };
+        }
     },
     components: { ErrorAlert }
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -265,7 +274,6 @@ export default defineComponent({
     height: 200px;
     width: 200px;
 }
-
 
 .img-container img {
     max-height: 100%;
