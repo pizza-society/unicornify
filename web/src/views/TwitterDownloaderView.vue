@@ -62,11 +62,13 @@
                                                             <th scope="col">
                                                                 Quality
                                                             </th>
+
                                                             <th scope="col">
                                                                 Downloads
                                                             </th>
                                                         </tr>
                                                     </thead>
+
                                                     <tbody>
                                                         <tr
                                                             v-for="(item, index) in tweetMedias"
@@ -74,13 +76,14 @@
                                                             <td>
                                                                 {{ item.resolution }}
                                                             </td>
+
                                                             <td>
                                                                 <a @click="downloadVideo(item.url)">
                                                                     Download
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                    </tbody>
+                                                    </tbody>  
                                                 </table>
                                             </div>
                                         </div>
@@ -120,6 +123,7 @@
                             </div>
                         </div>
                     </form>
+
                     <button
                         id="button-addon2"
                         class="btn btn-primary"
@@ -165,6 +169,7 @@ import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
 export default defineComponent({
     name: 'TwitterDownloaderView',
     setup() {
+
         // Data
         const tweetMetaData = ref<TweetMeta | null>(null)
         const tweetMedias = ref<TweetMedia[] | null>(null)

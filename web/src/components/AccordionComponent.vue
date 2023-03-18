@@ -99,10 +99,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-    name: "AccordionComponent",
+    name: 'AccordionComponent',
     setup() {
         const isAccordionOpen = ref<boolean[]>([false, true, false])
 
@@ -115,7 +115,7 @@ export default defineComponent({
             toggleItem,
         }
     },
-});
+})
 </script>
 
 <style lang="scss">
