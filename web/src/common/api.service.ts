@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 export const APIService = {
     // Config
     init() {
         // URL configs
-        axios.defaults.baseURL = `${import.meta.env.VITE_BASE_URL}`
+        axios.defaults.baseURL = `${ import.meta.env.VITE_BASE_URL }`
 
         // Error interceptors
         axios.interceptors.response.use(undefined, (error) => {
@@ -35,18 +35,15 @@ export const APIService = {
     setHeader () {
         // axios.defaults.headers.
     },
-    async get (resource: string, query: string | null = null) {
-        if (query !== null) {
-            resource = `${resource}/?${query}`
-        } else {
-            resource = `${resource}/`
-        }
-        return await axios.get(`${resource}`).catch(error => {
+    async get (resource: string, query: string | null = null, options?: AxiosRequestConfig) {
+        const url = query ? `${ resource }/?${ query }` : resource
+        
+        return await axios.get(url, options).catch(error => {
             throw error
         })
     },
     async post (resource: string, params: object) {
-        return await axios.post(`${resource}/`, params).catch(error => {
+        return await axios.post(`${ resource }/`, params).catch(error => {
             // console.log(error)
             throw error
         })
