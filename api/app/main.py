@@ -6,6 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.v1.api import api_router
 from app.core import dependencies
 from app.core.settings import settings
+from app.utils import logger
 
 
 @lru_cache()
@@ -31,3 +32,6 @@ app.include_router(api_router, prefix=get_settings().API_V1_STR)
 
 # Start dependencies here
 dependencies.setup_handlers(app=app)
+
+# Logger
+logger.setup_logger()
