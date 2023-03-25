@@ -15,7 +15,7 @@ def get_logger():
 
 def setup_logger():
     # Load logger config
-    fileConfig("logger.ini")
+    fileConfig("logger.ini", disable_existing_loggers=False)
     logger = get_logger()
 
     return logger

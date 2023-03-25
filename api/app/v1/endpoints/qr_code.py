@@ -9,9 +9,10 @@ from qrcode.exceptions import DataOverflowError
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles import colormasks, moduledrawers
 
-
 from app.v1 import constants
 from app.core.schemas.qr_code import DrawerChoices, QRCode, QRCodeResponse
+from app.core.schemas.errors import ErrorCode
+from app.utils.logger import get_logger as logger
 
 
 VERSION = 1
@@ -53,9 +54,10 @@ def generate_qr(data: QRCode):
     try:
         # Encode base 64 and decode utf-8
         img_base64 = base64.b64encode(buffer.getvalue()).decode(constants.Encoding.UTF8.value)
-    except (DataOverflowError, UnicodeDecodeError )as e:
+    except (DataOverflowError, UnicodeDecodeError) as e:
+        logger().warning(e.with_traceback)
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
-                            content={ "error": e.args })
+                            content={ "errorCode": ErrorCode.QR_ERROR, "error": e.args })
 
     # Return response
     return JSONResponse(status_code=status.HTTP_201_CREATED,
