@@ -5,6 +5,7 @@ class ErrorCode(str, Enum):
     """
     Error code related to services
     """
+
     # FastAPI related
     VALIDATION = "validation_error"
 

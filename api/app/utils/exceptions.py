@@ -6,6 +6,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
+from app.core.schemas.errors import ErrorCode
 from app.core.schemas.validations import ErrorKey, LocKey, ValidationErrorType
 
 
@@ -94,7 +95,6 @@ async def custom_http_exception_handler(request: Request,
         Response: default response
     """
 
-    # print(f"{ get_message_prefix() } OMG! An HTTP error!: {repr(exc)}")
     return await http_exception_handler(request, exc)
 
 
@@ -112,8 +112,9 @@ async def validation_exception_handler(request: Request,
         JSONResponse: a custom content JSON response
     
     """
+
     error_body = ValidationMessage(errors=exc.errors()).transform_message()
-    response_content = { "errorCode": "validation_error",
+    response_content = { "errorCode": ErrorCode.VALIDATION,
                          "errors": jsonable_encoder(error_body) }
 
     return JSONResponse(status_code=HTTP_422_UNPROCESSABLE_ENTITY,
