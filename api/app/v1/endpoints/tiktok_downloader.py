@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from pydantic import HttpUrl
 
 from app.utils.logger import get_logger
+from app.utils.helpers import convert_snake_to_camel_dict_or_list
 from app.core.schemas.exceptions import UnsupportedFormat, UnableToFindSupportedFormatKeys
 from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikTokVideoDownloaderResponse
 
@@ -170,5 +171,5 @@ class TikTokVideoDownloader:
             logging.error(f"Error occurred while extracting TikTok video information: {e}")
             raise RuntimeError from e
 
-        return formatted_media
+        return convert_snake_to_camel_dict_or_list(formatted_media)
 
