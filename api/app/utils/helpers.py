@@ -5,7 +5,8 @@ import re
 
 
 def to_camel_case(s: str) -> str:
-    """Converts a snake_case string to camelCase.
+    """
+    Converts a snake_case string to camelCase.
 
     Args:
         s: The snake_case string to convert.
