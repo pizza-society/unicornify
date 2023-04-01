@@ -30,14 +30,16 @@ router = APIRouter()
              responses=qr_code_doc.RESPONSES,
              status_code=status.HTTP_201_CREATED)
 def generate_qr(data: QRCode):
-    """
+    """\f
     Generate a QR code
 
-    :param data: qr code generator settings
-    :type data: QRCode
+    Args:
+        data (QRCode): QR code generator settings
 
-    :return: json response with results or error content
-    :rtype: JSONResponse
+    Returns:
+        QRCodeResponse: The generated QR code in base64 format or
+
+        JSONResponse: Error response
     """
     # Configure
     qr = qrcode.QRCode(version=VERSION, box_size=BOX_SIZE, border=BORDER,
@@ -70,14 +72,12 @@ def generate_qr(data: QRCode):
 def get_drawer_module(drawer: DrawerChoices):
     """
     Get drawer module by enum choice
-    
-    :param drawer: selected drawer 
-    :type drawer: DrawerChoices
 
-    :return: drawer module
-    :rtype: GappedSquareModuleDrawer or CircleModuleDrawer \
-        or RoundedModuleDrawer or VerticalBarsDrawer \
-        or HorizontalBarsDrawer or SquareModuleDrawer
+    Args:
+        drawer (DrawerChoices): Selected drawer
+
+    Returns:
+        ModuleDrawer: Mapped drawer module
     """
     drawer_module = None
 
