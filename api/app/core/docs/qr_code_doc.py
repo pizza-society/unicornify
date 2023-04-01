@@ -4,7 +4,7 @@ from fastapi import status
 SUMMARY = "Generate a QR code"
 DESCRIPTION = "Generate a QR code with all the information; url, image_type, drawer, frontColor, backColor"
 RESPONSES = {
-    status.HTTP_200_OK: {
+    status.HTTP_201_CREATED: {
         "description": "Generated",
         "content": {
             "application/json": {
