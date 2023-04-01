@@ -16,12 +16,6 @@ def test_disposable_email_methods():
     This test function makes requests to the endpoint with various HTTP methods to verify that
     only the expected methods are allowed. It also tests the behavior when a required field is missing
     in the request payload.
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
 
     # Test GET method
@@ -61,15 +55,6 @@ def test_disposable_email_endpoint_with_valid_input():
     Test the Disposable Email endpoint with valid input.
 
     This function tests the Disposable Email endpoint by sending a request with valid email parameters.
-
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
 
     request_data = {"email": "hello@github.com"}
@@ -95,15 +80,6 @@ def test_disposable_email_endpoint_with_invalid_input():
     Test the Disposable Email endpoint with invalid input.
 
     This function tests the Disposable Email endpoint by sending a request with an invalid email parameters.
-
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
     request_data = {"email": "www.google.com"}
     expected_output = {
