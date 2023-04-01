@@ -10,7 +10,7 @@ from pydantic import HttpUrl
 from app.utils.logger import get_logger
 from app.utils.helpers import convert_snake_to_camel_dict_or_list
 from app.core.schemas.exceptions import UnsupportedFormat, UnableToFindSupportedFormatKeys
-from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikTokVideoDownloaderResponse
+from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikTokVideoDownloaderResponse, TikTokVideoDownloaderResult
 
 
 router = APIRouter()
@@ -38,9 +38,9 @@ def download_tiktok_media(data: TikTokVideoDownloaderSchema):
         e = {"error": "There was an error while downloading the video: {}".format(str(e))}
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
                             content={ "error": str(e) })
+    
     # Return response
-    return JSONResponse(status_code=status.HTTP_200_OK,
-                        content={ "result": tiktok_info })
+    return TikTokVideoDownloaderResponse(result=tiktok_info)
 
 
 class TikTokVideoDownloader:
@@ -139,7 +139,7 @@ class TikTokVideoDownloader:
         
         return processed_info
 
-    def extract_tiktok_media_info(self) -> dict:
+    def extract_tiktok_media_info(self) -> TikTokVideoDownloaderResult:
         """
         Extract information about a TikTok video given its URL.
 
@@ -165,11 +165,15 @@ class TikTokVideoDownloader:
 
         try:
             formatted_media = self._format_selector(ydl.sanitize_info(info))
+
             if formatted_media is None:
                 raise UnableToFindSupportedFormatKeys
         except Exception as e:
             logging.error(f"Error occurred while extracting TikTok video information: {e}")
             raise RuntimeError from e
-
-        return convert_snake_to_camel_dict_or_list(formatted_media)
+        
+        # Convert _type key to media_type as _type will be removed when TikTokVideoDownloaderResult is instantiated
+        # This part can be moved into _format_selector also, please review this part since this is just an idea.
+        formatted_media['media_type'] = formatted_media.pop('_type')
+        return TikTokVideoDownloaderResult(**formatted_media)
 
