@@ -12,16 +12,6 @@ client = TestClient(app)
 def test_tiktok_video_methods():
     """
     Test that the endpoint only accepts allowed HTTP methods.
-
-    This test function makes requests to the endpoint with various HTTP methods to verify that
-    only the expected methods are allowed. It also tests the behavior when a required field is missing
-    in the request payload.
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
 
     # Test GET method
@@ -62,14 +52,6 @@ def test_tiktok_video_endpoint_with_valid_input():
 
     This function tests the TikTok video endpoint by sending a request with valid input parameters.
 
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
     # test code goes here
 
@@ -84,7 +66,6 @@ def test_tiktok_video_endpoint_with_valid_input():
                     "formatNote": "MP4",
                     "vcodec": "h264",
                     "url": "https://api-h2.tiktokv.com/aweme/v1/play/?video_id=v09044g40000ce8aa53c77u34p1uq6i0&line=0&is_play_url=1&source=PackSourceEnum_FEED&file_id=e18936402da44874a2d49196cda2c24f",
-                    # "url": "https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/play/?video_id=v09044g40000ce8aa53c77u34p1uq6i0&line=0&is_play_url=1&source=PackSourceEnum_FEED&file_id=e18936402da44874a2d49196cda2c24f",
                     "resolution": "576x1024",
                 },
                 {
@@ -92,7 +73,6 @@ def test_tiktok_video_endpoint_with_valid_input():
                     "formatNote": "MP4 - Watermarked",
                     "vcodec": "h264",
                     "url": "https://api-h2.tiktokv.com/aweme/v1/play/?video_id=v09044g40000ce8aa53c77u34p1uq6i0&line=0&watermark=1&logo_name=tiktok_m&source=FEED&file_id=0d6b4b72ce8947bf8041c9bbfa9b7cac",
-                    # "url": "https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/play/?video_id=v09044g40000ce8aa53c77u34p1uq6i0&line=0&watermark=1&logo_name=tiktok_m&source=FEED&file_id=0d6b4b72ce8947bf8041c9bbfa9b7cac",
                     "resolution": "576x1024",
                 },
             ],
@@ -122,14 +102,6 @@ def test_tiktok_video_endpoint_with_invalid_input():
 
     This function tests the TikTok video endpoint by sending a request with an invalid URL input parameters.
 
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
     request_data = {"url": "https://www.tiktokk.com/@user1234567/video/12345678"}
     expected_output = {
