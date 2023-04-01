@@ -10,6 +10,9 @@ from app.core.schemas.errors import ErrorCode
 from app.core.schemas.validations import ErrorKey, LocKey, ValidationErrorType
 
 
+DEFAULT_KEY = "msg"
+
+
 class ValidationMessage:
     """ Validation message is generated here """
 
@@ -24,8 +27,10 @@ class ValidationMessage:
         loc = err.get(ErrorKey.LOC, None)
         possible_locs = (LocKey.BODY, LocKey.PATH, LocKey.QUERY)
         filtered_locs = loc[1:] if loc[0] in possible_locs else loc
+        name = ".".join(filtered_locs) # nested fields with dot-notation
 
-        return ".".join(filtered_locs)  # nested fields with dot-notation
+        # return msg key if no field name
+        return DEFAULT_KEY if not name else name
 
     def _get_field_errors(self, err):
         field_name = self._get_field_name(err)
