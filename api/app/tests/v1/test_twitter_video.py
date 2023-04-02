@@ -12,16 +12,6 @@ client = TestClient(app)
 def test_twitter_video_methods():
     """
     Test that the endpoint only accepts allowed HTTP methods.
-
-    This test function makes requests to the endpoint with various HTTP methods to verify that
-    only the expected methods are allowed. It also tests the behavior when a required field is missing
-    in the request payload.
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
 
     # Test GET method
@@ -59,17 +49,6 @@ def test_twitter_video_methods():
 def test_twitter_video_endpoint_with_valid_input():
     """
     Test the Twitter video endpoint with valid input.
-
-    This function tests the Twitter video endpoint by sending a request with valid input parameters.
-
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
 
     request_data = {
@@ -134,17 +113,6 @@ def test_twitter_video_endpoint_with_valid_input():
 def test_twitter_video_endpoint_with_invalid_input():
     """
     Test the Twitter video endpoint with invalid input.
-
-    This function tests the Twitter video endpoint by sending a request with an invalid URL input parameters.
-
-    Args:
-        None
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If any of the test cases fail.
     """
     request_data = {
         "url": "https://twitter.com/Test123/statux/123445"
