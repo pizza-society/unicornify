@@ -6,7 +6,6 @@ from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from pydantic import HttpUrl
 
-from app.utils.helpers import convert_snake_to_camel_dict_or_list
 from app.core.schemas.exceptions import TweetExtractionError
 from app.core.schemas.twitter_downloader import TwitterVideoDownloaderSchema, TwitterVideoDownloaderResponse
 
@@ -164,8 +163,7 @@ class TwitterVideoDownloader:
         metadata = self._extract_tweet_meta_data(tweet_info_data, tweet_url)
         media = self._extract_resolution_and_link_info(tweet_media_formats)
 
-        formatted_media = {
+        return {
             "tweet_meta_data": metadata,
             "tweet_medias": media,
         }
-        return convert_snake_to_camel_dict_or_list(formatted_media)
