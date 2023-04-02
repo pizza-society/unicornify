@@ -13,7 +13,7 @@ from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikT
 
 
 router = APIRouter()
-logger = get_logger(__name__)
+logger = get_logger()
 
 @router.post("/download-tiktok-video/",
              response_model=TikTokVideoDownloaderResponse,
