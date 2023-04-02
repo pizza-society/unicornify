@@ -1,8 +1,25 @@
 import logging
+from logging.config import fileConfig
+from functools import lru_cache
 
-def get_logger(name):
-    """
-    TODO: SB to add this improved global logger
-    """
-    return logging.getLogger(name)
+from uvicorn.logging import ColourizedFormatter
 
+
+UNICORNIFY = "unicornify"
+
+
+@lru_cache()
+def get_logger():
+    return logging.getLogger(UNICORNIFY)
+
+
+def setup_logger():
+    # Load logger config
+    fileConfig("logger.ini", disable_existing_loggers=False)
+    logger = get_logger()
+
+    return logger
+
+
+class LoggerFormatter(ColourizedFormatter):
+    pass

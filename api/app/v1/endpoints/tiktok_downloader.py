@@ -7,7 +7,7 @@ from app.modules.tiktok_downloader_mod import TikTokVideoDownloader
 
 
 router = APIRouter()
-logger = get_logger(__name__)
+logger = get_logger()
 
 @router.post("/download-tiktok-video/",
              response_model=TikTokVideoDownloaderResponse,
