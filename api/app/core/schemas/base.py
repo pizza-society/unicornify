@@ -4,4 +4,4 @@ from pydantic import BaseModel
 class BaseResponse(BaseModel):
     """ Base response """
 
-    result: dict
+    result: str
