@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Based on:
+#   https://betterprogramming.pub/how-to-automatically-add-the-ticket-number-in-git-commit-message-bda5426ded05
+# 
+# Description:
+#   This git hook script that will help automatically prefix the commit messages with a ticket
+#   based on the branch name.
+# 
+# Example:
+#   Branch name: PS-001-Add-New-Hook
+#   Commit message cmd: git commit -m 'Added a new file here and there'
+#   Output: 'PS-001: Added a new file here and there'
+# 
+# Installation:
+#   cp project/scripts/prepare-commit-msg project/.git/hooks/
+#   chmod +x project/.git/hooks/prepare-commit-msg
+#
+
+FILE=$1
+MESSAGE=$(cat $FILE)
+TICKET=$(git rev-parse --abbrev-ref HEAD | grep -Eo '^(\w+/)?(\w+[-_])?[0-9]+' | grep -Eo '(\w+[-])?[0-9]+' | tr "[:lower:]" "[:upper:]")
+if [[ $TICKET == "" || "$MESSAGE" == "$TICKET"* ]];then
+  exit 0;
+fi
+
+echo "$TICKET: $MESSAGE" > $FILE
