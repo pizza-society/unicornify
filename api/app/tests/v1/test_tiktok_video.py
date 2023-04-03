@@ -16,7 +16,6 @@ def test_methods():
     """
     Test that the endpoint only accepts allowed HTTP methods.
     """
-
     expected_response_post_data = {
         "errorCode": ErrorCode.VALIDATION,
         "errors": {
@@ -29,13 +28,10 @@ def test_methods():
     do_test_base_method(client, TEST_URL, expected_response_post_data)
 
 
-
 def test_tiktok_video_endpoint_with_valid_input():
     """
     Test the TikTok video endpoint with valid input.
     """
-    # test code goes here
-
     request_data = {
         "url": "https://www.tiktok.com/@user1345259413173/video/7174417662867442950"
     }
@@ -55,7 +51,6 @@ def test_tiktok_video_endpoint_with_invalid_input():
     """
     Test the TikTok video endpoint with invalid input.
     """
-
     request_data = {"url": "https://www.tiktokk.com/@user1234567/video/12345678"}
 
     expected = tiktok_video_doc.RESPONSES[status.HTTP_422_UNPROCESSABLE_ENTITY]["content"]["application/json"]["example"]
