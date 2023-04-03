@@ -16,7 +16,6 @@ def test_methods():
     """
     Test that the endpoint only accepts allowed HTTP methods.
     """
-    
     expected_response_post_data = {
         "errorCode": ErrorCode.VALIDATION,
         "errors": {
@@ -32,7 +31,6 @@ def test_twitter_video_endpoint_with_valid_input():
     """
     Test the Twitter video endpoint with valid input.
     """
-
     request_data = {
         "url": "https://twitter.com/Xbox/status/1640020986501165058"
     }
@@ -48,7 +46,6 @@ def test_twitter_video_endpoint_with_invalid_input():
     """
     Test the Twitter video endpoint with invalid input.
     """
-
     request_data = {
         "url": "https://twitter.com/Test123/statux/123445"
     }
