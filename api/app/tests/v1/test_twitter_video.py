@@ -51,7 +51,6 @@ def test_twitter_video_endpoint_with_invalid_input():
     }
     expected = twitter_video_doc.RESPONSES[status.HTTP_422_UNPROCESSABLE_ENTITY]["content"]["application/json"]["example"]
 
-
     response = client.post(TEST_URL, json=request_data)
     response_data = response.json()
 
