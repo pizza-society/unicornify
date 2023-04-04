@@ -27,6 +27,7 @@ def test_methods():
 
     do_test_base_method(client, TEST_URL, expected_response_post_data)
 
+
 def test_twitter_video_endpoint_with_valid_input():
     """
     Test the Twitter video endpoint with valid input.
