@@ -2,7 +2,7 @@
 - eg: This fixes the bug that happened in...
 
 ## Issue ticket number and link
-- eg: AP-007
+- eg: PS-007
 
 ## Please check the type of change your PR introduces:
 _Put an `x` in the boxes that apply._
