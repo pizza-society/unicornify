@@ -37,7 +37,9 @@ module.exports = {
 				'normal': 'never',
 				'component': 'always'
 			}
-		}]
+		}],
+		'vue/object-curly-spacing': ['error', 'always'],
+		'vue/template-curly-spacing': ['error', 'always']
 	},
 	overrides: [
 		{
