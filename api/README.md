@@ -3,23 +3,23 @@
 
 A random app with multiple services
 
+## Requirements
 
-## Preview
-
-To be updated
+* Python 3.10+
+* pipenv
 
 ## Getting started
 
-To start, first create a python virtual environment:
+Install dependencies
 
 ```bash
-virtualenv env --python=python3 --copies
+  pipenv install
 ```
 
-Activate the environment
+Get into the virtual environment
 
 ```bash
-env/Scripts/activate
+  pipenv shell
 ```
 
 Run the live server
