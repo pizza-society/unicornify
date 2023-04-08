@@ -14,10 +14,10 @@ import { helpers } from '@vuelidate/validators'
  *   - https://vm.tiktok.com/<id>/
  */
 export const tikTokLinkRegex = helpers.regex(
-    // eslint-disable-next-line no-useless-escape
-    /\bhttps?:\/\/(?:m|www|vm)\.tiktok\.com\/(?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)\b|([\w\d]+))/gm
+	// eslint-disable-next-line no-useless-escape
+	/\bhttps?:\/\/(?:m|www|vm)\.tiktok\.com\/(?:.*\b(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)\b|([\w\d]+))/gm
 )
-  
+
 /**
  * Twitter Status Regex
  * Cases:
@@ -26,7 +26,7 @@ export const tikTokLinkRegex = helpers.regex(
  *   - https://twitter.com/usr/status/<id>
  */
 export const twitterStatusRegex = helpers.regex(
-  /^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?(\?(.+))?$/gm
+	/^https?:\/\/(?:mobile.)?twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)(?:\/.*)?(\?(.+))?$/gm
 )
 
 /**
@@ -36,22 +36,22 @@ export const twitterStatusRegex = helpers.regex(
  * @return {string} The input number converted to either seconds or minutes, depending on its value
  */
 export const convertToTime = (value: string): string => {
-  const SECONDS_IN_MINUTE = 60
-  
-  const num = parseInt(value)
-  
-  if (isNaN(num)) {
-    return ''
-  }
+	const SECONDS_IN_MINUTE = 60
 
-  const minutes = Math.floor(num / SECONDS_IN_MINUTE)
-  const seconds = num % SECONDS_IN_MINUTE
+	const num = parseInt(value)
 
-  if (minutes > 0) {
-    return `${ minutes } minutes ${ seconds } seconds`
-  } else {
-    return `${ seconds } seconds`
-  }
+	if (isNaN(num)) {
+		return ''
+	}
+
+	const minutes = Math.floor(num / SECONDS_IN_MINUTE)
+	const seconds = num % SECONDS_IN_MINUTE
+
+	if (minutes > 0) {
+		return `${ minutes } minutes ${ seconds } seconds`
+	} else {
+		return `${ seconds } seconds`
+	}
 }
 
 /**
@@ -61,5 +61,5 @@ export const convertToTime = (value: string): string => {
  * @returns {Promise<unknown>} 
  */
 export const sleep = (time: number): Promise<unknown> => {
-  return new Promise(resolve => setTimeout(resolve, time))
+	return new Promise(resolve => setTimeout(resolve, time))
 }
