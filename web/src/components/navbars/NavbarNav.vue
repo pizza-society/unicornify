@@ -79,7 +79,6 @@ export default defineComponent({
 	setup(props, context) {
 		const currentToggledMenu = ref<string>('')
 		const toggleDropdownMenu = (menuName: string) => {
-			console.log('heheh')
 			return currentToggledMenu.value === menuName ?
 				currentToggledMenu.value = '' :
 				currentToggledMenu.value = menuName
@@ -112,7 +111,6 @@ export default defineComponent({
 		padding: 0.69rem 0 !important;
 	}
 	
-
 	.nav-link.dropdown-toggle::after {
 		display: none;
 	}
