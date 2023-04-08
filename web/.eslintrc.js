@@ -39,6 +39,7 @@ module.exports = {
 			}
 		}],
 		'vue/object-curly-spacing': ['error', 'always'],
+		'vue/padding-line-between-blocks': ['error', 'always'],
 		'vue/template-curly-spacing': ['error', 'always']
 	},
 	overrides: [
