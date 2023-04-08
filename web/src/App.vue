@@ -1,8 +1,6 @@
 <template>
-	<router-view
-		name="Navbar"
-		class="is-family-monospace" />
-	<div class="bg-dark is-family-monospace">
+	<router-view name="Navbar" />
+	<div class="bg-dark">
 		<router-view class="container-fluid vh-min text-white" />
 	</div>
 </template>
