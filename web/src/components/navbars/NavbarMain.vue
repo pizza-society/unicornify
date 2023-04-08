@@ -11,11 +11,18 @@
 			</a>
 
 			<button
-				class="navbar-toggler"
+				id="menu-icon"
+				class="navbar-toggler border-0 shadow-none"
 				type="button"
 				aria-label="Toggle navigation"
+				:class="{
+					'open': isMobMenuOpen
+				}"
 				@click="toggleMobMenu()">
-				<span class="navbar-toggler-icon"></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
 			</button>
 
 			<div
@@ -139,9 +146,9 @@ export default defineComponent({
 			width: calc(100% - 1.5rem);
 			padding-right: 2.5rem;
 			padding-left: 2.5rem;
-			padding-top: 1rem;
+			padding-top: 0;
 			position: fixed;
-			top: 4.2rem;
+			top: 6rem;
 			z-index: 1050;
 
 			:deep(.navbar-nav .nav-link){
@@ -155,6 +162,81 @@ export default defineComponent({
 
 		.github-desktop {
 			display: none;
+		}
+
+		#menu-icon {
+			width: 15px;
+			height: 15px;
+			position: relative;
+			margin-top: auto;
+			margin-bottom: auto;
+			margin-left: auto;
+			margin-right: 0;
+			-webkit-transform: rotate(0deg);
+			-moz-transform: rotate(0deg);
+			-o-transform: rotate(0deg);
+			transform: rotate(0deg);
+			-webkit-transition: .5s ease-in-out;
+			-moz-transition: .5s ease-in-out;
+			-o-transition: .5s ease-in-out;
+			transition: .5s ease-in-out;
+		}
+
+		#menu-icon span {
+			display: block;
+			position: absolute;
+			height: 0.2rem;
+			width: 100%;
+			background: #ffffff80;
+			border-radius: 0.2rem;
+			opacity: 1;
+			left: 0;
+			-webkit-transform: rotate(0deg);
+			-moz-transform: rotate(0deg);
+			-o-transform: rotate(0deg);
+			transform: rotate(0deg);
+			-webkit-transition: .25s ease-in-out;
+			-moz-transition: .25s ease-in-out;
+			-o-transition: .25s ease-in-out;
+			transition: .25s ease-in-out;
+		}
+
+		#menu-icon span:nth-child(1) {
+			top: 0px;
+		}
+
+		#menu-icon span:nth-child(2),#menu-icon span:nth-child(3) {
+			top: 0.4rem;
+		}
+
+		#menu-icon span:nth-child(4) {
+			top: 0.8rem;
+		}
+
+		#menu-icon.open span:nth-child(1) {
+			top: 0.4rem;
+			width: 0%;
+			left: 50%;
+		}
+
+		#menu-icon.open span:nth-child(2) {
+			-webkit-transform: rotate(45deg);
+			-moz-transform: rotate(45deg);
+			-o-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+
+		#menu-icon.open span:nth-child(3) {
+			-webkit-transform: rotate(-45deg);
+			-moz-transform: rotate(-45deg);
+			-o-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+
+		#menu-icon.open span:nth-child(4) {
+			top: 0.4rem;
+			width: 0%;
+			left: 50%;
 		}
 	}
 
