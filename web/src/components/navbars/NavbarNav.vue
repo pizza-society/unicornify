@@ -7,7 +7,8 @@
 				<router-link
 					class="nav-link"
 					:to="item.path"
-					active-class="active text-primary">
+					active-class="active text-primary"
+					@click.self="emitMobile()">
 					{{ item.title }}
 				</router-link>
 			</template>
@@ -18,14 +19,15 @@
 					@mouseover="toggleDropdownMenu(item.name)"
 					@mouseleave="toggleDropdownMenu('')">
 					<a
-						class="nav-link dropdown-toggle mt-0"
-						data-bs-toggle="dropdown"
+						class="nav-link dropdown-toggle mt-0 d-flex d-sm-block"
 						role="button"
 						:aria-expanded="currentToggledMenu === item.name ? 'true' : 'false'"
 						:class="{
 							'show': currentToggledMenu === item.name
-						}">
+						}"
+						@click="toggleDropdownMenu(item.name)">
 						{{ item.title }}
+						<i class="fa-solid fa-plus fa-xs d-block d-md-none"></i>
 					</a>
 
 					<ul
@@ -42,7 +44,8 @@
 								<router-link
 									class="dropdown-item rounded"
 									:to="dropItem.path"
-									active-class="active text-primary">
+									active-class="active text-primary"
+									@click.self="emitMobile()">
 									{{ dropItem.title }}
 								</router-link>
 							</li>
@@ -55,12 +58,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import { NavbarItem } from '@/common/navbar'
 
 export default defineComponent({
 	name: 'NavbarNav',
+	
 	props: {
 		items: {
 			type: Array as () => NavbarItem[],
@@ -69,23 +73,76 @@ export default defineComponent({
 			}
 		}
 	},
-	setup() {
+	emits: [
+		'onMobileClick'
+	],
+	setup(props, context) {
 		const currentToggledMenu = ref<string>('')
 		const toggleDropdownMenu = (menuName: string) => {
+			console.log('heheh')
 			return currentToggledMenu.value === menuName ?
 				currentToggledMenu.value = '' :
 				currentToggledMenu.value = menuName
 		}
 
+		const isMobile = computed(() => {
+			return (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase())
+		})
+
+		const emitMobile = () => {
+			// emit on mobile click to toggle menu
+			// on mobile after an action
+			if (isMobile.value) {
+				context.emit('onMobileClick')
+			}
+		}
+
 		return { 
 			toggleDropdownMenu,
-			currentToggledMenu
+			currentToggledMenu,
+			emitMobile
 		}
 	}
 })
 </script>
 
 <style lang="scss" scoped>
+@media (max-width: 576px) {
+	.navbar-nav .nav-link {
+		padding: 0.69rem 0 !important;
+	}
+	
+
+	.nav-link.dropdown-toggle::after {
+		display: none;
+	}
+
+	.dropdown-toggle {
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.nav-item-dropdown {
+		.dropdown-menu {
+			--bs-dropdown-border-color: none;
+			--bs-dropdown-bg: transparent;
+			--bs-dropdown-box-shadow: transparent;
+			border-radius: 0;
+			padding: 0.69rem 0;
+			
+			.dropdown-item-parent .dropdown-item {
+				--bs-dropdown-link-active-bg: transparent;
+				--bs-dropdown-link-active-color: #ffffff80;
+				padding-top: 0;
+				padding-bottom: 0;
+				padding-left: 0.3rem;
+			}
+			&:last-child {
+				border-bottom: 1px solid #343a40;
+			}
+		}
+	}
+}
 
 .nav-item-dropdown {
 	.dropdown-menu {
