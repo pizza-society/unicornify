@@ -64,7 +64,6 @@ import { NavbarItem } from '@/common/navbar'
 
 export default defineComponent({
 	name: 'NavbarNav',
-	
 	props: {
 		items: {
 			type: Array as () => NavbarItem[],
