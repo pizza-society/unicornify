@@ -15,7 +15,7 @@
 				<h3 class="mb-0">
 					QR Generator
 				</h3>
-				<p class="mb-4">
+				<p class="mb-4 text-secondary">
 					<small>
 						Generate your own QR code with customized design!
 					</small>
