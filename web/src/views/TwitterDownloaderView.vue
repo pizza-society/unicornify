@@ -1,8 +1,6 @@
 <template>
 	<div class="container">
-		<div
-			class="d-flex flex-column justify-content-center
-            align-items-center">
+		<div class="d-flex flex-column justify-content-center align-items-center">
 			<lottie-player
 				src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
 				background="transparent"
@@ -11,7 +9,7 @@
 				loop
 				autoplay />
 
-			<div class="col-lg-6 col-md-4 text-center">
+			<div class="col-lg-5 col-md-4 text-center">
 				<figure class="text-center">
 					<blockquote class="blockquote">
 						<h3 class="mb-4">
@@ -97,22 +95,23 @@
 						class="needs-validation"
 						@submit.prevent>
 						<div class="row rounded-top ">
+							<label class="form-label text-center">
+								Enter URL
+							</label>
+							
 							<div class="input-group">
 								<div class="input-group mb-3">
-									<input
+									<TheInput
 										v-model="downloadForm.url"
 										type="text"
-										class="form-control form-control-lg"
 										placeholder="Enter Video Link..."
-										aria-label="Enter Video Link..."
-										aria-describedby="button-addon2"
 										:disabled="isLoading"
 										:class="{
 											'is-invalid': v$.url.$error && v$.url.$dirty,
 											'is-valid': !v$.url.$error && v$.url.$dirty
 										}"
 										@blur="v$.url.$touch" />
-
+										
 									<div
 										v-for="error of v$.url.$errors"
 										:key="error.$uid"
@@ -127,7 +126,6 @@
 					<button
 						id="button-addon2"
 						class="btn btn-primary"
-						type="button"
 						:disabled="isLoading || v$.$invalid"
 						@click="getTweetMedia()">
 						<span v-if="!isLoading">
@@ -138,7 +136,8 @@
 							<span
 								class="spinner-grow spinner-grow-sm"
 								role="status"
-								aria-hidden="true"></span>
+								aria-hidden="true">
+							</span>
 							Loading...
 						</span>
 					</button>
@@ -157,18 +156,19 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { useServiceStore } from '@/store'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
-import { useServiceStore } from '@/store'
+import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
 import { twitterStatusRegex, sleep } from '@/helpers/helpers'
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
-import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
+import TheInput from '@/components/forms/TheInput.vue'
 
 export default defineComponent({
 	name: 'TwitterDownloaderView',
-	components: { ErrorAlert },
+	components: { ErrorAlert, TheInput },
 	setup() {
 		// Data
 		const tweetMetaData = ref<TweetMeta | null>(null)
