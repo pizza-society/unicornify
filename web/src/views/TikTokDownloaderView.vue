@@ -13,7 +13,7 @@
 
 			<div class="col-lg-8 text-center">
 				<figure 
-					v-if="!tikTokMediaData && !error"
+					v-if="!tikTokMediaData && !formError"
 					class="text-center">
 					<blockquote class="blockquote">
 						<h3 class="mb-4">
@@ -26,13 +26,78 @@
 					</figcaption>
 				</figure>
 
-				<ErrorAlert v-if="error">
+				<ErrorAlert v-if="formError">
 					The TikTok link you supplied does not include any video 
 					or that there is a problem downloading the video.
 				</ErrorAlert>
+				
+				<ModalComponent>
+					<template #header>
+						Customize design
+					</template>
+
+					<template #content>
+						<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !formError">
+							<div class="card mb-3 mt-5">
+								<div class="row g-0">
+									<div class="col-md-4">
+										<img
+											class="img-fluid rounded-start"
+											:src="tikTokMetaData.thumbnail" />
+									</div>
+
+									<div class="col-md-8">
+										<div class="card-header">
+											<h5 class="card-title">
+												<i class="fa-solid fa-user"></i>
+												{{ tikTokMetaData.creator }}
+											</h5>
+										</div>
+
+										<div class="card-body">
+											<p class="card-text">
+												{{ tikTokMetaData.description }}
+											</p>
+										</div>
+
+										<div class="card-body bg-secondary-subtle">
+											<ul class="list-group list-group-flush">
+												<li
+													v-for="(item, index) in tikTokMediaData"
+													:key="index"                                                              
+													class="list-group-item thumbnail"
+													@click="downloadVideo(item.url)">
+													<i class="fa-solid fa-circle-arrow-down"></i>
+
+													<span>
+														Download {{ item.formatNote }} [{{ Number(index) + 1 }}]
+													</span>
+												</li>
+											</ul>
+										</div>
+                                    
+										<div class="card-footer">
+											<i class="fa-solid fa-video"></i>
+											{{ convertToTime(tikTokMetaData.durationString) }}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
+					
+					<template #footer>
+						<button
+							type="button"
+							class="btn btn-primary"
+							@click="toggleModal()">
+							Close
+						</button>
+					</template>
+				</ModalComponent>
 
 				<Transition>
-					<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !error">
+					<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !formError">
 						<div class="card text-bg-dark mb-3 mt-5">
 							<div class="row g-0">
 								<div class="col-md-4">
@@ -56,11 +121,12 @@
 									</div>
 
 									<div class="card-body">
-										<ul class="list-group list-group-flush">
+										<ul>
 											<li
 												v-for="(item, index) in tikTokMediaData"
-												:key="index"                                                              
-												class="list-group-item thumbnail"
+												:key="index"   
+												type="button"                                                           
+												class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
 												@click="downloadVideo(item.url)">
 												<i class="fa-solid fa-circle-arrow-down"></i>
 
@@ -82,27 +148,24 @@
 				</Transition>
 			</div>
 			<!-- Form -->
-			<div class="col-lg-6 text-center">                  
+			<div class="col-lg-5 text-center">                  
 				<form
 					class="needs-validation"
 					@submit.prevent>
 					<div class="row rounded-top">
 						<div class="input-group">
 							<div class="input-group mb-3">
-								<input
+								<TheInput 
 									v-model="downloadForm.url"
 									type="text"
-									class="form-control form-control-lg"
 									placeholder="Enter Video Link..."
-									aria-label="Enter Video Link..."
-									aria-describedby="button-addon2"
 									:disabled="isLoading"
 									:class="{
 										'is-invalid': v$.url.$error && v$.url.$dirty,
 										'is-valid': !v$.url.$error && v$.url.$dirty
 									}"
 									@blur="v$.url.$touch" />
-
+									
 								<div
 									v-for="error of v$.url.$errors"
 									:key="error.$uid"
@@ -152,19 +215,25 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import ModalComponent from '@/components/ModalComponent.vue'
 import { useServiceStore } from '@/store'
 import { tikTokLinkRegex, convertToTime, sleep } from '@/helpers/helpers'
 import { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
+import TheInput from '@/components/forms/TheInput.vue'
 
 export default defineComponent({
 	name: 'TikTokDownloaderView',
-	components: { ErrorAlert },
+	components: {
+		ErrorAlert,
+		ModalComponent,
+		TheInput
+	},
 	setup() {
 		// Data
 		const tikTokMetaData = ref<TikTokMeta | null>()
 		const tikTokMediaData = ref<TikTokMedia[] | null>()
 
-		const error = ref<boolean>(false)
+		const formError = ref<boolean>(false)
 
 		// Services
 		const serviceSvc = useServiceStore()
@@ -190,6 +259,9 @@ export default defineComponent({
 
 		// Checkers
 		const isLoading = ref<boolean>(false)
+
+		// Components
+		const modalComponent = ref<InstanceType<typeof ModalComponent>>()
 
 		// Get resolutions
 		const getTikTokMedia = () => {
@@ -219,9 +291,9 @@ export default defineComponent({
 
 		// Error Handler
 		const displayErrorMessage = (duration: number) => {
-			error.value = true
+			formError.value = true
 			sleep(duration).then(() => {
-				error.value = false
+				formError.value = false
 			})
 		}
 
@@ -230,17 +302,24 @@ export default defineComponent({
 			serviceSvc.downloadBlobFile(url, 'video/mp4', 'tiktok-video', true, { url: url })
 		}
 
+		// Toggle modal
+		const toggleModal = () => {
+			modalComponent.value?.toggleModal()
+		}
+
 		return {
 			downloadForm,
 			v$,
 			isLoading,
 			tikTokMediaData,
 			tikTokMetaData,
-			error,
+			formError,
+			modalComponent,
 			getTikTokMedia,
 			downloadVideo,
 			displayErrorMessage,
-			convertToTime
+			convertToTime,
+			toggleModal
 		}
 	}
 })
@@ -264,10 +343,6 @@ export default defineComponent({
 
 .thumbnail:hover {
 opacity: 0.5;
-}
-
-.list-group-item {
-    cursor: pointer;
 }
 
 @media only screen and (max-width: 767px) {
