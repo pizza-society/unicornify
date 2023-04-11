@@ -71,7 +71,7 @@ export const useServiceStore = defineStore('service', {
 			let targetURL = url
 
 			if (useProxy) {
-				targetURL = `${ process.env.VUE_APP_BASE_URL }/services/reverse-proxy/`
+				targetURL = `${ import.meta.env.VITE_BASE_URL }/services/reverse-proxy/`
 			}
 
 			APIService.get(targetURL, null, { responseType: 'blob', params: query })
