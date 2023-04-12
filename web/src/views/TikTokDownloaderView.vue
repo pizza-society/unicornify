@@ -30,72 +30,7 @@
 					The TikTok link you supplied does not include any video 
 					or that there is a problem downloading the video.
 				</ErrorAlert>
-				
-				<ModalComponent>
-					<template #header>
-						Customize design
-					</template>
-
-					<template #content>
-						<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !formError">
-							<div class="card mb-3 mt-5">
-								<div class="row g-0">
-									<div class="col-md-4">
-										<img
-											class="img-fluid rounded-start"
-											:src="tikTokMetaData.thumbnail" />
-									</div>
-
-									<div class="col-md-8">
-										<div class="card-header">
-											<h5 class="card-title">
-												<i class="fa-solid fa-user"></i>
-												{{ tikTokMetaData.creator }}
-											</h5>
-										</div>
-
-										<div class="card-body">
-											<p class="card-text">
-												{{ tikTokMetaData.description }}
-											</p>
-										</div>
-
-										<div class="card-body bg-secondary-subtle">
-											<ul class="list-group list-group-flush">
-												<li
-													v-for="(item, index) in tikTokMediaData"
-													:key="index"                                                              
-													class="list-group-item thumbnail"
-													@click="downloadVideo(item.url)">
-													<i class="fa-solid fa-circle-arrow-down"></i>
-
-													<span>
-														Download {{ item.formatNote }} [{{ Number(index) + 1 }}]
-													</span>
-												</li>
-											</ul>
-										</div>
-                                    
-										<div class="card-footer">
-											<i class="fa-solid fa-video"></i>
-											{{ convertToTime(tikTokMetaData.durationString) }}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</template>
-					
-					<template #footer>
-						<button
-							type="button"
-							class="btn btn-primary"
-							@click="toggleModal()">
-							Close
-						</button>
-					</template>
-				</ModalComponent>
-
+		
 				<Transition>
 					<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !formError">
 						<div class="card text-bg-dark mb-3 mt-5">
@@ -216,7 +151,6 @@ import { helpers, required } from '@vuelidate/validators'
 
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 import TheInput from '@/components/forms/TheInput.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
 import { useServiceStore } from '@/store'
 import { tikTokLinkRegex, convertToTime, sleep } from '@/helpers/helpers'
 import type { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
@@ -225,7 +159,6 @@ export default defineComponent({
 	name: 'TikTokDownloaderView',
 	components: {
 		ErrorAlert,
-		ModalComponent,
 		TheInput
 	},
 	setup() {
@@ -259,9 +192,6 @@ export default defineComponent({
 
 		// Checkers
 		const isLoading = ref<boolean>(false)
-
-		// Components
-		const modalComponent = ref<InstanceType<typeof ModalComponent>>()
 
 		// Get resolutions
 		const getTikTokMedia = () => {
@@ -302,11 +232,6 @@ export default defineComponent({
 			serviceSvc.downloadBlobFile(url, 'video/mp4', 'tiktok-video', true, { url: url })
 		}
 
-		// Toggle modal
-		const toggleModal = () => {
-			modalComponent.value?.toggleModal()
-		}
-
 		return {
 			downloadForm,
 			v$,
@@ -314,12 +239,10 @@ export default defineComponent({
 			tikTokMediaData,
 			tikTokMetaData,
 			formError,
-			modalComponent,
 			getTikTokMedia,
 			downloadVideo,
 			displayErrorMessage,
-			convertToTime,
-			toggleModal
+			convertToTime
 		}
 	}
 })
