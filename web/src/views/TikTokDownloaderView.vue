@@ -215,11 +215,11 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import TheInput from '@/components/forms/TheInput.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import { useServiceStore } from '@/store'
 import { tikTokLinkRegex, convertToTime, sleep } from '@/helpers/helpers'
-import { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
-import TheInput from '@/components/forms/TheInput.vue'
+import type { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
 
 export default defineComponent({
 	name: 'TikTokDownloaderView',
