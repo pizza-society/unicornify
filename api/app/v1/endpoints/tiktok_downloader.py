@@ -13,13 +13,18 @@ logger = get_logger()
              response_model=TikTokVideoDownloaderResponse,
              summary="Download TikTok video")
 def download_tiktok_media(data: TikTokVideoDownloaderSchema):
-    """
-    TODO: Update docstring format
-    Generate a Tiktok video downloader object by using 3rd party script with all the information.
+    """\f
+    Generate a TikTok video downloader object
 
-    - **url**: a valid http/https URL for a TikTok video, e.g. https://www.tiktok.com/@user/video/0123456789
+    Args:
+    
+        data (TikTokVideoDownloaderSchema): A valid URL for a TikTok video, e.g. https://www.tiktok.com/@user/video/0123456789
 
-    Documentation about the external CLI can be found here: https://github.com/ytdl-org/youtube-dl
+    Returns:
+
+        TikTokVideoDownloaderResponse: The generated TikTok video object, containing video metadata and download URL, or
+
+        JSONResponse: Error response
     """
     tiktok_downloader = TikTokVideoDownloader(data.url)
 
