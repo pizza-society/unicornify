@@ -2,6 +2,7 @@
 	<div class="container">
 		<div class="d-flex flex-column justify-content-center align-items-center">
 			<lottie-player
+				v-if="!tweetMetaData"
 				src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
 				background="transparent"
 				speed="0.5"
@@ -10,7 +11,9 @@
 				autoplay />
 
 			<div class="col-lg-5 col-md-4 text-center">
-				<figure class="text-center">
+				<figure 
+					v-if="!tweetMetaData && !formError"
+					class="text-center">
 					<blockquote class="blockquote">
 						<h3 class="mb-4">
 							Twitter Video Downloader
@@ -22,75 +25,64 @@
 					</figcaption>
 				</figure>
 
-				<ErrorAlert v-if="error">
+				<ErrorAlert v-if="formError">
 					The twitter link you supplied does not include any video 
 					or that there is a problem downloading the video.
-				</ErrorAlert>   
+				</ErrorAlert>
+				
+				<Transition>
+					<div v-if="tweetMedias && tweetMetaData && !isLoading && !formError">
+						<div class="card text-bg-dark mb-3 mt-5">
+							<div class="row g-0">
+								<div class="col-md-4">
+									<img
+										class="img-fluid rounded-start"
+										:src="tweetMetaData.thumbnail" />
+								</div>
 
-				<div class="mb-3">
-					<div v-if="tweetMedias && tweetMetaData && !isLoading && !error">
-						<div class="card text-center text-bg-dark mb-3">
-							<div class="card-header">
-								<h5 class="card-title">
-									{{ tweetMetaData.uploaderDisplayName }}
-								</h5>
-							</div>
-
-							<div class="card-body">
-								<p class="card-text">
-									{{ tweetMetaData.description }}
-								</p>
-							</div>
-
-							<div class="card-footer text-muted">
-								<div class="row g-0 text-bg-dark ">
-									<div class="col-md-4 img-container">
-										<img
-											:src="tweetMetaData.thumbnail"
-											class="img-fluid rounded-start" />
+								<div class="col-md-8">
+									<div class="card-header">
+										<h5 class="card-title">
+											<i class="fa-solid fa-user"></i>
+											{{ tweetMetaData.uploaderDisplayName }}
+										</h5>
 									</div>
 
-									<div class="col-md-8">
-										<div class="card-body">
-											<div class="card-text">
-												<table
-													class="table table-dark table-hover">
-													<thead>
-														<tr>
-															<th scope="col">
-																Quality
-															</th>
+									<div class="card-body">
+										<p class="card-text">
+											{{ tweetMetaData.description }}
+										</p>
+									</div>
 
-															<th scope="col">
-																Downloads
-															</th>
-														</tr>
-													</thead>
+									<div class="card-body">
+										<ul>
+											<li
+												v-for="(item, index) in tweetMedias"
+												:key="index"   
+												type="button"                                                           
+												class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
+												@click="downloadVideo(item.url)">
+												<i class="fa-solid fa-circle-arrow-down"></i>
 
-													<tbody>
-														<tr
-															v-for="(item, index) in tweetMedias"
-															:key="index">
-															<td>
-																{{ item.resolution }}
-															</td>
-
-															<td>
-																<a @click="downloadVideo(item.url)">
-																	Download
-																</a>
-															</td>
-														</tr>
-													</tbody>  
-												</table>
-											</div>
-										</div>
+												<span>
+													Download {{ item.resolution }} [{{ Number(index) + 1 }}]
+												</span>
+											</li>
+										</ul>
+									</div>
+                                    
+									<div class="card-footer">
+										<i class="fa-solid fa-video"></i>
+										{{ tweetMetaData.duration }}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
+				</Transition>
+				
+				<div class="mb-3">
+					<!-- Form -->
 					<form
 						class="needs-validation"
 						@submit.prevent>
@@ -124,7 +116,6 @@
 					</form>
 
 					<button
-						id="button-addon2"
 						class="btn btn-primary"
 						:disabled="isLoading || v$.$invalid"
 						@click="getTweetMedia()">
@@ -173,7 +164,7 @@ export default defineComponent({
 		// Data
 		const tweetMetaData = ref<TweetMeta | null>(null)
 		const tweetMedias = ref<TweetMedia[] | null>(null)
-		const error = ref<boolean>(false)
+		const formError = ref<boolean>(false)
 
 		// Services
 		const serviceSvc = useServiceStore()
@@ -229,9 +220,9 @@ export default defineComponent({
 
 		// Error Handler
 		const displayErrorMessage = (duration: number) => {
-			error.value = true
+			formError.value = true
 			sleep(duration).then(() => {
-				error.value = false
+				formError.value = false
 			})
 		}
         
@@ -246,7 +237,7 @@ export default defineComponent({
 			isLoading,
 			tweetMedias,
 			tweetMetaData,
-			error,
+			formError,
 			getTweetMedia,
 			downloadVideo,
 			displayErrorMessage
@@ -263,5 +254,30 @@ export default defineComponent({
 
 .img-container img {
     max-height: 100%;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.v-enter-from {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+.v-leave-to {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+.thumbnail:hover {
+opacity: 0.5;
+}
+
+@media only screen and (max-width: 767px) {
+    .img-fluid {
+        height: 350px;
+    }
 }
 </style>
