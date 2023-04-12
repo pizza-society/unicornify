@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
+from app.core.docs import tiktok_video_doc
 from app.utils.logger import get_logger
 from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikTokVideoDownloaderResponse
 from app.modules.tiktok_downloader_mod import TikTokVideoDownloader
@@ -11,7 +12,9 @@ logger = get_logger()
 
 @router.post("/download-tiktok-video/",
              response_model=TikTokVideoDownloaderResponse,
-             summary="Download TikTok video")
+             summary=tiktok_video_doc.SUMMARY,
+             responses=tiktok_video_doc.RESPONSES,
+             status_code=status.HTTP_200_OK)
 def download_tiktok_media(data: TikTokVideoDownloaderSchema):
     """\f
     Generate a TikTok video downloader object
