@@ -153,7 +153,8 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
 import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
-import { twitterStatusRegex, sleep } from '@/helpers/helpers'
+import { sleep } from '@/helpers/timer'
+import { twitterStatusRegex } from '@/helpers/regex'
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 import TheInput from '@/components/forms/TheInput.vue'
 
