@@ -1,16 +1,17 @@
 <template>
 	<div class="container">
 		<div class="d-flex flex-column justify-content-center align-items-center">
-			<lottie-player
-				v-if="!tweetMetaData"
-				src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
-				background="transparent"
-				speed="0.5"
-				style="width: 300px; height: 300px;"
-				loop
-				autoplay />
+			<div class="col-sm-12 col-md-4 text-center">
+				<div class="header-container">
+					<lottie-player
+						src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
+						background="transparent"
+						class="mx-auto"
+						speed="1"
+						style="width: 15rem; height: 15rem;"
+						autoplay />
+				</div>
 
-			<div class="col-lg-5 col-md-4 text-center">
 				<figure 
 					v-if="!tweetMetaData && !formError"
 					class="text-center">
@@ -280,5 +281,10 @@ opacity: 0.5;
     .img-fluid {
         height: 350px;
     }
+}
+
+.header-container {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
 </style>
