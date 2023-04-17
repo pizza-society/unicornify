@@ -60,7 +60,8 @@
 											<li
 												v-for="(item, index) in tikTokMediaData"
 												:key="index"   
-												type="button"                                                           
+												type="button"     
+												placeholder="Enter link (Eg: https://www.tiktok.com/@unicornify/video/0123456789)"                                                      
 												class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
 												@click="downloadVideo(item.url)">
 												<i class="fa-solid fa-circle-arrow-down"></i>
@@ -131,13 +132,6 @@
 						Loading...
 					</span>
 				</button>
-
-				<figure class="text-center mt-4">
-					<figcaption class="blockquote-footer">
-						Link example:
-						https://www.tiktok.com/@unicornify/video/0123456789
-					</figcaption>
-				</figure>
 			</div>
 		</div>
 	</div>
@@ -165,7 +159,6 @@ export default defineComponent({
 		// Data
 		const tikTokMetaData = ref<TikTokMeta | null>()
 		const tikTokMediaData = ref<TikTokMedia[] | null>()
-
 		const formError = ref<boolean>(false)
 
 		// Services
