@@ -11,19 +11,19 @@
 				autoplay />
 
 			<div class="col-lg-5 col-md-4 text-center">
-				<figure 
+				<div
 					v-if="!tweetMetaData && !formError"
 					class="text-center">
-					<blockquote class="blockquote">
-						<h3 class="mb-4">
-							Twitter Video Downloader
-						</h3>
-					</blockquote>
+					<h3 class="mb-0">
+						Twitter Video Downloader
+					</h3>
 
-					<figcaption class="blockquote-footer">
-						Download Twitter Videos in seconds...
-					</figcaption>
-				</figure>
+					<p class="mb-4 text-secondary">
+						<small>
+							Download Twitter Videos in seconds...
+						</small>
+					</p>
+				</div>
 
 				<ErrorAlert v-if="formError">
 					The twitter link you supplied does not include any video 
