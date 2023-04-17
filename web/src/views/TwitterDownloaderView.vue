@@ -91,25 +91,23 @@
 								Enter URL
 							</label>
 							
-							<div class="input-group">
-								<div class="input-group mb-3">
-									<TheInput
-										v-model="downloadForm.url"
-										type="text"
-										placeholder="Enter Video Link..."
-										:disabled="isLoading"
-										:class="{
-											'is-invalid': v$.url.$error && v$.url.$dirty,
-											'is-valid': !v$.url.$error && v$.url.$dirty
-										}"
-										@blur="v$.url.$touch" />
-										
-									<div
-										v-for="error of v$.url.$errors"
-										:key="error.$uid"
-										class="invalid-feedback">
-										{{ error.$message }}
-									</div>
+							<div class="input-group mb-3">
+								<TheInput
+									v-model="downloadForm.url"
+									type="text"
+									placeholder="Enter Video Link..."
+									:disabled="isLoading"
+									:class="{
+										'is-invalid': v$.url.$error && v$.url.$dirty,
+										'is-valid': !v$.url.$error && v$.url.$dirty
+									}"
+									@blur="v$.url.$touch" />
+									
+								<div
+									v-for="error of v$.url.$errors"
+									:key="error.$uid"
+									class="invalid-feedback">
+									{{ error.$message }}
 								</div>
 							</div>
 						</div>
