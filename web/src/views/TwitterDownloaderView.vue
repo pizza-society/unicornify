@@ -95,7 +95,7 @@
 								<TheInput
 									v-model="downloadForm.url"
 									type="text"
-									placeholder="Enter Video Link..."
+									placeholder="Enter link (Eg: https://twitter.com/user/status/1234)"
 									:disabled="isLoading"
 									:class="{
 										'is-invalid': v$.url.$error && v$.url.$dirty,
@@ -130,13 +130,6 @@
 							Loading...
 						</span>
 					</button>
-
-					<figure class="text-center mt-4">
-						<figcaption class="blockquote-footer">
-							Link example:
-							https://twitter.com/unicornify/status/882987478541533189
-						</figcaption>
-					</figure>
 				</div>
 			</div>
 		</div>
