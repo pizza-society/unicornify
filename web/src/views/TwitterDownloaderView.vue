@@ -1,135 +1,138 @@
 <template>
 	<div class="container">
 		<div class="d-flex flex-column justify-content-center align-items-center">
-			<lottie-player
-				v-if="!tweetMetaData"
-				src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
-				background="transparent"
-				speed="0.5"
-				style="width: 300px; height: 300px;"
-				loop
-				autoplay />
-
-			<div class="col-lg-5 col-md-4 text-center">
-				<div
-					v-if="!tweetMetaData && !formError"
-					class="text-center">
-					<h3 class="mb-0">
-						Twitter Video Downloader
-					</h3>
-
-					<p class="mb-4 text-secondary">
-						<small>
-							Download Twitter Videos in seconds...
-						</small>
-					</p>
+			<div class="col-sm-12 col-md-4 text-center">
+				<div class="header-container">
+					<lottie-player
+						src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
+						background="transparent"
+						class="mx-auto"
+						speed="1"
+						style="width: 15rem; height: 15rem;"
+						autoplay />
 				</div>
 
-				<ErrorAlert v-if="formError">
-					The twitter link you supplied does not include any video 
-					or that there is a problem downloading the video.
-				</ErrorAlert>
-				
-				<Transition>
-					<div v-if="tweetMedias && tweetMetaData && !isLoading && !formError">
-						<div class="card text-bg-dark mb-3 mt-5">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img
-										class="img-fluid rounded-start"
-										:src="tweetMetaData.thumbnail" />
-								</div>
+				<div class="col-lg-5 col-md-4 text-center">
+					<div
+						v-if="!tweetMetaData && !formError"
+						class="text-center">
+						<h3 class="mb-0">
+							Twitter Video Downloader
+						</h3>
 
-								<div class="col-md-8">
-									<div class="card-header">
-										<h5 class="card-title">
-											<i class="fa-solid fa-user"></i>
-											{{ tweetMetaData.uploaderDisplayName }}
-										</h5>
-									</div>
-
-									<div class="card-body">
-										<p class="card-text">
-											{{ tweetMetaData.description }}
-										</p>
-									</div>
-
-									<div class="card-body">
-										<ul>
-											<li
-												v-for="(item, index) in tweetMedias"
-												:key="index"   
-												type="button"                                                           
-												class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
-												@click="downloadVideo(item.url)">
-												<i class="fa-solid fa-circle-arrow-down"></i>
-
-												<span>
-													Download {{ item.resolution }} [{{ Number(index) + 1 }}]
-												</span>
-											</li>
-										</ul>
-									</div>
-                                    
-									<div class="card-footer">
-										<i class="fa-solid fa-video"></i>
-										{{ tweetMetaData.duration }}
-									</div>
-								</div>
-							</div>
-						</div>
+						<p class="mb-4 text-secondary">
+							<small>
+								Download Twitter Videos in seconds...
+							</small>
+						</p>
 					</div>
-				</Transition>
+
+					<ErrorAlert v-if="formError">
+						The twitter link you supplied does not include any video 
+						or that there is a problem downloading the video.
+					</ErrorAlert>
 				
-				<div class="mb-3">
-					<!-- Form -->
-					<form
-						class="needs-validation"
-						@submit.prevent>
-						<div class="row rounded-top ">
-							<label class="form-label text-center">
-								Enter URL
-							</label>
-							
-							<div class="input-group mb-3">
-								<TheInput
-									v-model="downloadForm.url"
-									type="text"
-									placeholder="Enter link (Eg: https://twitter.com/user/status/1234)"
-									:disabled="isLoading"
-									:class="{
-										'is-invalid': v$.url.$error && v$.url.$dirty,
-										'is-valid': !v$.url.$error && v$.url.$dirty
-									}"
-									@blur="v$.url.$touch" />
-									
-								<div
-									v-for="error of v$.url.$errors"
-									:key="error.$uid"
-									class="invalid-feedback">
-									{{ error.$message }}
+					<Transition>
+						<div v-if="tweetMedias && tweetMetaData && !isLoading && !formError">
+							<div class="card text-bg-dark mb-3 mt-5">
+								<div class="row g-0">
+									<div class="col-md-4">
+										<img
+											class="img-fluid rounded-start"
+											:src="tweetMetaData.thumbnail" />
+									</div>
+
+									<div class="col-md-8">
+										<div class="card-header">
+											<h5 class="card-title">
+												<i class="fa-solid fa-user"></i>
+												{{ tweetMetaData.uploaderDisplayName }}
+											</h5>
+										</div>
+
+										<div class="card-body">
+											<p class="card-text">
+												{{ tweetMetaData.description }}
+											</p>
+										</div>
+
+										<div class="card-body">
+											<ul>
+												<li
+													v-for="(item, index) in tweetMedias"
+													:key="index"   
+													type="button"                                                           
+													class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
+													@click="downloadVideo(item.url)">
+													<i class="fa-solid fa-circle-arrow-down"></i>
+
+													<span>
+														Download {{ item.resolution }} [{{ Number(index) + 1 }}]
+													</span>
+												</li>
+											</ul>
+										</div>
+                                    
+										<div class="card-footer">
+											<i class="fa-solid fa-video"></i>
+											{{ tweetMetaData.duration }}
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</form>
+					</Transition>
+				
+					<div class="mb-3">
+						<!-- Form -->
+						<form
+							class="needs-validation"
+							@submit.prevent>
+							<div class="row rounded-top ">
+								<label class="form-label text-center">
+									Enter URL
+								</label>
+							
+								<div class="input-group mb-3">
+									<TheInput
+										v-model="downloadForm.url"
+										type="text"
+										placeholder="Enter link (Eg: https://twitter.com/user/status/1234)"
+										:disabled="isLoading"
+										:class="{
+											'is-invalid': v$.url.$error && v$.url.$dirty,
+											'is-valid': !v$.url.$error && v$.url.$dirty
+										}"
+										@blur="v$.url.$touch" />
+									
+									<div
+										v-for="error of v$.url.$errors"
+										:key="error.$uid"
+										class="invalid-feedback">
+										{{ error.$message }}
+									</div>
+								</div>
+							</div>
+						</form>
 
-					<button
-						class="btn btn-primary"
-						:disabled="isLoading || v$.$invalid"
-						@click="getTweetMedia()">
-						<span v-if="!isLoading">
-							Download
-						</span>
-
-						<span v-else>
-							<span
-								class="spinner-grow spinner-grow-sm"
-								role="status"
-								aria-hidden="true">
+						<button
+							class="btn btn-primary"
+							:disabled="isLoading || v$.$invalid"
+							@click="getTweetMedia()">
+							<span v-if="!isLoading">
+								Download
 							</span>
-							Loading...
-						</span>
-					</button>
+
+							<span v-else>
+								<span
+									class="spinner-grow spinner-grow-sm"
+									role="status"
+									aria-hidden="true">
+								</span>
+								Loading...
+							</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -271,5 +274,10 @@ opacity: 0.5;
     .img-fluid {
         height: 350px;
     }
+}
+
+.header-container {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
 </style>
