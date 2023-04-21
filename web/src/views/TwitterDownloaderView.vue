@@ -4,6 +4,7 @@
 			<div class="col-sm-12 col-md-4 text-center">
 				<div class="header-container">
 					<lottie-player
+						v-if="!tweetMedias"
 						src="https://assets2.lottiefiles.com/private_files/lf30_pdS85G.json"
 						background="transparent"
 						class="mx-auto"
