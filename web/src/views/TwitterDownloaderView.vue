@@ -12,7 +12,7 @@
 						autoplay />
 				</div>
 
-				<div class="col-lg-5 col-md-4 text-center">
+				<div class="text-center">
 					<div
 						v-if="!tweetMetaData && !formError"
 						class="text-center">
