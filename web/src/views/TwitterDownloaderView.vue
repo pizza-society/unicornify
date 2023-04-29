@@ -65,10 +65,10 @@
 													type="button"                                                           
 													class="list-group-item thumbnail m-2 p-2 bg-primary rounded"
 													@click="downloadVideo(item.url)">
-													<i class="fa-solid fa-circle-arrow-down"></i>
+													<i class="fa-solid fa-circle-arrow-down mx-2"></i>
 
 													<span>
-														Download {{ item.resolution }} [{{ Number(index) + 1 }}]
+														{{ item.resolution }} [{{ Number(index) + 1 }}]
 													</span>
 												</li>
 											</ul>
@@ -125,11 +125,7 @@
 							</span>
 
 							<span v-else>
-								<span
-									class="spinner-grow spinner-grow-sm"
-									role="status"
-									aria-hidden="true">
-								</span>
+								<i class="fa-solid fa-spinner fa-spin"></i>
 								Loading...
 							</span>
 						</button>
