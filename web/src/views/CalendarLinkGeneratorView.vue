@@ -93,8 +93,8 @@
 							</div>
 						</div>
 
-						<div class="mt-4 mb-4">
-							<div class="col-10 mb-4 mx-auto">
+						<div class="row mt-4 mb-4">
+							<div class="col-12 col-md-6 mb-4 mx-auto">
 								<label
 									class="form-check-label"
 									for="date-time-picker">
@@ -112,7 +112,7 @@
 									:max-date="new Date()"
 									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
 							</div>
-							<div class="col-10 mb-4 mx-auto">
+							<div class="col-12 col-8 col-md-6 mb-4 mx-auto">
 								<label
 									class="form-check-label"
 									for="date-time-picker">
@@ -132,7 +132,7 @@
 							</div>
 						</div>
 
-						<div class="col-10 mx-auto">
+						<div class="col-12 col-md-12 mx-auto">
 							<div class="mb-3">
 								<label
 									for="form-control"
@@ -155,8 +155,11 @@
 					<hr class="mt-1" />
 
 					<div class="row row-cols-1 g-4 gy-4">
-						<div class="col-11 mx-auto">
-							<div class="input-group mb-3">
+						<div class="col-11 mx-auto text-center">
+							<span class="text-white fs-6 fs-md-8">
+								Google Calendar
+							</span>
+							<div class="input-group mb-3 mt-1">
 								<span class="input-group-text">
 									<!-- Google Calendar icon -->
 									<i class="fa-brands fa-google"></i>
@@ -180,7 +183,6 @@
 								</a>
 
 								<a
-									id="basic-addon2"
 									class="input-group-text"
 									:href="generateGoogleCalendarLink">
 									<button
@@ -191,8 +193,11 @@
 								</a>
 							</div>
 						</div>
-						<div class="col-11 mx-auto">
-							<div class="input-group mb-3">
+						<div class="col-11 mx-auto text-center">
+							<span class="text-white fs-6 fs-md-8">
+								Yahoo Calendar
+							</span>
+							<div class="input-group mb-3 mt-1">
 								<span class="input-group-text">
 									<!-- Yahoo icon -->
 									<i class="fa-brands fa-yahoo"></i>
@@ -206,7 +211,6 @@
 									:value="generateYahooCalendarLink" />
 
 								<span
-									id="basic-addon3" 
 									class="input-group-text" 
 									@click="copyTextToClipboard(generateYahooCalendarLink)">
 									<button
@@ -217,7 +221,6 @@
 								</span>
 
 								<a
-									id="basic-addon4"
 									class="input-group-text"
 									:href="generateYahooCalendarLink">
 									<button
