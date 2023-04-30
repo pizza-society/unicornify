@@ -30,7 +30,6 @@
 							
 							<TheInput
 								v-model="qrForm.url"
-								type="type"
 								placeholder="Enter link to open when scanned"
 								:disabled="isLoading"
 								:class="{
