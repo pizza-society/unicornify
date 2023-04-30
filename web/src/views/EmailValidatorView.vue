@@ -84,10 +84,9 @@ import { computed, defineComponent, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 
-import { useServiceStore } from '@/store'
 import TheInput from '@/components/forms/TheInput.vue'
 import { TextConcat } from '@/helpers/typography'
-import { useToastStore } from '@/store/modules/toast.module'
+import { useServiceStore, useToastStore } from '@/store'
 import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models'
 
 const VALIDATED_NOT_DISPOSABLE = 'The email <email> is valid and not disposable '
