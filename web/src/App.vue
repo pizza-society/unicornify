@@ -2,11 +2,13 @@
 	<router-view name="Navbar" />
 	<div class="bg-dark">
 		<router-view class="container-fluid vh-min text-white" />
+		<TheToast />
 	</div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import TheToast from './components/overlays/TheToast.vue'
 
 const lottieWebPlayerScript = document.createElement('script')
 const lottiePlayerUrl = 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'
