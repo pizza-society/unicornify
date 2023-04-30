@@ -3,12 +3,13 @@
 		<div class="d-flex flex-row vh-min justify-content-center row gx-5">
 			<div class="col-lg-8 mt-5">
 				<div class="text-center">
-					<h1 class="display-5 mb-0"> 
+					<h3 class="mb-0">
 						Calendar Link Generator 
-					</h1>
-
-					<p class="lead text-secondary"> 
-						Generate links to add an event to popular calendar services. 
+					</h3>
+					<p class="mb-4 text-secondary">
+						<small>
+							Generate links to add an event to popular calendar services. 
+						</small>
 					</p>
 				</div>
 
@@ -20,32 +21,30 @@
 
 						<hr class="mt-1" />
 
-						<div class="row row-cols-2 g-4 gy-4">
-							<div class="col-7">
+						<div class="row row-cols-12 gx-2 gy-3">
+							<div class="col-12">
 								<label 
-									class="form-label mb-1">
+									class="form-label">
 									Title
 								</label>
 
-								<input 
+								<TheInput 
 									v-model="calendarForm.title" 
-									class="form-control" 
 									placeholder="Add Title" />
 							</div>
 
-							<div class="col-5">
-								<label class="form-label mb-1">
+							<div class="col-4">
+								<label class="form-label">
 									Location
 								</label>
 
-								<input 
+								<TheInput 
 									v-model="calendarForm.location" 
-									class="form-control" 
 									placeholder="Add Location" />
 							</div>
 
-							<div class="col-7">
-								<label class="form-label mb-1">
+							<div class="col-6">
+								<label class="form-label">
 									Timezone
 								</label>
 
@@ -74,7 +73,7 @@
 								</select>
 							</div>
 
-							<div class="col-4">
+							<div class="col-2">
 								<br />
 
 								<div class="mt-3 form-check">
@@ -93,15 +92,13 @@
 							</div>
 						</div>
 
-						<div class="row mt-4 mb-4">
-							<div class="col-12 col-md-6 mb-4 mx-auto">
+						<div class="row my-3">
+							<div class="col-12 col-md-6 mx-auto">
 								<label
-									class="form-check-label"
+									class="form-check-label mb-2"
 									for="date-time-picker">
 									From
 								</label>
-
-								<br />
 
 								<DatePicker 
 									v-model="calendarForm.startTime"
@@ -112,9 +109,9 @@
 									:max-date="new Date()"
 									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
 							</div>
-							<div class="col-12 col-8 col-md-6 mb-4 mx-auto">
+							<div class="col-12 col-8 col-md-6 mx-auto">
 								<label
-									class="form-check-label"
+									class="form-check-label mb-2"
 									for="date-time-picker">
 									To
 								</label>
@@ -136,7 +133,7 @@
 							<div class="mb-3">
 								<label
 									for="form-control"
-									class="form-label">
+									class="form-label mb-2">
 									Description
 								</label>
                                 
@@ -154,13 +151,13 @@
 
 					<hr class="mt-1" />
 
-					<div class="row row-cols-1 g-4 gy-4">
-						<div class="col-11 mx-auto text-center">
-							<span class="text-white fs-6 fs-md-8">
+					<div class="row row-cols-1 gx-2 gy-3">
+						<div class="col-12 mx-auto text-start">
+							<span class="text-white fs-6 fs-md-8 mb-2">
 								Google Calendar
 							</span>
-							<div class="input-group mb-3 mt-1">
-								<span class="input-group-text">
+							<div class="input-group mt-1">
+								<span class="input-group-text bg-body-tertiary">
 									<!-- Google Calendar icon -->
 									<i class="fa-brands fa-google"></i>
 								</span>
@@ -172,32 +169,25 @@
 									readonly
 									:value="generateGoogleCalendarLink" />
 
-								<a 
-									class="input-group-text" 
+								<button
+									class="btn btn-outline-secondary"
 									@click="copyTextToClipboard(generateGoogleCalendarLink)">
-									<button
-										type="button"
-										class="btn btn-outline-dark">
-										<i class="fa-sharp fa-solid fa-note-sticky"></i>
-									</button>
-								</a>
+									<i class="fa-sharp fa-solid fa-note-sticky"></i>
+								</button>
 
 								<a
-									class="input-group-text"
+									class="btn btn-outline-secondary"
 									:href="generateGoogleCalendarLink">
-									<button
-										type="button"
-										class="btn btn-outline-dark">
-										<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
-									</button>
+									<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
 								</a>
 							</div>
 						</div>
-						<div class="col-11 mx-auto text-center">
-							<span class="text-white fs-6 fs-md-8">
+
+						<div class="col-12 mx-auto text-start">
+							<span class="text-white fs-6 fs-md-8 mb-2">
 								Yahoo Calendar
 							</span>
-							<div class="input-group mb-3 mt-1">
+							<div class="input-group mt-1">
 								<span class="input-group-text">
 									<!-- Yahoo icon -->
 									<i class="fa-brands fa-yahoo"></i>
@@ -210,24 +200,16 @@
 									readonly
 									:value="generateYahooCalendarLink" />
 
-								<span
-									class="input-group-text" 
+								<button
+									class="btn btn-outline-secondary"
 									@click="copyTextToClipboard(generateYahooCalendarLink)">
-									<button
-										type="button"
-										class="btn btn-outline-dark">
-										<i class="fa-sharp fa-solid fa-note-sticky"></i>
-									</button>
-								</span>
+									<i class="fa-sharp fa-solid fa-note-sticky"></i>
+								</button>
 
 								<a
-									class="input-group-text"
+									class="btn btn-outline-secondary"
 									:href="generateYahooCalendarLink">
-									<button
-										type="button"
-										class="btn btn-outline-dark">
-										<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
-									</button>
+									<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
 								</a>
 							</div>
 						</div>
@@ -239,18 +221,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import {  computed, defineComponent, ref } from 'vue'
 
 import { DatePicker } from 'v-calendar'
-import { computed } from 'vue'
 
-import { TIME_ZONES } from '@/common/timezones'
 import { copyTextToClipboard } from '@/common/helpers'
+import { TIME_ZONES } from '@/common/timezones'
+import TheInput from '@/components/forms/TheInput.vue'
 
 export default defineComponent({
 	name: 'CalendarLinkGeneratorView',
 	components: {
-		DatePicker
+		DatePicker,
+		TheInput
 	},
 	setup() {
 		// Forms
@@ -321,3 +304,10 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+.header-container {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+</style>
