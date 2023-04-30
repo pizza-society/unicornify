@@ -58,6 +58,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: '/tiktok-downloader',
+		name: 'tiktok-downloader',
+		components: {
+			default: () => import('@/views/TikTokDownloaderView.vue'),
+			Navbar: () => import('@/components/navbars/NavbarMain.vue')
+		}
+	},
+	{
 		path: '/calendar-link-generator',
 		name: 'calendar-link-generator',
 		components: {
