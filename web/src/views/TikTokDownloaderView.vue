@@ -146,7 +146,8 @@ import { helpers, required } from '@vuelidate/validators'
 import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
 import TheInput from '@/components/forms/TheInput.vue'
 import { useServiceStore } from '@/store'
-import { tikTokLinkRegex, convertToTime, sleep } from '@/helpers/helpers'
+import { convertToTime, sleep } from '@/helpers/timer'
+import { tikTokLinkRegex } from '@/helpers/regex'
 import type { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
 
 export default defineComponent({
