@@ -33,7 +33,7 @@
 									placeholder="Add Title" />
 							</div>
 
-							<div class="col-4">
+							<div class="col-12 col-md-4">
 								<label class="form-label">
 									Location
 								</label>
@@ -43,7 +43,7 @@
 									placeholder="Add Location" />
 							</div>
 
-							<div class="col-6">
+							<div class="col-8 col-md-6">
 								<label class="form-label">
 									Timezone
 								</label>
@@ -73,7 +73,7 @@
 								</select>
 							</div>
 
-							<div class="col-2">
+							<div class="col-4 col-md-2">
 								<br />
 
 								<div class="mt-3 form-check">
@@ -92,7 +92,7 @@
 							</div>
 						</div>
 
-						<div class="row my-3">
+						<div class="row mt-1 mb-3 gy-3">
 							<div class="col-12 col-md-6 mx-auto unicorn-calendar">
 								<label
 									class="form-check-label mb-2"
