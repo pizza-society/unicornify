@@ -86,6 +86,10 @@ export default defineComponent({
 					{
 						title: 'Twitter Video',
 						path: '/twitter-downloader'
+					},
+					{
+						title: 'TikTok Video',
+						path: '/tiktok-downloader'
 					}
 				]
 			}, 
