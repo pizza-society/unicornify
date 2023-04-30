@@ -93,7 +93,7 @@
 						</div>
 
 						<div class="row my-3">
-							<div class="col-12 col-md-6 mx-auto">
+							<div class="col-12 col-md-6 mx-auto unicorn-calendar">
 								<label
 									class="form-check-label mb-2"
 									for="date-time-picker">
@@ -103,9 +103,9 @@
 								<DatePicker 
 									v-model="calendarForm.startTime"
 									name="date-time-picker"
-									color="purple"
 									is-dark
-									is-expanded
+									expanded
+									title-position="left"
 									:max-date="new Date()"
 									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
 							</div>
@@ -120,10 +120,10 @@
 
 								<DatePicker 
 									v-model="calendarForm.endTime" 
-									name="date-time-picker" 
-									color="purple"
+									name="date-time-picker"
 									is-dark
-									is-expanded
+									expanded
+									title-position="left"
 									:min-date="new Date()"
 									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
 							</div>
@@ -229,6 +229,7 @@ import { copyTextToClipboard } from '@/common/helpers'
 import { TIME_ZONES } from '@/common/timezones'
 import TheInput from '@/components/forms/TheInput.vue'
 
+
 export default defineComponent({
 	name: 'CalendarLinkGeneratorView',
 	components: {
@@ -306,8 +307,52 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.header-container {
-	padding-top: 4rem;
-	padding-bottom: 4rem;
+:deep(.vc-dark) {
+	--vc-color: #adb5bd !important;
+	--vc-bg: #212529 !important;
+	--vc-border: #495057 !important;
+	--vc-focus-ring: 0 0 0 2px rgb(139, 92, 246, 0.7);
+	--vc-header-arrow-hover-bg: #171a1d !important;
+	--vc-weekday-color: rgb(139, 92, 246, 0.8) !important;
+	--vc-nav-title-color: #adb5bd !important;
+	--vc-day-popover-container-bg: red !important;
+	--vc-day-popover-container-border: red !important;
+	--vc-day-popover-header-color: red !important;
+	--vc-popover-content-color: red !important;
+	--vc-popover-content-bg: #212529 !important;
+	--vc-popover-content-border: #495057 !important;
+	--vc-time-picker-border: #495057 !important;
+	--vc-time-weekday-color: #adb5bd !important;
+	--vc-time-month-color: #8B5CF6 !important;
+	--vc-time-day-color: #8B5CF6 !important;
+	--vc-time-year-color: #adb5bd !important;
+	--vc-time-select-group-bg: hsla(216, 15%, 52%, 0.3);
+	--vc-time-select-group-border: transparent !important;
+	--vc-highlight-solid-bg: #8B5CF6 !important;
+	.vc-base-select select {
+		border: 0 !important;
+	}
+
+	.vc-time-select-group .vc-base-icon {
+		color: #8B5CF6;
+	}
+
+	.vc-day-content.vc-blue {
+		background-color: #8B5CF6;
+	}
+
+	.vc-title, .vc-arrow, .vc-nav-title, .vc-nav-arrow,
+	.vc-nav-item {
+		background-color: #1a1e21;
+	}
+
+	.vc-nav-item {
+		color: #adb5bd;
+
+		&.is-active {
+			background-color: #8B5CF6;
+			color: #fff;
+		}
+	}
 }
 </style>
