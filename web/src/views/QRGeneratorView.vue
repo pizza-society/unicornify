@@ -30,7 +30,6 @@
 							
 							<TheInput
 								v-model="qrForm.url"
-								type="type"
 								placeholder="Enter link to open when scanned"
 								:disabled="isLoading"
 								:class="{
@@ -240,14 +239,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useServiceStore } from '@/store'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, url } from '@vuelidate/validators'
 
-import { DrawerChoices, ImageChoices } from '@/helpers/qr-generator.enum'
-import ModalComponent from '@/components/ModalComponent.vue'
 import TheInput from '@/components/forms/TheInput.vue'
+import ModalComponent from '@/components/ModalComponent.vue'
+import { DrawerChoices, ImageChoices } from '@/helpers/qr-generator.enum'
+import { useServiceStore, useToastStore } from '@/store'
 
 export default defineComponent({
 	name: 'QRGeneratorView',
@@ -261,6 +260,7 @@ export default defineComponent({
 
 		// Services
 		const serviceSvc = useServiceStore()
+		const toastr = useToastStore()
 
 		// Forms
 		const qrForm = ref({
@@ -299,6 +299,8 @@ export default defineComponent({
 			).then(data => {
 				generatedResult.value = data.result
 				isLoading.value = false
+
+				toastr.success('Generated')
 			}).catch(() => {
 				isLoading.value = false
 			})

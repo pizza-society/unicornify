@@ -65,3 +65,9 @@ $form-valid-color: #75b798;
 $form-valid-border-color: #75b798;
 $form-invalid-color: #ea868f;
 $form-invalid-border-color: #ea868f;
+
+:root {
+    // TODO: check all to remove unused
+    --bs-secondary-bg: #343a40 !important;
+    --bs-secondary-bg-rgb: 52, 58, 64 !important;
+}
