@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 
+from app.core.docs import tiktok_video_doc
 from app.utils.logger import get_logger
 from app.core.schemas.tiktok_downloader import TikTokVideoDownloaderSchema, TikTokVideoDownloaderResponse
 from app.modules.tiktok_downloader_mod import TikTokVideoDownloader
@@ -11,15 +12,22 @@ logger = get_logger()
 
 @router.post("/download-tiktok-video/",
              response_model=TikTokVideoDownloaderResponse,
-             summary="Download TikTok video")
+             summary=tiktok_video_doc.SUMMARY,
+             responses=tiktok_video_doc.RESPONSES,
+             status_code=status.HTTP_200_OK)
 def download_tiktok_media(data: TikTokVideoDownloaderSchema):
-    """
-    TODO: Update docstring format
-    Generate a Tiktok video downloader object by using 3rd party script with all the information.
+    """\f
+    Generate a TikTok video downloader object
 
-    - **url**: a valid http/https URL for a TikTok video, e.g. https://www.tiktok.com/@user/video/0123456789
+    Args:
+    
+        data (TikTokVideoDownloaderSchema): A valid URL for a TikTok video, e.g. https://www.tiktok.com/@user/video/0123456789
 
-    Documentation about the external CLI can be found here: https://github.com/ytdl-org/youtube-dl
+    Returns:
+
+        TikTokVideoDownloaderResponse: The generated TikTok video object, containing video metadata and download URL, or
+
+        JSONResponse: Error response
     """
     tiktok_downloader = TikTokVideoDownloader(data.url)
 
