@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia'
 
 import { APIService } from '@/common/api.service'
-import QRGeneratorResponse from '@/types/qr-generator.model'
-import DisposableEmailResponse from '@/types/disposable-email-validator.models'
-import TwitterDownloaderResponse from '@/types/twitter-downloader.model'
-import TikTokDownloaderResponse from '@/types/tiktok-downloader.model'
+import { DisposableEmailResponse, QRGeneratorResponse,
+	TikTokDownloaderResponse, TwitterDownloaderResponse } from '@/types'
 
 export const useServiceStore = defineStore('service', {
 	state: () => ({}),

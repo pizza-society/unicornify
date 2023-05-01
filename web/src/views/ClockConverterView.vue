@@ -100,7 +100,7 @@
 import { defineComponent, ref, computed } from 'vue'
 
 import TheInput from '@/components/forms/TheInput.vue'
-import { useToastStore } from '@/store/modules/toast.module'
+import { useToastStore } from '@/store'
 
 const INVALID_24H = 'Invalid 24 Hour time format, valid format example: 18:00'
 const INVALID_12H = 'Invalid 12 Hour time format, valid format example: 12:00 am'

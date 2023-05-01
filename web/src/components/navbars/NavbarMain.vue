@@ -57,8 +57,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { NavbarItem } from '@/common/navbar'
 import NavbarNav from '@/components/navbars/NavbarNav.vue'
+import { NavbarItem } from '@/types'
 
 export default defineComponent({
 	name: 'NavbarMain',

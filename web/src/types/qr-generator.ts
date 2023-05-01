@@ -15,6 +15,6 @@ export enum DrawerChoices {
 }
 
 /** QR generator response interface */
-export default interface QRGeneratorResponse {
+export interface QRGeneratorResponse {
 	result: string
 }

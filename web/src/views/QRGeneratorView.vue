@@ -245,8 +245,8 @@ import { helpers, required, url } from '@vuelidate/validators'
 
 import TheInput from '@/components/forms/TheInput.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
-import { DrawerChoices, ImageChoices } from '@/helpers/qr-generator.enum'
 import { useServiceStore, useToastStore } from '@/store'
+import { DrawerChoices, ImageChoices } from '@/types'
 
 export default defineComponent({
 	name: 'QRGeneratorView',
