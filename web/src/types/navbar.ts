@@ -1,13 +1,13 @@
 /** Base interface for NavbarItem */
 export interface NavbarItem {
     /** Nav title */
-    title: string,
+    title: string
 
     /** Nav name */
     name: string
 
     /** Nav path */
-    path?: string,
+    path?: string
 
     /** Nav dropdown links */
     dropdown?: NavbarItemLink[]
@@ -16,7 +16,7 @@ export interface NavbarItem {
 /** Base interfce for NavbarLink */
 export interface NavbarItemLink {
     /** Link path */
-    path: string,
+    path: string
 
     /** Link title */
     title: string
