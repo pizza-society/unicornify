@@ -14,8 +14,8 @@
 import { computed, defineComponent } from 'vue'
 
 import ToastChild from './ToastChild.vue'
-import { ToastChildItem } from '@/types/toast'
-import { useToastStore } from '@/store/modules/toast.module'
+import { ToastChildItem } from '@/types'
+import { useToastStore } from '@/store'
 
 
 export default defineComponent({

@@ -225,10 +225,8 @@ import {  computed, defineComponent, ref } from 'vue'
 
 import { DatePicker } from 'v-calendar'
 
-import { copyTextToClipboard } from '@/common/helpers'
-import { TIME_ZONES } from '@/common/timezones'
 import TheInput from '@/components/forms/TheInput.vue'
-
+import { copyTextToClipboard, TIME_ZONES } from '@/common'
 
 export default defineComponent({
 	name: 'CalendarLinkGeneratorView',

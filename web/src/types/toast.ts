@@ -7,13 +7,13 @@ export type ToastType = 'info' | 'success' | 'error' | 'warning'
 /** Base interface for ToastChild component */
 export interface ToastChildItem {
     /** item id */
-    id: number;
+    id: number
 
     /** item toast type */
-    theme: ToastType;
+    theme: ToastType
 
     /** item text */
-    text: string;
+    text: string
 }
 
 /** Toast icon map to theme */

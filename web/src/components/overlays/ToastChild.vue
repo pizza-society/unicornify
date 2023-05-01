@@ -18,7 +18,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { ToastColorMap, ToastIconMap, ToastType } from '@/types/toast'
+import { ToastColorMap, ToastIconMap, ToastType } from '@/types'
 
 export default defineComponent({
 	name: 'ToastChild',

@@ -138,10 +138,10 @@ import { defineComponent, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
-import { useServiceStore, useToastStore } from '@/store'
-import { tikTokLinkRegex, convertToTime } from '@/helpers'
-import type { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
 import TheInput from '@/components/forms/TheInput.vue'
+import { tikTokLinkRegex, convertToTime } from '@/helpers'
+import { useServiceStore, useToastStore } from '@/store'
+import type { TikTokMedia, TikTokMeta } from '@/types'
 
 const UNABLE_TO_FIND_VIDEO = 'The TikTok link you supplied does not include any video or that there is a problem downloading the video.'
 
