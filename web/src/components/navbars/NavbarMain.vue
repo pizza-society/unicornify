@@ -3,10 +3,10 @@
 		<div class="container-fluid">
 			<a
 				class="navbar-brand"
-				href="#">
+				href="/">
 				<img
 					alt="site_logo"
-					src="@/assets/images/pizza-slice.png"
+					src="@/assets/images/unicornify.png"
 					class="d-inline-block align-text-top navbar-brand-logo" />
 			</a>
 
