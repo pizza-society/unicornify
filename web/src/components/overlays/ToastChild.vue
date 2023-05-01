@@ -5,11 +5,11 @@
 		style="bottom: 1rem;">
 		<div
 			class="d-inline-flex justify-content-center align-items-center
-			flex-shrink-0 p-1 my-auto rounded-circle toast-icon"
+			flex-shrink-0 p-1 my-auto rounded-circle toast-icon text-white"
 			:class="colorMapped">
 			<i :class="iconMapped"></i>
 		</div>
-		<div class="d-flex align-items-center py-2 ps-2 pe-2 text">
+		<div class="d-flex align-items-center py-2 ps-2 pe-2 text-white">
 			{{ text }}
 		</div>
 	</div>
@@ -56,18 +56,18 @@ export default defineComponent({
 }
 
 .toast-info {
-	background-color: rgb(30, 64, 175, 0.5);
+	background-color: rgb(30, 64, 175, 1);
 }
 
 .toast-success {
-	background-color: rgb(22, 101, 52, 0.5);
+	background-color: rgb(22, 101, 52, 1);
 }
 
 .toast-warning {
-	background-color: rgb(234, 179, 8, 0.5);
+	background-color: rgb(234, 179, 8, 1);
 }
 
 .toast-error {
-	background-color: rgb(159, 18, 57, 0.5);
+	background-color: rgb(159, 18, 57, 1);
 }
 </style>
