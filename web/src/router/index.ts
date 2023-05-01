@@ -68,6 +68,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/tiktok-downloader',
 		name: 'tiktok-downloader',
+		meta: { title: 'TikTok Downloader' },
 		components: {
 			default: () => import('@/views/TikTokDownloaderView.vue'),
 			Navbar: () => import('@/components/navbars/NavbarMain.vue')
