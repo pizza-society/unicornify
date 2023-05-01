@@ -1,314 +1,354 @@
 <template>
-    <div class="container">
-        <div class="d-flex flex-row vh-min justify-content-center row gx-5">
-            <div class="col-lg-8 mt-5">
-                <div class="text-center">
-                    <h1 class="display-5 mb-0"> 
-                        Calendar Link Generator 
-                    </h1>
+	<div class="container">
+		<div class="d-flex flex-row vh-min justify-content-center row gx-5">
+			<div class="col-lg-8 mt-5">
+				<div class="text-center">
+					<h3 class="mb-0">
+						Calendar Link Generator 
+					</h3>
+					<p class="mb-4 text-secondary">
+						<small>
+							Generate links to add an event to popular calendar services. 
+						</small>
+					</p>
+				</div>
 
-                    <p class="lead text-secondary"> 
-                        Generate links to add an event to popular calendar services. 
-                    </p>
-                </div>
+				<div class="mt-0">
+					<form @submit.prevent>
+						<small class="text-left text-secondary mt-3"> 
+							DETAILS 
+						</small>
 
-                <div class="mt-0">
-                    <form @submit.prevent>
-                        <small class="text-left text-secondary mt-3"> 
-                            DETAILS 
-                        </small>
+						<hr class="mt-1" />
 
-                        <hr class="mt-1" />
+						<div class="row row-cols-12 gx-2 gy-3">
+							<div class="col-12">
+								<label 
+									class="form-label">
+									Title
+								</label>
 
-                        <div class="row row-cols-2 g-4 gy-4">
-                            <div class="col-7">
-                                <label 
-                                    class="form-label mb-1">
-                                    Title
-                                </label>
+								<TheInput 
+									v-model="calendarForm.title" 
+									placeholder="Add Title" />
+							</div>
 
-                                <input 
-                                    class="form-control" 
-                                    placeholder="Add Title" 
-                                    v-model='calendarForm.title' />
-                            </div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">
+									Location
+								</label>
 
-                            <div class="col-4">
-                                <label class="form-label mb-1">
-                                    Location
-                                </label>
+								<TheInput 
+									v-model="calendarForm.location" 
+									placeholder="Add Location" />
+							</div>
 
-                                <input 
-                                    class="form-control" 
-                                    placeholder="Add Location" 
-                                    v-model='calendarForm.location' />
-                            </div>
+							<div class="col-8 col-md-6">
+								<label class="form-label">
+									Timezone
+								</label>
 
-                            <div class="col-7">
-                                <label class="form-label mb-1">
-                                    Timezone
-                                </label>
+								<select
+									v-model="calendarForm.timeZone"
+									class="form-select">
+									<option 
+										v-if="calendarForm.timeZone != ''" 
+										disabled
+										value>
+										Select a Timezone
+									</option>
 
-                                <select
-                                    class="form-select"
-                                    v-model='calendarForm.timeZone'>
-                                    <option 
-                                        v-if="calendarForm.timeZone != ''" 
-                                        disabled value>
-                                        Select a Timezone
-                                    </option>
+									<option
+										v-else
+										:value="calendarForm.timeZone">
+										{{ Intl.DateTimeFormat().resolvedOptions().timeZone }}
+									</option>
 
-                                    <option v-else :value='calendarForm.timeZone'>
-                                        {{ Intl.DateTimeFormat().resolvedOptions().timeZone }}
-                                    </option>
+									<option 
+										v-for="(zone, time) in timeZones" 
+										:key="zone" 
+										:value="zone">
+										{{ time }}
+									</option>
+								</select>
+							</div>
 
-                                    <option 
-                                        v-for='(zone, time) in timeZones' 
-                                        :value='zone' 
-                                        :key='zone'>
-                                        {{ time }}
-                                    </option>
-                                </select>
-                            </div>
+							<div class="col-4 col-md-2">
+								<br />
 
-                            <div class="col-4">
-                                <br />
+								<div class="mt-3 form-check">
+									<input 
+										v-model="calendarForm.isAllDayEvent" 
+										class="form-check-input" 
+										type="checkbox" 
+										placeholder="All day event" />
 
-                                <div class="mt-3 form-check">
-                                    <input 
-                                        class="form-check-input" 
-                                        type="checkbox" 
-                                        placeholder="All day event" 
-                                        v-model='calendarForm.isAllDayEvent' />
+									<label 
+										class="form-check-label"
+										for="form-check-input">
+										All Day
+									</label>
+								</div>
+							</div>
+						</div>
 
-                                    <label 
-                                        class="form-check-label"
-                                        for="form-check-inpu">
-                                        All Day
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+						<div class="row mt-1 mb-3 gy-3">
+							<div class="col-12 col-md-6 mx-auto unicorn-calendar">
+								<label
+									class="form-check-label mb-2"
+									for="date-time-picker">
+									From
+								</label>
 
-                        <div class="mt-2 mb-2">
-                            <div class="col-11 mb-2">
-                                <label
-                                    class="form-check-label"
-                                    for="date-time-picker">
-                                    From
-                                </label>
+								<DatePicker 
+									v-model="calendarForm.startTime"
+									name="date-time-picker"
+									is-dark
+									expanded
+									title-position="left"
+									:max-date="new Date()"
+									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
+							</div>
+							<div class="col-12 col-8 col-md-6 mx-auto">
+								<label
+									class="form-check-label mb-2"
+									for="date-time-picker">
+									To
+								</label>
 
-                                <br />
+								<br />
 
-                                <DatePicker 
-                                    name="date-time-picker"
-                                    color="purple"
-                                    is-dark
-                                    is-expanded
-                                    v-model="calendarForm.startTime"
-                                    :max-date="new Date()"
-                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
-                            </div>
-                            <div class="col-11">
-                                <label
-                                    class="form-check-label"
-                                    for="date-time-picker">
-                                    To
-                                </label>
+								<DatePicker 
+									v-model="calendarForm.endTime" 
+									name="date-time-picker"
+									is-dark
+									expanded
+									title-position="left"
+									:min-date="new Date()"
+									:mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
+							</div>
+						</div>
 
-                                <br />
-
-                                <DatePicker 
-                                    name="date-time-picker" 
-                                    color="purple" 
-                                    is-dark
-                                    is-expanded
-                                    v-model="calendarForm.endTime"
-                                    :min-date="new Date()"
-                                    :mode="calendarForm.isAllDayEvent ? 'date' : 'dateTime'" />
-                            </div>
-                        </div>
-
-                        <div class="col-11">
-                            <div class="mb-3">
-                                <label for="form-control" class="form-label">
-                                    Description
-                                </label>
+						<div class="col-12 col-md-12 mx-auto">
+							<div class="mb-3">
+								<label
+									for="form-control"
+									class="form-label mb-2">
+									Description
+								</label>
                                 
-                                <textarea
-                                    class="form-control"
-                                    rows="3"
-                                    placeholder="Add description"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+								<textarea
+									class="form-control"
+									rows="3"
+									placeholder="Add description"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
 
-                <div class="mt-2 mb-5">
-                    <small class="text-left text-secondary mt-3"> RESULTS </small>
+				<div class="mt-2 mb-5">
+					<small class="text-left text-secondary mt-3"> RESULTS </small>
 
-                    <hr class="mt-1" />
+					<hr class="mt-1" />
 
-                    <div class="row row-cols-1 g-4 gy-4">
-                        <div class="col-11">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">
-                                    <!-- Google Calendar icon -->
-                                    <i class="fa-brands fa-google"></i>
-                                </span>
+					<div class="row row-cols-1 gx-2 gy-3">
+						<div class="col-12 mx-auto text-start">
+							<span class="text-white fs-6 fs-md-8 mb-2">
+								Google Calendar
+							</span>
+							<div class="input-group mt-1">
+								<span class="input-group-text bg-body-tertiary">
+									<!-- Google Calendar icon -->
+									<i class="fa-brands fa-google"></i>
+								</span>
 
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    placeholder="Google Calendar"
-                                    readonly
-                                    :value='generateGoogleCalendarLink'  />
+								<input 
+									type="text" 
+									class="form-control" 
+									placeholder="Google Calendar"
+									readonly
+									:value="generateGoogleCalendarLink" />
 
-                                <a 
-                                    class="input-group-text" 
-                                    @click='copyTextToClipboard(generateGoogleCalendarLink)'>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-dark">
-                                        <i class="fa-sharp fa-solid fa-note-sticky"></i>
-                                    </button>
-                                </a>
+								<button
+									class="btn btn-outline-secondary"
+									@click="copyTextToClipboard(generateGoogleCalendarLink)">
+									<i class="fa-sharp fa-solid fa-note-sticky"></i>
+								</button>
 
-                                <a
-                                    id="basic-addon2"
-                                    class="input-group-text"
-                                    :href='generateGoogleCalendarLink'>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-dark">
-                                        <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
-                                    </button>
-                                </a>
-                            </div>
+								<a
+									class="btn btn-outline-secondary"
+									:href="generateGoogleCalendarLink">
+									<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
+								</a>
+							</div>
+						</div>
 
-                        </div>
-                        <div class="col-11">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">
-                                    <!-- Yahoo icon -->
-                                    <i class="fa-brands fa-yahoo"></i>
-                                </span>
+						<div class="col-12 mx-auto text-start">
+							<span class="text-white fs-6 fs-md-8 mb-2">
+								Yahoo Calendar
+							</span>
+							<div class="input-group mt-1">
+								<span class="input-group-text">
+									<!-- Yahoo icon -->
+									<i class="fa-brands fa-yahoo"></i>
+								</span>
                                 
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    placeholder="Yahoo Calendar"
-                                    readonly
-                                    :value='generateYahooCalendarLink' />
+								<input 
+									type="text" 
+									class="form-control" 
+									placeholder="Yahoo Calendar"
+									readonly
+									:value="generateYahooCalendarLink" />
 
-                                <span
-                                    id="basic-addon3" 
-                                    class="input-group-text" 
-                                    @click='copyTextToClipboard(generateYahooCalendarLink)'>
-                                    <button type="button" class="btn btn-outline-dark">
-                                        <i class="fa-sharp fa-solid fa-note-sticky"></i>
-                                    </button>
-                                </span>
+								<button
+									class="btn btn-outline-secondary"
+									@click="copyTextToClipboard(generateYahooCalendarLink)">
+									<i class="fa-sharp fa-solid fa-note-sticky"></i>
+								</button>
 
-                                <a
-                                    id="basic-addon4"
-                                    class="input-group-text"
-                                    :href='generateYahooCalendarLink'>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-dark">
-                                        <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+								<a
+									class="btn btn-outline-secondary"
+									:href="generateYahooCalendarLink">
+									<i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import {  computed, defineComponent, ref } from 'vue'
 
 import { DatePicker } from 'v-calendar'
-import { computed } from 'vue'
 
-import { TIME_ZONES } from '@/common/timezones'
 import { copyTextToClipboard } from '@/common/helpers'
+import { TIME_ZONES } from '@/common/timezones'
+import TheInput from '@/components/forms/TheInput.vue'
+
 
 export default defineComponent({
-    name: 'CalendarLinkGeneratorView',
-    setup() {
-        // Forms
-        const calendarForm = ref({
-            title: 'Event',
-            location: '',
-            startTime: new Date(),
-            endTime: new Date(),
-            timeZone: '',
-            isAllDayEvent: false,
-            fromDateHour: '',
-            toDateHour: '',
-            description: ''
-        })
+	name: 'CalendarLinkGeneratorView',
+	components: {
+		DatePicker,
+		TheInput
+	},
+	setup() {
+		// Forms
+		const calendarForm = ref({
+			title: 'Event',
+			location: '',
+			startTime: new Date(),
+			endTime: new Date(),
+			timeZone: '',
+			isAllDayEvent: false,
+			fromDateHour: '',
+			toDateHour: '',
+			description: ''
+		})
 
-        /**
+		/**
          * Converts a given date/datetime string or a Date object to a pure ISO 8601 string.
          * Returns a string in the format of YYYYMMDD or YYYYMMDDTHHmmSSZ depending on the value of isAllDayEvent.
          * @param {string | Date} dateTimeString - The date/datetime string or Date object to be converted.
          * @return {string} The converted ISO 8601 string.
          */
-        const convertDateTimeToPureISO = (dateTimeString: string | Date) => {
-            const date = new Date(new Date(dateTimeString))
-            return calendarForm.value.isAllDayEvent
-                ? new Date(date.setDate(date.getDate() + 1))
-                      .toISOString()
-                      .split('T', 1)[0]
-                      .replace(/-/g, '')
-                : date
-                      .toISOString()
-                      .replace(/-|:/g, '')
-                      .replace(/\.\d{3}Z/, 'Z')
-        }
+		const convertDateTimeToPureISO = (dateTimeString: string | Date) => {
+			const date = new Date(new Date(dateTimeString))
+			return calendarForm.value.isAllDayEvent
+				? new Date(date.setDate(date.getDate() + 1))
+					.toISOString()
+					.split('T', 1)[0]
+					.replace(/-/g, '')
+				: date
+					.toISOString()
+					.replace(/-|:/g, '')
+					.replace(/\.\d{3}Z/, 'Z')
+		}
 
-        // Computes
-        const generateGoogleCalendarLink = computed(() => {
-            return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${
-                calendarForm.value.title
-            }&details=${calendarForm.value.description}&location=${
-                calendarForm.value.location
-            }&dates=${convertDateTimeToPureISO(
-                calendarForm.value.startTime
-            )}%2F${ convertDateTimeToPureISO(calendarForm.value.endTime) }&ctz=${
-                calendarForm.value.timeZone
-            }`
-        })
+		// Computes
+		const generateGoogleCalendarLink = computed(() => {
+			return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${
+				calendarForm.value.title
+			}&details=${ calendarForm.value.description }&location=${
+				calendarForm.value.location
+			}&dates=${ convertDateTimeToPureISO(
+				calendarForm.value.startTime
+			) }%2F${ convertDateTimeToPureISO(calendarForm.value.endTime) }&ctz=${
+				calendarForm.value.timeZone
+			}`
+		})
 
-        const generateYahooCalendarLink = computed(() => {
-            return `https://calendar.yahoo.com/?title=${
-                calendarForm.value.title
-            }&desc=${calendarForm.value.description}&in_loc=${
-                calendarForm.value.location
-            }&st=${convertDateTimeToPureISO(
-                calendarForm.value.startTime
-            )}&et=${ convertDateTimeToPureISO(calendarForm.value.endTime) }`
-        })
+		const generateYahooCalendarLink = computed(() => {
+			return `https://calendar.yahoo.com/?title=${
+				calendarForm.value.title
+			}&desc=${ calendarForm.value.description }&in_loc=${
+				calendarForm.value.location
+			}&st=${ convertDateTimeToPureISO(
+				calendarForm.value.startTime
+			) }&et=${ convertDateTimeToPureISO(calendarForm.value.endTime) }`
+		})
 
-        // Data
-        const timeZones = TIME_ZONES
+		// Data
+		const timeZones = TIME_ZONES
         
-        return {
-            calendarForm,
-            generateGoogleCalendarLink,
-            generateYahooCalendarLink,
-            timeZones,
-            copyTextToClipboard
-        }
-    },
-    components: {
-        DatePicker
-    }
+		return {
+			calendarForm,
+			generateGoogleCalendarLink,
+			generateYahooCalendarLink,
+			timeZones,
+			copyTextToClipboard
+		}
+	}
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(.vc-dark) {
+	--vc-color: #adb5bd !important;
+	--vc-bg: #212529 !important;
+	--vc-border: #495057 !important;
+	--vc-focus-ring: 0 0 0 2px rgb(139, 92, 246, 0.7);
+	--vc-header-arrow-hover-bg: #171a1d !important;
+	--vc-weekday-color: rgb(139, 92, 246, 0.8) !important;
+	--vc-nav-title-color: #adb5bd !important;
+	--vc-popover-content-bg: #212529 !important;
+	--vc-popover-content-border: #495057 !important;
+	--vc-time-picker-border: #495057 !important;
+	--vc-time-weekday-color: #adb5bd !important;
+	--vc-time-month-color: #8B5CF6 !important;
+	--vc-time-day-color: #8B5CF6 !important;
+	--vc-time-year-color: #adb5bd !important;
+	--vc-time-select-group-bg: hsla(216, 15%, 52%, 0.3);
+	--vc-time-select-group-border: transparent !important;
+	--vc-highlight-solid-bg: #8B5CF6 !important;
+	.vc-base-select select {
+		border: 0 !important;
+	}
+
+	.vc-time-select-group .vc-base-icon {
+		color: #8B5CF6;
+	}
+
+	.vc-day-content.vc-blue {
+		background-color: #8B5CF6;
+	}
+
+	.vc-title, .vc-arrow, .vc-nav-title, .vc-nav-arrow,
+	.vc-nav-item {
+		background-color: #1a1e21;
+	}
+
+	.vc-nav-item {
+		color: #adb5bd;
+
+		&.is-active {
+			background-color: #8B5CF6;
+			color: #fff;
+		}
+	}
+}
+</style>

@@ -1,183 +1,191 @@
 <template>
-    <div class="container">
-        <div
-            class="d-flex flex-row vh-min justify-content-center
-            align-items-center row">
-            <div class="col-lg-12 col-md-4 text-center">
-                <ErrorAlert v-if="error">
-                    An Error has occured, please try again later ...
-                </ErrorAlert>
+	<div class="container">
+		<div class="d-flex flex-row vh-min justify-content-center row">
+			<div class="col-sm-12 col-md-4 text-center">
+				<div class="header-container">
+					<lottie-player
+						src="src/assets/images/lottiefiles/email.json"
+						background="transparent"
+						class="mx-auto"
+						speed="1"
+						style="width: 8rem; height: 8rem;"
+						autoplay />
+				</div>
 
-                <h3 class="mb-0">
-                    Disposable Email Validator
-                </h3>
+				<h3 class="mb-0">
+					Disposable Email Validator
+				</h3>
 
-                <p class="mb-4">
-                    <small>
-                        Validate disposable email address in seconds !
-                    </small>
-                </p>
+				<p class="mb-4 text-secondary">
+					<small>
+						Validate disposable email address in seconds!
+					</small>
+				</p>
 
-                <div class="mb-3">
-                    <div v-if="!formSubmitted">
-                        <div class="container-sm">
-                            <form @submit="validateEmail()" v-on:submit.prevent>
-                                <span v-if="!isValidEmail">
-                                    <div class="alert alert-light" role="alert">
-                                        Please enter a valid email address
-                                    </div>
-                                </span>
+				<div class="mb-3">
+					<form
+						class="needs-validation"
+						@submit.prevent>
+						<div class="mb-3">
+							<label class="form-label">
+								Enter Email
+							</label>
+							
+							<TheInput
+								v-model="emailForm.email"
+								placeholder="Enter email address"
+								:disabled="isLoading"
+								:class="{
+									'is-invalid': v$.email.$error && v$.email.$dirty,
+									'is-valid': !v$.email.$error && v$.email.$dirty
+								}"
+								@blur="v$.email.$touch" />
+							<div
+								v-for="error of v$.email.$errors"
+								:key="error.$uid"
+								class="invalid-feedback">
+								{{ error.$message }}
+							</div>
+						</div>
+					</form>
 
-                                <div v-if="!formSubmitted">
-                                    <label class="form-label">
-                                        Enter An Email
-                                    </label>
+					<button
+						v-if="!disposedEmailResult"
+						class="btn btn-outline-primary mb-3"
+						:disabled="isLoading || v$.$invalid"
+						@click="validateEmail()">
+						<span v-if="!isLoading">
+							Verify
+						</span>
+						<span v-else>
+							<i class="fa-solid fa-spinner fa-spin"></i>
+						</span>
+					</button>
 
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        placeholder="Email address"
-                                        aria-label="Email address"
-                                        aria-describedby="button-addon1"
-                                        v-model="emailForm.email"
-                                        required />
-
-                                    <br />
-
-                                    <button
-                                        id="button-addon1"
-                                        class="btn btn-outline-primary"
-                                        type="submit">
-                                        Verify
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div
-                        v-else-if="dataObtained && !disposedEmailResult!.disposable && disposedEmailResult!.format">
-                        <div class="alert alert-success" role="alert">
-                            The Email <b>"{{ emailForm.email }}"</b> is Valid and Not
-                            Disposable
-                        </div>
-                    </div>
-
-                    <div
-                        v-else-if="dataObtained && disposedEmailResult!.disposable">
-                        <div class="alert alert-danger" role="alert">
-                            Warning, The Email <b>"{{ emailForm.email }}"</b> is a
-                            Disposable Email
-                        </div>
-                    </div>
-
-                    <div
-                        v-else-if="dataObtained && !disposedEmailResult!.format">
-                        <div class="alert alert-light" role="alert">
-                            The Email <b>"{{ emailForm.email }}"</b> is not a Valid Email.
-                        </div>
-                    </div>
-
-                    <div v-else>
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-
-                    <br />
-
-                    <button
-                        v-if="dataObtained"
-                        type="button"
-                        class="btn btn-primary btn-lg"
-                        @click="formSubmitted = false; dataObtained = false;">
-                        Check again
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+					<div
+						v-else
+						class="d-grid gap-2 d-flex justify-content-center">
+						<button
+							class="btn btn-outline-primary"
+							:disabled="isLoading"
+							@click="reset()">
+							Check again
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
-import { useServiceStore } from '@/store'
+import useVuelidate from '@vuelidate/core'
+import { email, helpers, required } from '@vuelidate/validators'
+
+import TheInput from '@/components/forms/TheInput.vue'
+import { TextConcat } from '@/helpers/typography'
+import { useServiceStore, useToastStore } from '@/store'
 import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models'
 
+const VALIDATED_NOT_DISPOSABLE = 'The email <email> is valid and not disposable '
+const VALIDATED_DISPOBABLE = 'Warning, the email <email> is a disposable email'
+const VALIDATED_SERVER_ERROR = 'An error has occured, please try again later...'
+
 export default defineComponent({
-    name: 'EmailValidatorView',
-    setup() {
-        // Data
-        const disposedEmailResult = ref<DisposableEmailMeta | null>(null)
+	name: 'EmailValidatorView',
+	components: {
+		TheInput
+	},
+	setup() {
+		// Data
+		const disposedEmailResult = ref<DisposableEmailMeta | null>(null)
 
-        // Services
-        const serviceSvc = useServiceStore()
+		// Services
+		const serviceSvc = useServiceStore()
+		const toastr = useToastStore()
 
-        //  Forms 
-        const emailForm = ref({ email: '' })
+		//  Forms 
+		const emailForm = ref({ email: null })
+		const validation = {
+			email: { 
+				required: helpers.withMessage(
+					'Need to have a value',
+					required
+				),
+				email: helpers.withMessage(
+					'Need to have a valid email',
+					email
+				)
+			}
+		}
+		const v$ = useVuelidate(validation, emailForm)
 
-        // Checkers
-        const formSubmitted = ref(false)
-        const dataObtained = ref(false)
-        const error = ref(false)
-        const isValidEmail = ref(true)
+		// Checkers
+		const isLoading = ref<boolean>(false)
 
-        // Validate Email
-        const validateEmail = () => {
-            if (!testEmail()) {
-                isValidEmail.value = false
-                sleep(3000).then(() => {
-                    isValidEmail.value = true
-                })
-                return
-            }
+		// Validate Email
+		const validateEmail = () => {
+			if (v$.value.$invalid) return
 
-            formSubmitted.value = true
+			isLoading.value = true
+			
+			return serviceSvc.validateDisposableEmail(emailForm.value)
+				.then(data => {
+					disposedEmailResult.value = data.result
+					isLoading.value = false
 
-            return serviceSvc.validateDisposableEmail(
-                emailForm.value
-                ).then(data => {
-                    disposedEmailResult.value= data.result
-                    dataObtained.value = true
-                })
-                .catch(() => {
-                    error.value = true
-                })
-        }
+					if (!disposedEmailResult.value.disposable && disposedEmailResult.value.format) {
+						toastr.success(validatedNotDisposableMsg.value)
+					} else if (disposedEmailResult.value.disposable && disposedEmailResult.value.format) {
+						toastr.warning(validatedDisposableMsg.value)
+					} else if (disposedEmailResult.value.disposable && !disposedEmailResult.value.format) {
+						toastr.warning(validatedServerErrorMsg.value)
+					}
+				})
+				.catch(() => {
+					isLoading.value = false
+				})
+		}
 
+		// Reset form
+		const reset = () => {
+			emailForm.value.email = null
+			disposedEmailResult.value = null
+			v$.value.$reset()
+		}
 
-        const testEmail = () => {
-            const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-            return regex.test(emailForm.value.email)
-        }
+		const validatedNotDisposableMsg = computed(() => {
+			const curEmail = emailForm.value.email ? emailForm.value.email : ''
+			return (TextConcat(VALIDATED_NOT_DISPOSABLE, '<email>', curEmail))
+		})
 
-        const sleep = (time: number) => {
-            return new Promise(resolve => setTimeout(resolve, time))
-        }
+		const validatedDisposableMsg = computed(() => {
+			const curEmail = emailForm.value.email ? emailForm.value.email : ''
+			return (TextConcat(VALIDATED_DISPOBABLE, '<email>', curEmail))
+		})
 
-        return {
-            emailForm,
-            formSubmitted,
-            dataObtained,
-            disposedEmailResult,
-            error,
-            isValidEmail,
-            validateEmail,
-            testEmail
-        }
-    },
-    components: { ErrorAlert }
+		const validatedServerErrorMsg = ref<string>(VALIDATED_SERVER_ERROR)
+
+		return {
+			emailForm,
+			v$,
+			disposedEmailResult,
+			isLoading,
+			validateEmail,
+			reset,
+			validatedNotDisposableMsg,
+			validatedDisposableMsg,
+			validatedServerErrorMsg
+		}
+	}
 })
 </script>
 
 <style lang="scss" scoped>
-.container-sm {
-    max-width: 25rem;
-}
-
-.container {
-    max-width: 50rem;
+.header-container {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 }
 </style>
