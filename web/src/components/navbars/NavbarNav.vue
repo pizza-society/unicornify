@@ -60,11 +60,10 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
-import { NavbarItem } from '@/common/navbar'
+import { NavbarItem } from '@/types'
 
 export default defineComponent({
 	name: 'NavbarNav',
-	
 	props: {
 		items: {
 			type: Array as () => NavbarItem[],

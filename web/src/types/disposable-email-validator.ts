@@ -24,7 +24,7 @@ export interface DisposableEmailMeta {
  * an object that represents the response from validating a
  * disposable email.
  */
-export default interface DisposableEmailResponse {
+export interface DisposableEmailResponse {
   /** The result of the disposable email validation */
   result: DisposableEmailMeta
 }

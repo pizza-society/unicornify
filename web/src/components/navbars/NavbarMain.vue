@@ -3,10 +3,10 @@
 		<div class="container-fluid">
 			<a
 				class="navbar-brand"
-				href="#">
+				href="/">
 				<img
 					alt="site_logo"
-					src="@/assets/images/pizza-slice.png"
+					src="@/assets/images/unicornify.png"
 					class="d-inline-block align-text-top navbar-brand-logo" />
 			</a>
 
@@ -57,8 +57,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { NavbarItem } from '@/common/navbar'
 import NavbarNav from '@/components/navbars/NavbarNav.vue'
+import { NavbarItem } from '@/types'
 
 export default defineComponent({
 	name: 'NavbarMain',
@@ -86,6 +86,10 @@ export default defineComponent({
 					{
 						title: 'Twitter Video',
 						path: '/twitter-downloader'
+					},
+					{
+						title: 'TikTok Video',
+						path: '/tiktok-downloader'
 					}
 				]
 			}, 

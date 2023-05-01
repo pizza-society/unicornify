@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
 
-import { APIService } from '@/common/api.service'
-import QRGeneratorResponse from '@/types/qr-generator.model'
-import DisposableEmailResponse from '@/types/disposable-email-validator.models'
-import TwitterDownloaderResponse from '@/types/twitter-downloader.model'
-import TikTokDownloaderResponse from '@/types/tiktok-downloader.model'
+import { APIService } from '@/common'
+import {
+	DisposableEmailResponse, QRGeneratorResponse,
+	TikTokDownloaderResponse, TwitterDownloaderResponse } from '@/types'
 
 export const useServiceStore = defineStore('service', {
 	state: () => ({}),
@@ -71,7 +70,7 @@ export const useServiceStore = defineStore('service', {
 			let targetURL = url
 
 			if (useProxy) {
-				targetURL = `${ process.env.VUE_APP_BASE_URL }/services/reverse-proxy/`
+				targetURL = `${ import.meta.env.VITE_BASE_URL }services/reverse-proxy/`
 			}
 
 			APIService.get(targetURL, null, { responseType: 'blob', params: query })

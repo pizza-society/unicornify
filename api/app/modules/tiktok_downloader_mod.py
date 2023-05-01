@@ -70,7 +70,7 @@ class TikTokVideoDownloader:
             format_dict["format_note"] = "MP4 - Watermarked" if "watermarked" in format.get("format_note", "") else "MP4"
             format_dict["vcodec"] = format.get("vcodec")
             format_dict["url"] = format.get("url")
-            format_dict["resolution"] = format.get("resolution")
+            format_dict["resolution"] = "{} x {}".format(*format.get("resolution").split("x")) # Split and space between HeightxWidth
             filtered_formats_list.append(format_dict)
         
         return filtered_formats_list
