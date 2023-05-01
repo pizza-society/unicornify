@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+qrcode = {version = "==7.4.2", extras = ["pil"]}
+python-decouple = "==3.6"
+yt-dlp = "==2022.11.11"
+youtube-dl = "==2021.12.17"
+pyhumps = "==3.8.0"
+pytest = "==7.2.2"
+requests = "==2.27.1"
+fastapi = {version = "==0.95.0", extras = ["all"]}
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
