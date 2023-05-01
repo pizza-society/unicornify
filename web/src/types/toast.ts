@@ -1,5 +1,5 @@
 /** Toast default timeout in milliseconds */
-export const TOAST_TIMEOUT = 300000
+export const TOAST_TIMEOUT = 3000
 
 /** Toast theme types */
 export type ToastType = 'info' | 'success' | 'error' | 'warning'
