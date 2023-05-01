@@ -1,4 +1,3 @@
-
 # Unicornify 🦄
 
 A random app with multiple services
@@ -10,16 +9,10 @@ A random app with multiple services
 
 ## Getting started
 
-Install dependencies
-
 ```bash
-  yarn install
+# install dependencies
+$ yarn install
+
+# run development server
+$ yarn dev
 ```
-
-## Preview
-
-To be updated
-
-## Acknowledgements
-
- - To be updated

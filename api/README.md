@@ -10,32 +10,29 @@ A random app with multiple services
 
 ## Getting started
 
-Install dependencies
+Create a `.env` file in this directory and insert the key-value pairs in the following format of `KEY=VALUE`
 
-```bash
-  pipenv install
+```sh
+BACKEND_CORS_ORIGINS=['http://localhost', 'http://localhost:5173', 'https://localhost', 'http://127.0.0.1:5173']
+PROJECT_NAME = Unicornify
 ```
 
-Get into the virtual environment
+Install dependencies and run development server
 
 ```bash
-  pipenv shell
-```
+# make sure you have pipenv installed then install dependencies
+$ pipenv install
 
-Run the live server
+# get into the virtual environment
+$ pipenv shell
 
-```bash
-uvicorn app.main:app --reload
+# run the live server
+$ uvicorn app.main:app --reload
 ```
 
 ## Running tests
 
-To start running tests, run this command in virtualenv:
-
 ```bash
-pytest -v
+# to start running tests, run this command in virtualenv:
+$ pytest -v
 ```
-
-## Acknowledgements
-
- - To be updated
