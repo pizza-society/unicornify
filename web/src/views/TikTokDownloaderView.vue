@@ -28,11 +28,6 @@
 						</p>
 					</div>
 
-					<ErrorAlert v-if="formError">
-						The TikTok link you supplied does not include any video 
-						or that there is a problem downloading the video.
-					</ErrorAlert>
-		
 					<Transition>
 						<div v-if="tikTokMediaData && tikTokMetaData && !isLoading && !formError">
 							<div class="card text-bg-dark mb-3 mt-5">
@@ -143,17 +138,16 @@ import { defineComponent, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
-import TheInput from '@/components/forms/TheInput.vue'
-import { useServiceStore } from '@/store'
-import { convertToTime, sleep } from '@/helpers/timer'
-import { tikTokLinkRegex } from '@/helpers/regex'
+import { useServiceStore, useToastStore } from '@/store'
+import { tikTokLinkRegex, convertToTime } from '@/helpers'
 import type { TikTokMedia, TikTokMeta } from '@/types/tiktok-downloader.model'
+import TheInput from '@/components/forms/TheInput.vue'
+
+const UNABLE_TO_FIND_VIDEO = 'The TikTok link you supplied does not include any video or that there is a problem downloading the video.'
 
 export default defineComponent({
 	name: 'TikTokDownloaderView',
 	components: {
-		ErrorAlert,
 		TheInput
 	},
 	setup() {
@@ -164,6 +158,7 @@ export default defineComponent({
 
 		// Services
 		const serviceSvc = useServiceStore()
+		const toastr = useToastStore()
 
 		// Form
 		const downloadForm = ref({
@@ -196,7 +191,7 @@ export default defineComponent({
 				.downloadTikTokVideo(downloadForm.value)
 				.then(data => {
 					if (data.result.error) {
-						throw new Error('There\'s no video in this link')
+						toastr.warning(UNABLE_TO_FIND_VIDEO)
 					}
 
 					// TikTok media file data
@@ -209,16 +204,8 @@ export default defineComponent({
 					tikTokMediaData.value = null
 					tikTokMetaData.value = null
 					isLoading.value = false
-					displayErrorMessage(5000)
+					toastr.warning(UNABLE_TO_FIND_VIDEO)
 				})
-		}
-
-		// Error Handler
-		const displayErrorMessage = (duration: number) => {
-			formError.value = true
-			sleep(duration).then(() => {
-				formError.value = false
-			})
 		}
 
 		// Download Tiktok video
@@ -235,7 +222,6 @@ export default defineComponent({
 			formError,
 			getTikTokMedia,
 			downloadVideo,
-			displayErrorMessage,
 			convertToTime
 		}
 	}

@@ -27,12 +27,7 @@
 							</small>
 						</p>
 					</div>
-
-					<ErrorAlert v-if="formError">
-						The twitter link you supplied does not include any video 
-						or that there is a problem downloading the video.
-					</ErrorAlert>
-				
+			
 					<Transition>
 						<div v-if="tweetMedias && tweetMetaData && !isLoading && !formError">
 							<div class="card text-bg-dark mb-3 mt-5">
@@ -138,20 +133,20 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useServiceStore } from '@/store'
+import { useServiceStore, useToastStore } from '@/store'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
 import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
-import { sleep } from '@/helpers/timer'
-import { twitterStatusRegex } from '@/helpers/regex'
-import ErrorAlert from '@/components/ErrorHandlers/ErrorAlert.vue'
+import { twitterStatusRegex } from '@/helpers'
 import TheInput from '@/components/forms/TheInput.vue'
+
+const UNABLE_TO_FIND_VIDEO = 'The Twitter link you supplied does not include any video or that there is a problem downloading the video.'
 
 export default defineComponent({
 	name: 'TwitterDownloaderView',
-	components: { ErrorAlert, TheInput },
+	components: { TheInput },
 	setup() {
 		// Data
 		const tweetMetaData = ref<TweetMeta | null>(null)
@@ -160,6 +155,7 @@ export default defineComponent({
 
 		// Services
 		const serviceSvc = useServiceStore()
+		const toastr = useToastStore()
 
 		// Form
 		const downloadForm = ref({
@@ -193,7 +189,7 @@ export default defineComponent({
 				.downloadTwitterVideo(downloadForm.value)
 				.then(data => {
 					if(data.result.error) {
-						throw new Error('There\'s no video in this tweet')
+						toastr.warning(UNABLE_TO_FIND_VIDEO)
 					}
 
 					// Tweet media file data
@@ -206,18 +202,10 @@ export default defineComponent({
 					tweetMedias.value = null
 					tweetMetaData.value = null
 					isLoading.value = false
-					displayErrorMessage(5000)   
+					toastr.warning(UNABLE_TO_FIND_VIDEO) 
 				})
 		}
 
-		// Error Handler
-		const displayErrorMessage = (duration: number) => {
-			formError.value = true
-			sleep(duration).then(() => {
-				formError.value = false
-			})
-		}
-        
 		// Download tweet video
 		const downloadVideo = (url: string) => {
 			serviceSvc.downloadBlobFile(url, 'video/mp4', 'tweet-video')
@@ -231,8 +219,7 @@ export default defineComponent({
 			tweetMetaData,
 			formError,
 			getTweetMedia,
-			downloadVideo,
-			displayErrorMessage
+			downloadVideo
 		}
 	}
 })
