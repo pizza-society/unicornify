@@ -5,7 +5,7 @@ A random app with multiple services
 ## Preview
 
 <div align="center">
-  <img src="https://github.com/pizza-society/unicornify/blob/previews/home.png"
+  <img src="https://github.com/pizza-society/unicornify/blob/main/previews/home.png"
     width="700" />
 </div>
 <br />
