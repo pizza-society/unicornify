@@ -59,7 +59,7 @@ export interface TwitterDownloaderResult {
 }
 
 /** Interface for TwitterDownloaderResponse */
-export default interface TwitterDownloaderResponse {
+export interface TwitterDownloaderResponse {
     /** Result of the Twitter downloader operation */
     result: TwitterDownloaderResult
 }

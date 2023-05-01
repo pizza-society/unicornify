@@ -53,7 +53,7 @@ export interface TikTokDownloaderResult extends TikTokMeta {
 }
 
 /** Interface for TikTokDownloaderResponse */
-export default interface TikTokDownloaderResponse {
+export interface TikTokDownloaderResponse {
     /** The result of the TikTok downloader */
     result: TikTokDownloaderResult
 }

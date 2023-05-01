@@ -133,14 +133,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useServiceStore, useToastStore } from '@/store'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 
-import { TweetMedia, TweetMeta } from '@/types/twitter-downloader.model'
-import { twitterStatusRegex } from '@/helpers'
 import TheInput from '@/components/forms/TheInput.vue'
+import { twitterStatusRegex } from '@/helpers'
+import { useServiceStore, useToastStore } from '@/store'
+import { TweetMedia, TweetMeta } from '@/types/'
 
 const UNABLE_TO_FIND_VIDEO = 'The Twitter link you supplied does not include any video or that there is a problem downloading the video.'
 

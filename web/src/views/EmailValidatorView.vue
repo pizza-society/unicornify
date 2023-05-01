@@ -85,9 +85,9 @@ import useVuelidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 
 import TheInput from '@/components/forms/TheInput.vue'
-import { TextConcat } from '@/helpers/typography'
+import { TextConcat } from '@/helpers'
 import { useServiceStore, useToastStore } from '@/store'
-import type { DisposableEmailMeta } from '@/types/disposable-email-validator.models'
+import type { DisposableEmailMeta } from '@/types'
 
 const VALIDATED_NOT_DISPOSABLE = 'The email <email> is valid and not disposable '
 const VALIDATED_DISPOBABLE = 'Warning, the email <email> is a disposable email'
@@ -136,11 +136,11 @@ export default defineComponent({
 					disposedEmailResult.value = data.result
 					isLoading.value = false
 
-					if (!disposedEmailResult.value.disposable && disposedEmailResult.value.format) {
+					if (!disposedEmailResult.value?.disposable && disposedEmailResult.value?.format) {
 						toastr.success(validatedNotDisposableMsg.value)
-					} else if (disposedEmailResult.value.disposable && disposedEmailResult.value.format) {
+					} else if (disposedEmailResult.value?.disposable && disposedEmailResult.value?.format) {
 						toastr.warning(validatedDisposableMsg.value)
-					} else if (disposedEmailResult.value.disposable && !disposedEmailResult.value.format) {
+					} else if (disposedEmailResult.value?.disposable && !disposedEmailResult.value?.format) {
 						toastr.warning(validatedServerErrorMsg.value)
 					}
 				})

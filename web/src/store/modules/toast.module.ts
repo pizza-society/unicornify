@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { ToastChildItem, TOAST_TIMEOUT } from '@/types/toast'
+import { ToastChildItem, TOAST_TIMEOUT } from '@/types'
 
 export const useToastStore = defineStore('toast', {
 	state: () => {
